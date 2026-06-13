@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PriesteGamingSpace</title>
+  <meta name="description" content="PriesteGamingSpace — 游戏UI · 游戏截图 · 工作感悟">
+  <meta name="theme-color" content="#0D0D0D">
+
+  <meta property="og:title" content="PriesteGamingSpace">
+  <meta property="og:description" content="游戏与生活的交集 · 分享不止于屏幕">
+  <meta property="og:type" content="website">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="logo" onclick="App.navigate('home')">
+        <span class="logo-icon">◆</span>
+        <span>PriesteGamingSpace</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Two-Column Layout -->
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="sidebar"></aside>
+
+    <!-- Main Content -->
+    <main class="app-content" id="content"></main>
+  </div>
+
+  <!-- Hidden import file input -->
+  <input type="file" id="import-file" accept=".json" style="display:none">
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>© 2026 PriesteGamingSpace · Hosted on <a href="https://pages.github.com" target="_blank">GitHub Pages</a></p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
