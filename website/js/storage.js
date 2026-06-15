@@ -12,6 +12,8 @@ const Storage = (() => {
     bookmarks: 'pgs_bookmarks'
   };
 
+  let _sharedLoaded = false;
+
   // ========== Helpers ==========
 
   function _read(key) {
@@ -180,6 +182,37 @@ const Storage = (() => {
     return true;
   }
 
+  // ========== Shared Content (JSON file) ==========
+
+  function loadSharedContent() {
+    if (_sharedLoaded) return Promise.resolve();
+    return fetch('data/content.json')
+      .then(r => r.json())
+      .then(shared => {
+        ['gameUI','screenshots','reflections','life'].forEach(cat => {
+          const local = _read(KEYS[cat]);
+          const sharedItems = Array.isArray(shared[cat]) ? shared[cat] : [];
+          const localIds = new Set(local.map(i => i.id));
+          const merged = [...local];
+          sharedItems.forEach(si => {
+            if (!localIds.has(si.id)) merged.push(si);
+          });
+          _write(KEYS[cat], merged);
+        });
+        _sharedLoaded = true;
+      })
+      .catch(() => {}); // fallback: local only
+  }
+
+  function getSharedData() {
+    return {
+      gameUI: _read(KEYS.gameUI),
+      screenshots: _read(KEYS.screenshots),
+      reflections: _read(KEYS.reflections),
+      life: _read(KEYS.life)
+    };
+  }
+
   // ========== Sign-in ==========
 
   function _dateKey(date) {
@@ -302,6 +335,8 @@ const Storage = (() => {
     getTotalDays,
     toggleBookmark,
     getBookmarks,
-    isBookmarked
+    isBookmarked,
+    loadSharedContent,
+    getSharedData
   };
 })();

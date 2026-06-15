@@ -14,13 +14,15 @@ const App = (() => {
   // ========== Init ==========
 
   function init() {
-    _dates = Storage.getDatesWithContent();
-    const now = new Date();
-    _calendarYear = now.getFullYear();
-    _calendarMonth = now.getMonth() + 1;
-    autoCheckIn();
-    bindEvents();
-    render();
+    Storage.loadSharedContent().then(() => {
+      _dates = Storage.getDatesWithContent();
+      const now = new Date();
+      _calendarYear = now.getFullYear();
+      _calendarMonth = now.getMonth() + 1;
+      autoCheckIn();
+      bindEvents();
+      render();
+    });
   }
 
   function autoCheckIn() {
