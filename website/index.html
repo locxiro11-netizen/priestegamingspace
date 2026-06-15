@@ -22,6 +22,7 @@
       <div style="display:flex;align-items:center;gap:12px">
         <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式" id="theme-btn">🌙</button>
         <button class="bg-toggle" onclick="toggleBgPanel()" title="切换背景图" id="bg-btn">🖼️</button>
+        <button class="bgm-btn" onclick="toggleBGM()" title="背景音乐" id="bgm-btn">🎵</button>
         <button class="header-signin" id="signin-btn">
           <span class="flame">🔥</span> 连续签到 <span class="streak">0</span> 天
         </button>
@@ -51,6 +52,9 @@
   </footer>
 
   <input type="file" id="import-file" accept=".json" style="display:none">
+
+  <audio id="bgm-audio" loop preload="auto" style="display:none"
+    src="https://cdn.pixabay.com/audio/2025/01/08/audio_2bf6a69e3f.mp3"></audio>
 
   <!-- Background Upload Panel -->
   <div class="bg-upload-overlay" id="bg-overlay" onclick="if(event.target===this)closeBgPanel()">
@@ -154,6 +158,35 @@
     (function(){
       var bg=localStorage.getItem('pgs_bg')||'none';
       applyBg(bg);
+    })();
+
+    // BGM
+    var _bgmReady=false;
+    function toggleBGM(){
+      var a=document.getElementById('bgm-audio');
+      var b=document.getElementById('bgm-btn');
+      if(a.paused){
+        a.play().then(function(){
+          b.classList.add('playing');b.textContent='🎵♪';
+          localStorage.setItem('pgs_bgm','on');
+        }).catch(function(){});
+      }else{
+        a.pause();b.classList.remove('playing');b.textContent='🎵';
+        localStorage.setItem('pgs_bgm','off');
+      }
+    }
+    (function(){
+      var a=document.getElementById('bgm-audio');
+      a.volume=0.3;
+      // Try autoplay (may be blocked), restore state
+      if(localStorage.getItem('pgs_bgm')!=='off'){
+        document.addEventListener('click',function once(){
+          a.play().then(function(){
+            var b=document.getElementById('bgm-btn');
+            if(b){b.classList.add('playing');b.textContent='🎵♪';}
+          }).catch(function(){});
+        },{once:true});
+      }
     })();
   </script>
 </body>
