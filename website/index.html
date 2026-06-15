@@ -57,6 +57,23 @@
     <source src="assets/bgm.mp4" type="audio/mp4">
   </audio>
 
+  <!-- Music HUD -->
+  <div class="music-hud" id="music-hud">
+    <div class="music-cover">🎵</div>
+    <div class="music-info">
+      <div class="music-title" id="music-title"><span>明日方舟：终末地 EP - 宜</span></div>
+      <div class="music-artist">庄方宜</div>
+    </div>
+    <div class="music-progress-wrap">
+      <span class="music-time" id="music-cur">0:00</span>
+      <input type="range" class="music-progress" id="music-prog" min="0" max="100" value="0" oninput="seekBGM(this.value)">
+      <span class="music-time" id="music-dur">0:00</span>
+    </div>
+    <div class="music-controls">
+      <button class="music-ctrl-btn" onclick="toggleBGM()" id="hud-play">▶</button>
+    </div>
+  </div>
+
   <!-- Background Upload Panel -->
   <div class="bg-upload-overlay" id="bg-overlay" onclick="if(event.target===this)closeBgPanel()">
     <div class="bg-upload-panel" id="bg-panel" onclick="event.stopPropagation()">
@@ -162,32 +179,88 @@
     })();
 
     // BGM
-    var _bgmReady=false;
     function toggleBGM(){
       var a=document.getElementById('bgm-audio');
-      var b=document.getElementById('bgm-btn');
-      if(a.paused){
-        a.play().then(function(){
-          b.classList.add('playing');b.textContent='🎵♪';
-          localStorage.setItem('pgs_bgm','on');
-        }).catch(function(){});
-      }else{
-        a.pause();b.classList.remove('playing');b.textContent='🎵';
-        localStorage.setItem('pgs_bgm','off');
-      }
+      if(a.paused){playBGM();}else{pauseBGM();}
     }
+    function playBGM(){
+      var a=document.getElementById('bgm-audio');
+      var b=document.getElementById('bgm-btn');
+      var hud=document.getElementById('music-hud');
+      var pb=document.getElementById('hud-play');
+      a.play().then(function(){
+        if(b){b.classList.add('playing');b.textContent='🎵♪';}
+        if(hud)hud.classList.add('show');
+        if(pb)pb.textContent='⏸';
+        localStorage.setItem('pgs_bgm','on');
+        startProgress();
+      }).catch(function(){});
+    }
+    function pauseBGM(){
+      var a=document.getElementById('bgm-audio');
+      var b=document.getElementById('bgm-btn');
+      var pb=document.getElementById('hud-play');
+      a.pause();
+      if(b){b.classList.remove('playing');b.textContent='🎵';}
+      if(pb)pb.textContent='▶';
+      localStorage.setItem('pgs_bgm','off');
+      stopProgress();
+    }
+    function formatTime(s){
+      var m=Math.floor(s/60),sec=Math.floor(s%60);
+      return m+':'+(sec<10?'0':'')+sec;
+    }
+    var _progTimer=null;
+    function startProgress(){
+      var a=document.getElementById('bgm-audio');
+      var prog=document.getElementById('music-prog');
+      var cur=document.getElementById('music-cur');
+      var dur=document.getElementById('music-dur');
+      if(!a||!prog)return;
+      stopProgress();
+      if(a.duration&&isFinite(a.duration))prog.max=Math.floor(a.duration);
+      if(dur)dur.textContent=formatTime(a.duration||0);
+      function tick(){
+        var pct=a.duration?(a.currentTime/a.duration*100):0;
+        if(prog)prog.value=Math.floor(a.currentTime);
+        if(cur)cur.textContent=formatTime(a.currentTime);
+        if(a.paused){stopProgress();return;}
+        _progTimer=requestAnimationFrame(tick);
+      }
+      tick();
+    }
+    function stopProgress(){
+      if(_progTimer){cancelAnimationFrame(_progTimer);_progTimer=null;}
+    }
+    function seekBGM(val){
+      var a=document.getElementById('bgm-audio');
+      if(a&&a.duration)a.currentTime=parseInt(val);
+    }
+    // Title marquee
+    (function(){
+      var t=document.getElementById('music-title');
+      if(t&&t.scrollWidth>t.clientWidth){t.classList.add('scroll');
+        t.querySelector('span').innerHTML+=('　　'+t.querySelector('span').innerHTML);}
+    })();
     (function(){
       var a=document.getElementById('bgm-audio');
       a.volume=0.3;
-      // Try autoplay (may be blocked), restore state
       if(localStorage.getItem('pgs_bgm')!=='off'){
         document.addEventListener('click',function once(){
-          a.play().then(function(){
-            var b=document.getElementById('bgm-btn');
-            if(b){b.classList.add('playing');b.textContent='🎵♪';}
-          }).catch(function(){});
+          playBGM();
         },{once:true});
       }
+      // Progress
+      a.addEventListener('loadedmetadata',function(){
+        var prog=document.getElementById('music-prog');
+        var dur=document.getElementById('music-dur');
+        if(prog&&a.duration)prog.max=Math.floor(a.duration);
+        if(dur)dur.textContent=formatTime(a.duration);
+      });
+      a.addEventListener('ended',function(){
+        var pb=document.getElementById('hud-play');
+        if(pb)pb.textContent='▶';
+      });
     })();
   </script>
 </body>
