@@ -6,7 +6,10 @@ const Storage = (() => {
   const KEYS = {
     gameUI: 'pgs_game_ui',
     screenshots: 'pgs_screenshots',
-    reflections: 'pgs_reflections'
+    reflections: 'pgs_reflections',
+    life: 'pgs_life',
+    signin: 'pgs_signin',
+    bookmarks: 'pgs_bookmarks'
   };
 
   // ========== Helpers ==========
@@ -139,12 +142,13 @@ const Storage = (() => {
     );
   }
 
+  const ALL_CATS = ['gameUI','screenshots','reflections','life'];
+
   function getRecent(limit = 3) {
-    const all = [
-      ...getAll('gameUI').map(i => ({ ...i, category: 'gameUI' })),
-      ...getAll('screenshots').map(i => ({ ...i, category: 'screenshots' })),
-      ...getAll('reflections').map(i => ({ ...i, category: 'reflections' }))
-    ];
+    const all = [];
+    ALL_CATS.forEach(cat => {
+      getAll(cat).forEach(item => all.push({ ...item, category: cat }));
+    });
     return all.sort((a, b) => b.date.localeCompare(a.date)).slice(0, limit);
   }
 
@@ -152,7 +156,8 @@ const Storage = (() => {
     return {
       gameUI: getAll('gameUI').length,
       screenshots: getAll('screenshots').length,
-      reflections: getAll('reflections').length
+      reflections: getAll('reflections').length,
+      life: getAll('life').length
     };
   }
 
@@ -161,6 +166,7 @@ const Storage = (() => {
       gameUI: getAll('gameUI'),
       screenshots: getAll('screenshots'),
       reflections: getAll('reflections'),
+      life: getAll('life'),
       exportedAt: _now()
     };
   }
@@ -170,7 +176,107 @@ const Storage = (() => {
     if (Array.isArray(data.gameUI)) _write(KEYS.gameUI, data.gameUI);
     if (Array.isArray(data.screenshots)) _write(KEYS.screenshots, data.screenshots);
     if (Array.isArray(data.reflections)) _write(KEYS.reflections, data.reflections);
+    if (Array.isArray(data.life)) _write(KEYS.life, data.life);
     return true;
+  }
+
+  // ========== Sign-in ==========
+
+  function _dateKey(date) {
+    const d = date || new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+
+  function _todayKey() { return _dateKey(new Date()); }
+
+  function checkIn() {
+    const data = getSignInData();
+    const today = _todayKey();
+    if (data.lastDate === today) return data; // already checked in
+
+    const yesterday = _dateKey(new Date(Date.now() - 86400000));
+    if (data.lastDate === yesterday) {
+      data.streak += 1;
+    } else {
+      data.streak = 1;
+    }
+    data.lastDate = today;
+    data.totalDays = (data.totalDays || 0) + 1;
+    _write(KEYS.signin, data);
+    return data;
+  }
+
+  function getSignInData() {
+    return _read(KEYS.signin)[0] || { lastDate: null, streak: 0, totalDays: 0 };
+  }
+
+  // ========== Calendar / Date ==========
+
+  function getDatesWithContent() {
+    const dateSet = new Set();
+    ALL_CATS.forEach(cat => {
+      getAll(cat).forEach(item => {
+        // Extract date part from "2026/06/15 14:30" format
+        const m = item.date.match(/(\d{4})\/(\d{1,2})\/(\d{1,2})/);
+        if (m) dateSet.add(`${m[1]}-${String(parseInt(m[2])).padStart(2,'0')}-${String(parseInt(m[3])).padStart(2,'0')}`);
+      });
+    });
+    return [...dateSet].sort().reverse();
+  }
+
+  function getContentByDate(dateStr) {
+    const result = { gameUI: [], screenshots: [], reflections: [], life: [] };
+    ALL_CATS.forEach(cat => {
+      getAll(cat).forEach(item => {
+        const m = item.date.match(/(\d{4})\/(\d{1,2})\/(\d{1,2})/);
+        if (m) {
+          const d = `${m[1]}-${String(parseInt(m[2])).padStart(2,'0')}-${String(parseInt(m[3])).padStart(2,'0')}`;
+          if (d === dateStr) {
+            result[cat].push({ ...item, category: cat });
+          }
+        }
+      });
+    });
+    return result;
+  }
+
+  function getAllContentSorted() {
+    const all = [];
+    ALL_CATS.forEach(cat => {
+      getAll(cat).forEach(item => all.push({ ...item, category: cat }));
+    });
+    return all.sort((a, b) => b.date.localeCompare(a.date));
+  }
+
+  function getTotalDays() {
+    return getDatesWithContent().length;
+  }
+
+  // ========== Bookmarks ==========
+
+  function toggleBookmark(cat, id) {
+    const bookmarks = _read(KEYS.bookmarks);
+    const existing = bookmarks.findIndex(b => b.id === id);
+    if (existing >= 0) {
+      bookmarks.splice(existing, 1);
+      _write(KEYS.bookmarks, bookmarks);
+      return false;
+    }
+    bookmarks.push({ cat, id, addedAt: _now() });
+    _write(KEYS.bookmarks, bookmarks);
+    return true;
+  }
+
+  function getBookmarks() {
+    const bookmarks = _read(KEYS.bookmarks);
+    return bookmarks.map(b => {
+      const item = getById(b.cat, b.id);
+      return item ? { ...item, category: b.cat, bookmarkAddedAt: b.addedAt } : null;
+    }).filter(Boolean);
+  }
+
+  function isBookmarked(id) {
+    return _read(KEYS.bookmarks).some(b => b.id === id);
   }
 
   // ========== Public API ==========
@@ -187,6 +293,15 @@ const Storage = (() => {
     getRecent,
     getStats,
     exportAll,
-    importAll
+    importAll,
+    checkIn,
+    getSignInData,
+    getDatesWithContent,
+    getContentByDate,
+    getAllContentSorted,
+    getTotalDays,
+    toggleBookmark,
+    getBookmarks,
+    isBookmarked
   };
 })();

@@ -1,95 +1,245 @@
 /**
- * PriesteGamingSpace — Application Core v2
- * Two-column layout · Sidebar routing · Daily Forge style
+ * PriesteGamingSpace v3 — Application Core
+ * Daily Forge style: sign-in, calendar, date selector, bookmarks
  */
 const App = (() => {
   let _currentTab = 'home';
+  let _currentDateIndex = 0;
+  let _activeFilter = 'all';
   let _searchQuery = '';
+  let _dates = [];
+  let _calendarYear, _calendarMonth;
+  let _lifeUnlocked = false;
 
   // ========== Init ==========
 
   function init() {
+    _dates = Storage.getDatesWithContent();
+    const now = new Date();
+    _calendarYear = now.getFullYear();
+    _calendarMonth = now.getMonth() + 1;
+    autoCheckIn();
+    bindEvents();
     render();
-    bindGlobalEvents();
   }
 
-  function bindGlobalEvents() {
-    // Sidebar navigation
-    document.querySelector('#sidebar').addEventListener('click', (e) => {
-      const navItem = e.target.closest('.sidebar-nav-item');
-      if (navItem) {
-        navigate(navItem.dataset.tab);
-        return;
-      }
-    });
+  function autoCheckIn() {
+    const data = Storage.checkIn();
+    updateSignInBtn(data);
+  }
 
-    // Card action delegation (like / delete)
+  function bindEvents() {
+    document.querySelector('#stats-bar').addEventListener('click', (e) => {});
+    // Nav tabs
+    document.querySelector('#nav-tabs').addEventListener('click', (e) => {
+      const tab = e.target.closest('.nav-tab');
+      if (tab) navigate(tab.dataset.tab);
+    });
+    // Card actions (like, bookmark, delete)
     document.querySelector('#content').addEventListener('click', (e) => {
       const likeBtn = e.target.closest('[data-action="like"]');
-      const deleteBtn = e.target.closest('[data-action="delete"]');
+      const bmBtn = e.target.closest('[data-action="bookmark"]');
+      const delBtn = e.target.closest('[data-action="delete"]');
       if (likeBtn) {
         e.stopPropagation();
         Storage.toggleLike(likeBtn.dataset.cat, likeBtn.dataset.id);
         refresh();
       }
-      if (deleteBtn) {
+      if (bmBtn) {
         e.stopPropagation();
-        handleDelete(deleteBtn.dataset.cat, deleteBtn.dataset.id);
+        const added = Storage.toggleBookmark(bmBtn.dataset.cat, bmBtn.dataset.id);
+        Components.showToast(added ? '已收藏 ★' : '已取消收藏');
+        refresh();
+      }
+      if (delBtn) {
+        e.stopPropagation();
+        handleDelete(delBtn.dataset.cat, delBtn.dataset.id);
       }
     });
-
-    // Import file
+    // Sign-in
+    document.querySelector('#signin-btn').addEventListener('click', () => {
+      const data = Storage.checkIn();
+      updateSignInBtn(data);
+      Components.showToast(`签到成功！连续签到 ${data.streak} 天 🔥`);
+    });
+    // Search
+    document.querySelector('#content').addEventListener('input', (e) => {
+      if (e.target.id === 'search-input') handleSearch(e.target.value);
+    });
+    // Import
     document.querySelector('#import-file').addEventListener('change', handleImport);
+  }
+
+  function updateSignInBtn(data) {
+    const btn = document.querySelector('#signin-btn');
+    if (!btn) return;
+    const today = new Date().toISOString().slice(0, 10);
+    if (data.lastDate === today) {
+      btn.className = 'header-signin checked';
+      btn.innerHTML = `<span class="flame">🔥</span> 连续签到 <span class="streak">${data.streak}</span> 天`;
+    } else {
+      btn.className = 'header-signin';
+      btn.innerHTML = `<span class="flame">🔥</span> 连续签到 <span class="streak">${data.streak}</span> 天`;
+    }
   }
 
   // ========== Routing ==========
 
   function navigate(tab) {
+    if (tab === 'life' && !_lifeUnlocked) {
+      _currentTab = tab;
+      showPasswordGate();
+      return;
+    }
     _currentTab = tab;
     _searchQuery = '';
-    const searchInput = document.querySelector('#search-input');
-    if (searchInput) searchInput.value = '';
+    const si = document.querySelector('#search-input');
+    if (si) si.value = '';
     render();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function refresh() {
+    _dates = Storage.getDatesWithContent();
     render();
+  }
+
+  function setFilter(filter) {
+    _activeFilter = filter;
+    render();
+  }
+
+  function prevDate() {
+    if (_currentDateIndex < _dates.length - 1) {
+      _currentDateIndex++;
+      refresh();
+    }
+  }
+
+  function nextDate() {
+    if (_currentDateIndex > 0) {
+      _currentDateIndex--;
+      refresh();
+    }
+  }
+
+  function selectDate(dateStr) {
+    const idx = _dates.indexOf(dateStr);
+    if (idx >= 0) {
+      _currentDateIndex = idx;
+      closeCalendar();
+      _currentTab = 'home';
+      refresh();
+    }
+  }
+
+  // ========== Calendar ==========
+
+  function openCalendar() {
+    closeCalendar();
+    const cd = _dates[_currentDateIndex] || null;
+    document.body.insertAdjacentHTML('beforeend', Components.renderCalendar(_dates, cd));
+  }
+
+  function closeCalendar() {
+    const el = document.querySelector('#calendar-overlay');
+    if (el) el.remove();
+  }
+
+  function calPrevMonth() {
+    if (_calendarMonth === 1) { _calendarMonth = 12;
+      _calendarYear--; } else _calendarMonth--;
+    openCalendar();
+  }
+
+  function calNextMonth() {
+    if (_calendarMonth === 12) { _calendarMonth = 1;
+      _calendarYear++; } else _calendarMonth++;
+    openCalendar();
+  }
+
+  // ========== Bookmarks ==========
+
+  function openBookmarks() {
+    closeBookmarks();
+    const bms = Storage.getBookmarks();
+    document.body.insertAdjacentHTML('beforeend', Components.renderBookmarksPanel(bms));
+  }
+
+  function closeBookmarks() {
+    const el = document.querySelector('#bookmarks-overlay');
+    if (el) el.remove();
+  }
+
+  function removeBookmark(cat, id) {
+    Storage.toggleBookmark(cat, id);
+    openBookmarks();
+    refresh();
   }
 
   // ========== Render ==========
 
   function render() {
     const stats = Storage.getStats();
+    const totalDays = Storage.getTotalDays();
+    const currentDate = _dates[_currentDateIndex] || null;
 
-    // Sidebar
-    document.querySelector('#sidebar').innerHTML = Components.renderSidebar(_currentTab, stats);
+    // Stats bar
+    document.querySelector('#stats-bar').innerHTML = Components.renderStatsBar(stats, totalDays);
+
+    // Nav tabs
+    document.querySelector('#nav-tabs').innerHTML = Components.renderNavTabs(_currentTab);
+
+    // Sub bar
+    const hasDates = _dates.length > 0;
+    document.querySelector('#sub-bar').innerHTML = Components.renderSubBar(
+      _currentTab, _currentDateIndex, _dates.length, _dates, _activeFilter
+    );
 
     // Content
     const content = document.querySelector('#content');
 
-    if (_currentTab === 'home') {
-      content.innerHTML = `
-        ${Components.renderHomeHero()}
-        <div class="card-grid" id="card-container">
-          ${Components.renderHomeContent()}
-        </div>
-      `;
+    if (_currentTab === 'archive') {
+      content.innerHTML = Components.renderArchive(_dates, currentDate);
+    } else if (_currentTab === 'home') {
+      content.innerHTML = Components.renderHomeHero();
+      if (currentDate) {
+        content.innerHTML += Components.renderDayTitle(_currentDateIndex, _dates.length, currentDate);
+        const dateData = Storage.getContentByDate(currentDate);
+        content.innerHTML += Components.renderContentByDate(dateData, _activeFilter);
+      } else {
+        content.innerHTML += Components.renderEmpty();
+      }
+    } else if (_currentTab === 'life') {
+      if (!_lifeUnlocked) { showPasswordGate(); return; }
+      content.innerHTML = Components.renderSearchBar();
+      if (currentDate) {
+        const dateData = Storage.getContentByDate(currentDate);
+        const items = dateData['life'] || [];
+        content.innerHTML += `<div class="card-grid">${items.map((item,i) => Components.renderCard(item,i,true)).join('') || Components.renderEmpty()}</div>`;
+      } else {
+        content.innerHTML += Components.renderEmpty();
+      }
     } else {
-      content.innerHTML = `
-        ${Components.renderSearchBar()}
-        <div class="card-grid" id="card-container"></div>
-      `;
-      const items = Storage.search(_currentTab, _searchQuery);
-      document.querySelector('#card-container').innerHTML = Components.renderCardGrid(items, _currentTab);
+      // Category-specific view
+      content.innerHTML = Components.renderSearchBar();
+      if (currentDate) {
+        const dateData = Storage.getContentByDate(currentDate);
+        const items = dateData[_currentTab] || [];
+        content.innerHTML += `<div class="card-grid">${items.map((item,i) => Components.renderCard(item,i,true)).join('') || Components.renderEmpty()}</div>`;
+      } else {
+        content.innerHTML += Components.renderEmpty();
+      }
     }
+
+    // Update sign-in
+    updateSignInBtn(Storage.getSignInData());
   }
 
   // ========== Modal ==========
 
   function openCreateModal() {
-    if (_currentTab === 'home') {
-      Components.showToast('请先选择一个分类再发布', 'info');
+    if (_currentTab === 'home' || _currentTab === 'archive') {
       return;
     }
     closeModal();
@@ -102,8 +252,9 @@ const App = (() => {
   function openDetail(category, id) {
     const item = Storage.getById(category, id);
     if (!item) return;
+    item.category = category;
     closeModal();
-    document.body.insertAdjacentHTML('beforeend', Components.renderDetail(item, category));
+    document.body.insertAdjacentHTML('beforeend', Components.renderDetail(item));
     document.querySelector('#detail-modal').addEventListener('click', (e) => {
       if (e.target.id === 'detail-modal') closeModal();
     });
@@ -126,37 +277,33 @@ const App = (() => {
     const placeholder = document.querySelector('.upload-placeholder');
     const status = document.querySelector('#upload-status');
     if (!file) return;
-
     status.textContent = '正在压缩图片...';
     status.className = 'upload-status loading';
-
-    Storage.compressImage(file)
-      .then(result => {
-        _pendingImage = result.base64;
-        preview.querySelector('img').src = result.base64;
-        preview.style.display = 'block';
-        placeholder.style.display = 'none';
-        status.textContent = `图片已就绪 (${Math.round(result.base64.length / 1024)}KB)`;
-        status.className = 'upload-status success';
-      })
-      .catch(err => {
-        status.textContent = err.message;
-        status.className = 'upload-status error';
-        input.value = '';
-      });
+    Storage.compressImage(file).then(result => {
+      _pendingImage = result.base64;
+      preview.querySelector('img').src = result.base64;
+      preview.style.display = 'block';
+      placeholder.style.display = 'none';
+      status.textContent = `图片已就绪 (${Math.round(result.base64.length/1024)}KB)`;
+      status.className = 'upload-status success';
+    }).catch(err => {
+      status.textContent = err.message;
+      status.className = 'upload-status error';
+      input.value = '';
+    });
   }
 
   function clearImagePreview() {
     _pendingImage = null;
-    const preview = document.querySelector('#image-preview');
-    const placeholder = document.querySelector('.upload-placeholder');
-    const input = document.querySelector('#image-input');
-    const status = document.querySelector('#upload-status');
-    if (preview) preview.style.display = 'none';
-    if (placeholder) placeholder.style.display = 'flex';
-    if (input) input.value = '';
-    if (status) { status.textContent = '';
-      status.className = 'upload-status'; }
+    const p = document.querySelector('#image-preview');
+    const ph = document.querySelector('.upload-placeholder');
+    const inp = document.querySelector('#image-input');
+    const st = document.querySelector('#upload-status');
+    if (p) p.style.display = 'none';
+    if (ph) ph.style.display = 'flex';
+    if (inp) inp.value = '';
+    if (st) { st.textContent = '';
+      st.className = 'upload-status'; }
   }
 
   function handleCreate(event, category) {
@@ -165,28 +312,18 @@ const App = (() => {
     const submitBtn = form.querySelector('#submit-btn');
     submitBtn.disabled = true;
     submitBtn.textContent = '发布中...';
-
     const formData = new FormData(form);
-    const tags = formData.get('tags')
-      ? formData.get('tags').split(/[,，]/).map(t => t.trim()).filter(Boolean)
-      : [];
-
+    const tags = formData.get('tags') ? formData.get('tags').split(/[,，]/).map(t => t.trim()).filter(Boolean) : [];
     const data = { title: formData.get('title').trim(), tags };
-
-    if (category === 'reflections') {
-      data.content = formData.get('content').trim();
-    } else {
-      data.desc = formData.get('desc')?.trim() || '';
-      if (_pendingImage) data.image = _pendingImage;
-    }
-    if (category === 'screenshots') {
-      data.game = formData.get('game')?.trim() || '';
-    }
-
+    if (category === 'reflections') data.content = formData.get('content').trim();
+    else { data.desc = formData.get('desc')?.trim() || ''; if (_pendingImage) data.image = _pendingImage; }
+    if (category === 'screenshots') data.game = formData.get('game')?.trim() || '';
     try {
       Storage.create(category, data);
       _pendingImage = null;
       closeModal();
+      _dates = Storage.getDatesWithContent();
+      _currentDateIndex = 0;
       refresh();
       Components.showToast('发布成功');
     } catch (err) {
@@ -200,6 +337,8 @@ const App = (() => {
     const confirmed = await Components.showConfirm('确定要删除这条内容吗？此操作不可恢复。');
     if (confirmed) {
       Storage.remove(category, id);
+      _dates = Storage.getDatesWithContent();
+      if (_currentDateIndex >= _dates.length) _currentDateIndex = Math.max(0, _dates.length - 1);
       refresh();
       Components.showToast('已删除');
     }
@@ -207,11 +346,7 @@ const App = (() => {
 
   function handleSearch(query) {
     _searchQuery = query;
-    const items = Storage.search(_currentTab, query);
-    const container = document.querySelector('#card-container');
-    if (container) {
-      container.innerHTML = Components.renderCardGrid(items, _currentTab);
-    }
+    refresh();
   }
 
   // ========== Export / Import ==========
@@ -223,7 +358,7 @@ const App = (() => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `PriesteGamingSpace_backup_${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = `PriesteGamingSpace_backup_${new Date().toISOString().slice(0,10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
     Components.showToast('导出成功');
@@ -237,26 +372,61 @@ const App = (() => {
       try {
         const data = JSON.parse(e.target.result);
         if (Storage.importAll(data)) {
+          _dates = Storage.getDatesWithContent();
           Components.showToast('导入成功');
           refresh();
-        } else {
-          Components.showToast('文件格式不正确', 'error');
-        }
-      } catch {
-        Components.showToast('文件解析失败', 'error');
-      }
+        } else Components.showToast('文件格式不正确', 'error');
+      } catch { Components.showToast('文件解析失败', 'error'); }
     };
     reader.readAsText(file);
     event.target.value = '';
   }
 
+  // ========== Password Gate ==========
+
+  function showPasswordGate() {
+    closePasswordGate();
+    document.body.insertAdjacentHTML('beforeend', Components.renderPasswordGate());
+    setTimeout(() => {
+      const input = document.querySelector('#pwd-input');
+      if (input) input.focus();
+    }, 100);
+  }
+
+  function verifyPassword(event) {
+    event.preventDefault();
+    const input = document.querySelector('#pwd-input');
+    const error = document.querySelector('#pwd-error');
+    if (input.value === '22142214') {
+      _lifeUnlocked = true;
+      closePasswordGate();
+      _currentTab = 'life';
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      Components.showToast('解锁成功 🌿');
+    } else {
+      if (error) error.style.display = 'block';
+      input.value = '';
+      input.focus();
+    }
+  }
+
+  function closePasswordGate() {
+    const el = document.querySelector('#password-gate');
+    if (el) el.remove();
+  }
+
   // ========== Public API ==========
   return {
-    init, navigate, refresh,
-    openDetail, openCreateModal, closeModal,
+    init, navigate, refresh, setFilter,
+    prevDate, nextDate, selectDate,
+    openCalendar, closeCalendar, calPrevMonth, calNextMonth,
+    openBookmarks, closeBookmarks, removeBookmark,
+    openCreateModal, openDetail, closeModal,
     handleCreate, handleDelete, handleSearch,
     handleImagePreview, clearImagePreview,
-    handleExport, handleImport
+    handleExport, handleImport,
+    verifyPassword, showPasswordGate, closePasswordGate
   };
 })();
 

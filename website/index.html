@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PriesteGamingSpace</title>
   <meta name="description" content="PriesteGamingSpace — 游戏UI · 游戏截图 · 工作感悟">
-  <meta name="theme-color" content="#0D0D0D">
-
+  <meta name="theme-color" content="#FFFFFF">
   <meta property="og:title" content="PriesteGamingSpace">
   <meta property="og:description" content="游戏与生活的交集 · 分享不止于屏幕">
   <meta property="og:type" content="website">
-
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -21,27 +19,37 @@
         <span class="logo-icon">◆</span>
         <span>PriesteGamingSpace</span>
       </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="header-signin" id="signin-btn">
+          <span class="flame">🔥</span> 连续签到 <span class="streak">0</span> 天
+        </button>
+        <button class="cal-btn" onclick="App.handleExport()">📤</button>
+        <button class="cal-btn" onclick="document.getElementById('import-file').click()">📥</button>
+      </div>
     </div>
   </header>
 
-  <!-- Two-Column Layout -->
-  <div class="app-layout">
-    <!-- Sidebar -->
-    <aside class="app-sidebar" id="sidebar"></aside>
+  <!-- Stats Bar -->
+  <div class="stats-bar" id="stats-bar"></div>
 
-    <!-- Main Content -->
-    <main class="app-content" id="content"></main>
+  <!-- Nav Tabs -->
+  <div class="nav-bar">
+    <div class="nav-tabs" id="nav-tabs"></div>
   </div>
 
-  <!-- Hidden import file input -->
-  <input type="file" id="import-file" accept=".json" style="display:none">
+  <!-- Sub Bar (date + filter + bookmarks) -->
+  <div class="sub-bar" id="sub-bar"></div>
+
+  <!-- Main Content -->
+  <main class="main-content" id="content"></main>
 
   <!-- Footer -->
   <footer class="app-footer">
-    <p>© 2026 PriesteGamingSpace · Hosted on <a href="https://pages.github.com" target="_blank">GitHub Pages</a></p>
+    <p>© 2026 PriesteGamingSpace · Hosted on <a href="https://pages.github.com" target="_blank" style="color:var(--accent-gold);text-decoration:none">GitHub Pages</a></p>
   </footer>
 
-  <!-- Scripts -->
+  <input type="file" id="import-file" accept=".json" style="display:none">
+
   <script src="js/storage.js"></script>
   <script src="js/components.js"></script>
   <script src="js/app.js"></script>
