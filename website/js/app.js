@@ -458,9 +458,12 @@ const App = (() => {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
       }).then(r => r.json()).then(res => {
-        if (res.ok) Components.showToast('☁️ 已同步到云端');
-      }).catch(() => {});
-    } catch(e) {}
+        if (res.ok) console.log('[Sync] OK');
+        else console.error('[Sync]', res.msg);
+      }).catch(err => {
+        console.warn('[Sync] Server not running, content saved locally only');
+      });
+    } catch(e) { console.error('[Sync] Error:', e); }
   }
 
   function getSyncData() {
