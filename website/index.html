@@ -75,14 +75,14 @@
       var cur=localStorage.getItem('pgs_bg')||'none';
       var idx=_bgs.indexOf(cur);
       var next=_bgs[(idx+1)%_bgs.length];
-      document.body.className='bg-'+next;
-      localStorage.setItem('pgs_bg',next);
       var b=document.getElementById('bg-btn');
       if(b)b.textContent=next==='custom'?'🖼️✨':'🖼️';
+      localStorage.setItem('pgs_bg',next);
+      if(!document.body.classList.contains('tab-life')) document.body.className='bg-'+next;
     }
     (function(){
       var bg=localStorage.getItem('pgs_bg')||'none';
-      document.body.className='bg-'+bg;
+      if(!document.body.classList.contains('tab-life')) document.body.className='bg-'+bg;
       var b=document.getElementById('bg-btn');
       if(b)b.textContent=bg==='custom'?'🖼️✨':'🖼️';
     })();

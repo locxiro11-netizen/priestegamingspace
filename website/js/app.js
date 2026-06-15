@@ -184,6 +184,9 @@ const App = (() => {
     const totalDays = Storage.getTotalDays();
     const currentDate = _dates[_currentDateIndex] || null;
 
+    // Set body class for life tab background
+    document.body.className = _currentTab === 'life' ? 'bg-none tab-life' : (localStorage.getItem('pgs_bg')||'none')==='custom'?'bg-custom':'bg-none';
+
     // Stats bar
     document.querySelector('#stats-bar').innerHTML = Components.renderStatsBar(stats, totalDays);
 
