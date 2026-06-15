@@ -256,6 +256,8 @@ const App = (() => {
 
     // Update sign-in
     updateSignInBtn(Storage.getSignInData());
+    // Re-apply admin visibility (after innerHTML replaces DOM)
+    if (typeof updateAdminUI === 'function') updateAdminUI();
   }
 
   // ========== Modal ==========
