@@ -504,7 +504,7 @@ const Components = (() => {
 
   function renderPasswordGate() {
     return `
-      <div class="modal-overlay" id="password-gate" style="align-items:center" onclick="if(event.target===this)App.closePasswordGate()">
+      <div class="modal-overlay" id="password-gate" style="align-items:center;background:var(--bg);backdrop-filter:none" onclick="if(event.target===this)App.closePasswordGate()">
         <div class="modal" style="max-width:380px;padding:32px;text-align:center;position:relative">
           <button class="modal-close" onclick="App.closePasswordGate()" style="position:absolute;top:12px;right:12px">✕</button>
           <div style="font-size:48px;margin-bottom:12px">🌿</div>

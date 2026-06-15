@@ -393,6 +393,7 @@ const App = (() => {
 
   function showPasswordGate() {
     closePasswordGate();
+    document.querySelector('#content').innerHTML = '';
     document.body.insertAdjacentHTML('beforeend', Components.renderPasswordGate());
     setTimeout(() => {
       const input = document.querySelector('#pwd-input');
@@ -421,6 +422,8 @@ const App = (() => {
   function closePasswordGate() {
     const el = document.querySelector('#password-gate');
     if (el) el.remove();
+    if (!_lifeUnlocked) { _currentTab = 'home';
+      render(); }
   }
 
   // ========== Public API ==========
