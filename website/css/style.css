@@ -434,3 +434,28 @@ body{
   cursor:pointer;transition:all var(--transition)
 }
 .theme-toggle:hover{background:var(--accent-gold-light)}
+
+/* === Body Backgrounds === */
+body.bg-none{background:var(--bg)}
+body.bg-custom{
+  background:var(--bg) url('assets/backgrounds/bg-custom.png') center/cover fixed;
+  background-blend-mode:overlay;
+}
+[data-theme="dark"] body.bg-custom{background-blend-mode:soft-light}
+body.bg-custom .stat-card,body.bg-custom .card,
+body.bg-custom .modal,body.bg-custom .date-selector{backdrop-filter:blur(6px)}
+
+/* Background Toggle */
+.bg-toggle{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:20px;padding:6px 10px;font-size:14px;
+  cursor:pointer;transition:all var(--transition)
+}
+.bg-toggle:hover{background:var(--accent-gold-light)}
+
+/* Life tab background */
+body.tab-life .main-content{
+  background:url('assets/backgrounds/bg-life.png') center/cover fixed;
+  background-blend-mode:overlay;border-radius:var(--radius-lg);
+}
+[data-theme="dark"] body.tab-life .main-content{background-blend-mode:soft-light}

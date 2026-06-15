@@ -503,8 +503,9 @@ const Components = (() => {
 
   function renderPasswordGate() {
     return `
-      <div class="modal-overlay" id="password-gate" style="align-items:center">
-        <div class="modal" style="max-width:380px;padding:32px;text-align:center">
+      <div class="modal-overlay" id="password-gate" style="align-items:center" onclick="if(event.target===this)App.closePasswordGate()">
+        <div class="modal" style="max-width:380px;padding:32px;text-align:center;position:relative">
+          <button class="modal-close" onclick="App.closePasswordGate()" style="position:absolute;top:12px;right:12px">✕</button>
           <div style="font-size:48px;margin-bottom:12px">🌿</div>
           <h3 style="font-size:20px;font-weight:700;margin-bottom:6px">生活与自然</h3>
           <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px">此内容已加密，请输入密码查看</p>
