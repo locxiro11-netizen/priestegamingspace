@@ -184,8 +184,13 @@ const App = (() => {
     const totalDays = Storage.getTotalDays();
     const currentDate = _dates[_currentDateIndex] || null;
 
-    // Set body class for life tab background
-    document.body.className = _currentTab === 'life' ? 'bg-none tab-life' : (localStorage.getItem('pgs_bg')||'none')==='custom'?'bg-custom':'bg-none';
+    // Set body class for background
+    var curBg=localStorage.getItem('pgs_bg')||'none';
+    document.body.className='bg-'+curBg;
+    if(curBg==='upload'){
+      var ud=localStorage.getItem('pgs_bg_upload');
+      if(ud)document.body.style.backgroundImage='url('+ud+')';
+    }else{document.body.style.backgroundImage='';}
 
     // Stats bar
     document.querySelector('#stats-bar').innerHTML = Components.renderStatsBar(stats, totalDays);

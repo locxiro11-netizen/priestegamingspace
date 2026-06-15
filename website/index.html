@@ -21,7 +21,7 @@
       </div>
       <div style="display:flex;align-items:center;gap:12px">
         <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式" id="theme-btn">🌙</button>
-        <button class="bg-toggle" onclick="cycleBackground()" title="切换背景图" id="bg-btn">🖼️</button>
+        <button class="bg-toggle" onclick="toggleBgPanel()" title="切换背景图" id="bg-btn">🖼️</button>
         <button class="header-signin" id="signin-btn">
           <span class="flame">🔥</span> 连续签到 <span class="streak">0</span> 天
         </button>
@@ -52,6 +52,20 @@
 
   <input type="file" id="import-file" accept=".json" style="display:none">
 
+  <!-- Background Upload Panel -->
+  <div class="bg-upload-panel" id="bg-panel">
+    <h4>🖼️ 背景图设置</h4>
+    <div class="bg-upload-row" id="bg-presets">
+      <button onclick="setBg('none')">无背景</button>
+      <button onclick="setBg('custom')">星空</button>
+      <button onclick="setBg('life')">自然</button>
+    </div>
+    <div class="bg-upload-custom">
+      <input type="file" id="bg-upload-input" accept="image/*" onchange="uploadBg(this)">
+      <label for="bg-upload-input">📁 上传自定义背景</label>
+    </div>
+  </div>
+
   <script src="js/storage.js"></script>
   <script src="js/components.js"></script>
   <script src="js/app.js"></script>
@@ -70,21 +84,59 @@
       var b=document.getElementById('theme-btn');
       if(b)b.textContent=n==='dark'?'☀️':'🌙';
     }
-    var _bgs=['none','custom'];
-    function cycleBackground(){
-      var cur=localStorage.getItem('pgs_bg')||'none';
-      var idx=_bgs.indexOf(cur);
-      var next=_bgs[(idx+1)%_bgs.length];
+    var _bgs=['none','custom','life'];
+    function setBg(name){
+      localStorage.setItem('pgs_bg',name);
+      applyBg(name);
+      toggleBgPanel();
+      updateBgPresetBtns(name);
+    }
+    function applyBg(name){
+      document.body.className='bg-'+name;
+      if(name==='upload'){
+        var d=localStorage.getItem('pgs_bg_upload');
+        if(d)document.body.style.backgroundImage='url('+d+')';
+      }else{document.body.style.backgroundImage='';}
       var b=document.getElementById('bg-btn');
-      if(b)b.textContent=next==='custom'?'🖼️✨':'🖼️';
-      localStorage.setItem('pgs_bg',next);
-      if(!document.body.classList.contains('tab-life')) document.body.className='bg-'+next;
+      var labels={'none':'🖼️','custom':'🖼️✨','life':'🖼️🌿','upload':'🖼️📁'};
+      if(b)b.textContent=labels[name]||'🖼️';
+    }
+    function updateBgPresetBtns(active){
+      var btns=document.querySelectorAll('#bg-presets button');
+      btns.forEach(function(btn){
+        btn.classList.toggle('active',btn.textContent.trim()===getBgLabel(active));
+      });
+    }
+    function getBgLabel(name){
+      return name==='none'?'无背景':name==='custom'?'星空':name==='life'?'自然':'';
+    }
+    function toggleBgPanel(){
+      var p=document.getElementById('bg-panel');
+      p.classList.toggle('show');
+      updateBgPresetBtns(localStorage.getItem('pgs_bg')||'none');
+    }
+    function uploadBg(input){
+      var f=input.files[0];
+      if(!f)return;
+      if(f.size>2*1024*1024){alert('图片不能超过2MB');return;}
+      var r=new FileReader();
+      r.onload=function(e){
+        localStorage.setItem('pgs_bg_upload',e.target.result);
+        setBg('upload');
+      };
+      r.readAsDataURL(f);
+      input.value='';
     }
     (function(){
       var bg=localStorage.getItem('pgs_bg')||'none';
-      if(!document.body.classList.contains('tab-life')) document.body.className='bg-'+bg;
-      var b=document.getElementById('bg-btn');
-      if(b)b.textContent=bg==='custom'?'🖼️✨':'🖼️';
+      applyBg(bg);
+      document.addEventListener('click',function(e){
+        var panel=document.getElementById('bg-panel');
+        var btn=document.getElementById('bg-btn');
+        if(panel&&btn&&!panel.contains(e.target)&&e.target!==btn){
+          panel.classList.remove('show');
+        }
+      });
     })();
   </script>
 </body>
