@@ -245,7 +245,13 @@
     })();
 
     // Admin mode
-    var _isAdmin=sessionStorage.getItem('pgs_admin')==='1';
+    // Admin with 30-day remember
+    function checkAdminAuto(){
+      var d=localStorage.getItem('pgs_admin');
+      if(d){try{var o=JSON.parse(d);if(o.exp>Date.now()){_isAdmin=true;}}catch(e){}}
+      if(!_isAdmin)_isAdmin=sessionStorage.getItem('pgs_admin')==='1';
+    }
+    checkAdminAuto();
     function updateAdminUI(){
       document.querySelectorAll('.admin-only').forEach(function(el){
         el.style.display=_isAdmin?'':'none';
@@ -254,7 +260,7 @@
       if(btn)btn.textContent=_isAdmin?'🔓':'🔒';
     }
     function toggleAdmin(){
-      if(_isAdmin){_isAdmin=false;sessionStorage.removeItem('pgs_admin');updateAdminUI();return;}
+      if(_isAdmin){_isAdmin=false;sessionStorage.removeItem('pgs_admin');localStorage.removeItem('pgs_admin');updateAdminUI();return;}
       var overlay=document.createElement('div');
       overlay.className='modal-overlay';overlay.id='admin-gate';overlay.style.alignItems='center';
       overlay.onclick=function(e){if(e.target===this)this.remove();};
@@ -262,12 +268,13 @@
         '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:static;float:right">✕</button>'+
         '<div style="font-size:36px;margin-bottom:8px">🔒</div>'+
         '<h3 style="margin-bottom:16px">管理员登录</h3>'+
-        '<form onsubmit="event.preventDefault();var v=this.querySelector(\'input\').value;if(v===\'22142214\'){_isAdmin=true;sessionStorage.setItem(\'pgs_admin\',\'1\');updateAdminUI();this.closest(\'.modal-overlay\').remove();App.unlockLife();}else{this.querySelector(\'.err\').style.display=\'block\';this.querySelector(\'input\').value=\'\';}">'+
-        '<input type="password" placeholder="输入管理员密码" required style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;text-align:center;font-size:16px;margin-bottom:8px;outline:none" autofocus>'+
-        '<p class="err" style="color:var(--danger);font-size:13px;display:none;margin-bottom:8px">密码错误</p>'+
+        '<form onsubmit="event.preventDefault();var v=this.querySelector(\'input[type=password]\').value;if(v===\'22142214\'){_isAdmin=true;var rm=this.querySelector(\'input[type=checkbox]\').checked;if(rm){localStorage.setItem(\'pgs_admin\',JSON.stringify({exp:Date.now()+30*86400000}));}else{sessionStorage.setItem(\'pgs_admin\',\'1\');}updateAdminUI();this.closest(\'.modal-overlay\').remove();App.unlockLife();}else{this.querySelector(\'.err\').style.display=\'block\';this.querySelector(\'input[type=password]\').value=\'\';}" style="display:flex;flex-direction:column;gap:10px">'+
+        '<input type="password" placeholder="输入管理员密码" required style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;text-align:center;font-size:16px;outline:none" autofocus>'+
+        '<p class="err" style="color:var(--danger);font-size:13px;display:none">密码错误</p>'+
+        '<label style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;color:var(--text-muted);cursor:pointer"><input type="checkbox" checked> 30天内自动登录</label>'+
         '<button type="submit" class="btn-submit" style="width:100%">解锁</button></form></div>';
       document.body.appendChild(overlay);
-      setTimeout(function(){var i=overlay.querySelector('input');if(i)i.focus();},100);
+      setTimeout(function(){var i=overlay.querySelector('input[type=password]');if(i)i.focus();},100);
     }
     updateAdminUI();
     (function(){
