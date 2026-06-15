@@ -202,7 +202,7 @@ const Storage = (() => {
     }
     data.lastDate = today;
     data.totalDays = (data.totalDays || 0) + 1;
-    _write(KEYS.signin, data);
+    _write(KEYS.signin, [data]);
     return data;
   }
 
