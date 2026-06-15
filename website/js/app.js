@@ -440,6 +440,11 @@ const App = (() => {
       render(); }
   }
 
+  function unlockLife() {
+    _lifeUnlocked = true;
+    if (_currentTab === 'life') render();
+  }
+
   // ========== Public API ==========
   return {
     init, navigate, refresh, setFilter,
@@ -450,7 +455,8 @@ const App = (() => {
     handleCreate, handleDelete, handleSearch,
     handleImagePreview, clearImagePreview,
     handleExport, handleImport,
-    verifyPassword, showPasswordGate, closePasswordGate
+    verifyPassword, showPasswordGate, closePasswordGate,
+    unlockLife
   };
 })();
 

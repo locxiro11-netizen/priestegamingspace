@@ -262,7 +262,7 @@
         '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:static;float:right">✕</button>'+
         '<div style="font-size:36px;margin-bottom:8px">🔒</div>'+
         '<h3 style="margin-bottom:16px">管理员登录</h3>'+
-        '<form onsubmit="event.preventDefault();var v=this.querySelector(\'input\').value;if(v===\'22142214\'){_isAdmin=true;sessionStorage.setItem(\'pgs_admin\',\'1\');updateAdminUI();this.closest(\'.modal-overlay\').remove();}else{this.querySelector(\'.err\').style.display=\'block\';this.querySelector(\'input\').value=\'\';}">'+
+        '<form onsubmit="event.preventDefault();var v=this.querySelector(\'input\').value;if(v===\'22142214\'){_isAdmin=true;sessionStorage.setItem(\'pgs_admin\',\'1\');updateAdminUI();this.closest(\'.modal-overlay\').remove();App.unlockLife();}else{this.querySelector(\'.err\').style.display=\'block\';this.querySelector(\'input\').value=\'\';}">'+
         '<input type="password" placeholder="输入管理员密码" required style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;text-align:center;font-size:16px;margin-bottom:8px;outline:none" autofocus>'+
         '<p class="err" style="color:var(--danger);font-size:13px;display:none;margin-bottom:8px">密码错误</p>'+
         '<button type="submit" class="btn-submit" style="width:100%">解锁</button></form></div>';
