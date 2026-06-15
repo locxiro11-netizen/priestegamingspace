@@ -402,3 +402,35 @@ body{
   .day-title{font-size:28px}
   .card-title{font-size:var(--font-md)}
 }
+
+/* === Dark Mode === */
+[data-theme="dark"] {
+  --bg: #0D0D0D;
+  --card-bg: #1A1A1A;
+  --text: #E8E8E8;
+  --text-secondary: #999999;
+  --text-muted: #666666;
+  --accent: #E8E8E8;
+  --accent-gold: #D4A844;
+  --accent-gold-light: rgba(212, 168, 68, 0.1);
+  --border: #2A2A2A;
+  --border-light: #222222;
+  --danger: #E05555;
+  --green: #55A065;
+}
+[data-theme="dark"] .app-header{background:rgba(13,13,13,0.92)}
+[data-theme="dark"] .header-signin{background:var(--card-bg)}
+[data-theme="dark"] .modal-overlay{background:rgba(0,0,0,0.6)}
+[data-theme="dark"] .upload-preview img{background:var(--bg)}
+[data-theme="dark"] .filter-pill.active{color:#1A1A1A}
+[data-theme="dark"] .btn-submit{color:#1A1A1A}
+[data-theme="dark"] .btn-detail:hover{color:#1A1A1A}
+[data-theme="dark"] .sidebar-publish{color:#1A1A1A}
+
+/* Theme Toggle */
+.theme-toggle{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:20px;padding:6px 12px;font-size:16px;
+  cursor:pointer;transition:all var(--transition)
+}
+.theme-toggle:hover{background:var(--accent-gold-light)}

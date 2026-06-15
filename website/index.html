@@ -20,6 +20,7 @@
         <span>PriesteGamingSpace</span>
       </div>
       <div style="display:flex;align-items:center;gap:12px">
+        <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式" id="theme-btn">🌙</button>
         <button class="header-signin" id="signin-btn">
           <span class="flame">🔥</span> 连续签到 <span class="streak">0</span> 天
         </button>
@@ -53,5 +54,21 @@
   <script src="js/storage.js"></script>
   <script src="js/components.js"></script>
   <script src="js/app.js"></script>
+  <script>
+    (function(){
+      var t=localStorage.getItem('pgs_theme')||'light';
+      document.documentElement.setAttribute('data-theme',t);
+      var b=document.getElementById('theme-btn');
+      if(b)b.textContent=t==='dark'?'☀️':'🌙';
+    })();
+    function toggleTheme(){
+      var c=document.documentElement.getAttribute('data-theme');
+      var n=c==='dark'?'light':'dark';
+      document.documentElement.setAttribute('data-theme',n);
+      localStorage.setItem('pgs_theme',n);
+      var b=document.getElementById('theme-btn');
+      if(b)b.textContent=n==='dark'?'☀️':'🌙';
+    }
+  </script>
 </body>
 </html>
