@@ -260,8 +260,17 @@ const App = (() => {
 
   // ========== Modal ==========
 
+  function isAdmin() {
+    if (sessionStorage.getItem('pgs_admin') === '1') return true;
+    try {
+      var d = JSON.parse(localStorage.getItem('pgs_admin'));
+      if (d && d.exp > Date.now()) return true;
+    } catch(e) {}
+    return false;
+  }
+
   function openCreateModal() {
-    if (!sessionStorage.getItem('pgs_admin')) return;
+    if (!isAdmin()) return;
     if (_currentTab === 'home' || _currentTab === 'archive') return;
     closeModal();
     document.body.insertAdjacentHTML('beforeend', Components.renderCreateModal(_currentTab));
