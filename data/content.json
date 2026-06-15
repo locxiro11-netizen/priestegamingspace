@@ -1,1 +1,13 @@
-{"gameUI":[],"screenshots":[],"reflections":[],"life":[]}
+{
+  "gameUI": [
+    {
+      "id": "t1",
+      "date": "2026/06/15 19:30",
+      "title": "Sync Test",
+      "likes": 0
+    }
+  ],
+  "screenshots": [],
+  "reflections": [],
+  "life": []
+}

@@ -4,3 +4,6 @@ Thumbs.db
 *.log
 sync-server.py
 start-sync.bat
+sync-server.log
+website/js/token.js
+js/token.js

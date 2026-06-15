@@ -451,19 +451,60 @@ const App = (() => {
   // ========== Sync ==========
 
   function syncToCloud() {
+    syncViaGitHub();
+  }
+
+  async function syncViaGitHub() {
+    const token = localStorage.getItem('pgs_gh_token');
+    if (!token) {
+      // Try local server fallback
+      try {
+        const data = Storage.getSharedData();
+        await fetch('http://localhost:9876/sync', {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        });
+        Components.showToast('☁️ 已同步 (本地)');
+      } catch(e) {}
+      return;
+    }
     try {
       const data = Storage.getSharedData();
-      fetch('http://localhost:9876/sync', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data)
-      }).then(r => r.json()).then(res => {
-        if (res.ok) console.log('[Sync] OK');
-        else console.error('[Sync]', res.msg);
-      }).catch(err => {
-        console.warn('[Sync] Server not running, content saved locally only');
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+      // Get current file SHA
+      let sha = '';
+      try {
+        const r = await fetch('https://api.github.com/repos/locxiro11-netizen/priestegamingspace/contents/data/content.json', {
+          headers: { 'Authorization': 'token '+token }
+        });
+        if (r.ok) { const j = await r.json(); sha = j.sha; }
+      } catch(e) {}
+      // Push update
+      const body = { message: 'Auto-sync content', content: content, branch: 'main' };
+      if (sha) body.sha = sha;
+      const r = await fetch('https://api.github.com/repos/locxiro11-netizen/priestegamingspace/contents/data/content.json', {
+        method: 'PUT',
+        headers: { 'Authorization': 'token '+token, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
       });
-    } catch(e) { console.error('[Sync] Error:', e); }
+      if (r.ok) Components.showToast('☁️ 已同步到云端');
+      else { const j = await r.json(); console.error('[Sync]', j.message); }
+    } catch(e) {
+      console.error('[Sync]', e);
+      // Fallback to local server
+      try {
+        const data = Storage.getSharedData();
+        await fetch('http://localhost:9876/sync', {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        });
+      } catch(e2) {}
+    }
+  }
+
+  function setGitHubToken(token) {
+    localStorage.setItem('pgs_gh_token', token);
+    Components.showToast('Token 已保存，同步就绪');
   }
 
   function getSyncData() {
@@ -487,7 +528,7 @@ const App = (() => {
     handleImagePreview, clearImagePreview,
     handleExport, handleImport,
     verifyPassword, showPasswordGate, closePasswordGate,
-    unlockLife, syncToCloud, getSyncData, clearSyncFlag
+    unlockLife, syncToCloud, setGitHubToken
   };
 })();
 
