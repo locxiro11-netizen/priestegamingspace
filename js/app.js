@@ -183,8 +183,19 @@ const App = (() => {
 
   function render() {
     const stats = Storage.getStats();
-    const totalDays = Storage.getTotalDays();
-    const currentDate = _dates[_currentDateIndex] || null;
+    let totalDays = Storage.getTotalDays();
+    let dates = _dates;
+    // Hide life data everywhere when locked
+    if (!_lifeUnlocked) {
+      stats.life = 0;
+      // Filter dates that only have life content
+      dates = dates.filter(d => {
+        const dd = Storage.getContentByDate(d);
+        return (dd.gameUI.length+dd.screenshots.length+dd.reflections.length) > 0;
+      });
+      totalDays = dates.length;
+    }
+    const currentDate = dates[_currentDateIndex] || null;
 
     // Set body class for background
     var curBg=localStorage.getItem('pgs_bg')||'none';
@@ -201,20 +212,20 @@ const App = (() => {
     document.querySelector('#nav-tabs').innerHTML = Components.renderNavTabs(_currentTab);
 
     // Sub bar
-    const hasDates = _dates.length > 0;
+    const hasDates = dates.length > 0;
     document.querySelector('#sub-bar').innerHTML = Components.renderSubBar(
-      _currentTab, _currentDateIndex, _dates.length, _dates, _activeFilter
+      _currentTab, _currentDateIndex, dates.length, dates, _activeFilter, _lifeUnlocked
     );
 
     // Content
     const content = document.querySelector('#content');
 
     if (_currentTab === 'archive') {
-      content.innerHTML = Components.renderArchive(_dates, currentDate);
+      content.innerHTML = Components.renderArchive(dates, currentDate);
     } else if (_currentTab === 'home') {
       content.innerHTML = Components.renderHomeHero();
       if (currentDate) {
-        content.innerHTML += Components.renderDayTitle(_currentDateIndex, _dates.length, currentDate);
+        content.innerHTML += Components.renderDayTitle(_currentDateIndex, dates.length, currentDate);
         const dateData = Storage.getContentByDate(currentDate);
         if (!_lifeUnlocked) delete dateData.life;
         content.innerHTML += Components.renderContentByDate(dateData, _activeFilter);

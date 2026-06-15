@@ -61,7 +61,7 @@ const Components = (() => {
 
   // ========== Sub Bar (date + filter pills + bookmarks) ==========
 
-  function renderSubBar(currentTab, currentDateIndex, totalDates, dates, activeFilter) {
+  function renderSubBar(currentTab, currentDateIndex, totalDates, dates, activeFilter, lifeUnlocked) {
     const currentDate = dates[currentDateIndex] || '—';
     const dateDisplay = formatDateDisplay(currentDate);
     const canPrev = currentDateIndex < totalDates - 1;
@@ -79,7 +79,7 @@ const Components = (() => {
       </div>
 
       <div class="filter-pills">
-        ${FILTER_PILLS.map(p => `
+        ${FILTER_PILLS.filter(p => p.id !== 'life' || lifeUnlocked).map(p => `
           <button class="filter-pill ${activeFilter === p.id ? 'active' : ''}"
             data-filter="${p.id}" onclick="App.setFilter('${p.id}')">${p.label}</button>
         `).join('')}
