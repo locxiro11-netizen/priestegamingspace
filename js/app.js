@@ -347,6 +347,8 @@ const App = (() => {
       _currentDateIndex = 0;
       refresh();
       Components.showToast('发布成功');
+      // Trigger auto-sync
+      syncToCloud();
     } catch (err) {
       Components.showToast('发布失败，请重试', 'error');
       submitBtn.disabled = false;
@@ -362,6 +364,7 @@ const App = (() => {
       if (_currentDateIndex >= _dates.length) _currentDateIndex = Math.max(0, _dates.length - 1);
       refresh();
       Components.showToast('已删除');
+      syncToCloud();
     }
   }
 
@@ -445,6 +448,26 @@ const App = (() => {
     if (_currentTab === 'life') render();
   }
 
+  // ========== Sync ==========
+
+  function syncToCloud() {
+    try {
+      const data = Storage.getSharedData();
+      localStorage.setItem('pgs_sync_data', JSON.stringify(data));
+      localStorage.setItem('pgs_sync_pending', '1');
+    } catch(e) {}
+  }
+
+  function getSyncData() {
+    try {
+      return JSON.parse(localStorage.getItem('pgs_sync_data') || 'null');
+    } catch(e) { return null; }
+  }
+
+  function clearSyncFlag() {
+    localStorage.removeItem('pgs_sync_pending');
+  }
+
   // ========== Public API ==========
   return {
     init, navigate, refresh, setFilter,
@@ -456,7 +479,7 @@ const App = (() => {
     handleImagePreview, clearImagePreview,
     handleExport, handleImport,
     verifyPassword, showPasswordGate, closePasswordGate,
-    unlockLife
+    unlockLife, syncToCloud, getSyncData, clearSyncFlag
   };
 })();
 
