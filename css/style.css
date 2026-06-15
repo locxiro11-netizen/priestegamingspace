@@ -471,29 +471,31 @@ body.bg-upload .modal,body.bg-upload .date-selector{backdrop-filter:blur(6px)}
 }
 .bg-toggle:hover{background:var(--accent-gold-light)}
 
-/* Background upload panel */
-.bg-upload-panel{
-  position:fixed;bottom:20px;right:20px;z-index:150;
-  background:var(--card-bg);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:16px;
-  box-shadow:0 8px 30px rgba(0,0,0,0.12);
-  display:none;max-width:260px;
+/* Background upload panel - centered modal */
+.bg-upload-overlay{
+  display:none;position:fixed;inset:0;z-index:180;
+  background:rgba(0,0,0,0.3);align-items:center;justify-content:center;
 }
-.bg-upload-panel.show{display:block}
-.bg-upload-panel h4{font-size:var(--font-sm);font-weight:600;margin-bottom:10px}
-.bg-upload-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.bg-upload-overlay.show{display:flex}
+.bg-upload-panel{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:28px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.15);
+  max-width:320px;width:90%;
+}
+.bg-upload-panel h4{font-size:var(--font-md);font-weight:700;margin-bottom:16px}
+.bg-upload-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .bg-upload-row button{
-  padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);
-  background:var(--card-bg);cursor:pointer;font-size:var(--font-xs);
+  padding:8px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--card-bg);cursor:pointer;font-size:var(--font-sm);
   transition:all var(--transition);font-family:inherit;color:var(--text-secondary);
 }
 .bg-upload-row button:hover{background:var(--accent-gold-light);color:var(--accent)}
-.bg-upload-row button.active{border-color:var(--accent-gold);background:var(--accent-gold-light);color:var(--accent)}
-.bg-upload-custom{margin-top:6px}
+.bg-upload-row button.active{border-color:var(--accent-gold);background:var(--accent-gold-light);color:var(--accent);font-weight:600}
 .bg-upload-custom input[type="file"]{display:none}
 .bg-upload-custom label{
-  display:block;padding:8px;border:2px dashed var(--border);border-radius:var(--radius-sm);
-  text-align:center;font-size:var(--font-xs);color:var(--text-muted);cursor:pointer;
+  display:block;padding:12px;border:2px dashed var(--border);border-radius:var(--radius-sm);
+  text-align:center;font-size:var(--font-sm);color:var(--text-muted);cursor:pointer;
   transition:all var(--transition);
 }
 .bg-upload-custom label:hover{border-color:var(--accent-gold);color:var(--accent-gold)}

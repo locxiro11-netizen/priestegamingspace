@@ -53,16 +53,21 @@
   <input type="file" id="import-file" accept=".json" style="display:none">
 
   <!-- Background Upload Panel -->
-  <div class="bg-upload-panel" id="bg-panel">
-    <h4>🖼️ 背景图设置</h4>
-    <div class="bg-upload-row" id="bg-presets">
-      <button onclick="setBg('none')">无背景</button>
-      <button onclick="setBg('custom')">星空</button>
-      <button onclick="setBg('life')">自然</button>
-    </div>
-    <div class="bg-upload-custom">
-      <input type="file" id="bg-upload-input" accept="image/*" onchange="uploadBg(this)">
-      <label for="bg-upload-input">📁 上传自定义背景</label>
+  <div class="bg-upload-overlay" id="bg-overlay" onclick="if(event.target===this)closeBgPanel()">
+    <div class="bg-upload-panel" id="bg-panel" onclick="event.stopPropagation()">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <h4 style="margin:0">🖼️ 背景图设置</h4>
+        <button class="modal-close" onclick="closeBgPanel()" style="position:static">✕</button>
+      </div>
+      <div class="bg-upload-row" id="bg-presets">
+        <button onclick="setBg('none')">无背景</button>
+        <button onclick="setBg('custom')">星空</button>
+        <button onclick="setBg('life')">自然</button>
+      </div>
+      <div class="bg-upload-custom">
+        <input type="file" id="bg-upload-input" accept="image/*" onchange="uploadBg(this)">
+        <label for="bg-upload-input">📁 上传自定义背景</label>
+      </div>
     </div>
   </div>
 
@@ -88,7 +93,7 @@
     function setBg(name){
       localStorage.setItem('pgs_bg',name);
       applyBg(name);
-      toggleBgPanel();
+      closeBgPanel();
       updateBgPresetBtns(name);
     }
     function applyBg(name){
@@ -111,9 +116,11 @@
       return name==='none'?'无背景':name==='custom'?'星空':name==='life'?'自然':'';
     }
     function toggleBgPanel(){
-      var p=document.getElementById('bg-panel');
-      p.classList.toggle('show');
+      document.getElementById('bg-overlay').classList.toggle('show');
       updateBgPresetBtns(localStorage.getItem('pgs_bg')||'none');
+    }
+    function closeBgPanel(){
+      document.getElementById('bg-overlay').classList.remove('show');
     }
     function uploadBg(input){
       var f=input.files[0];
@@ -130,13 +137,6 @@
     (function(){
       var bg=localStorage.getItem('pgs_bg')||'none';
       applyBg(bg);
-      document.addEventListener('click',function(e){
-        var panel=document.getElementById('bg-panel');
-        var btn=document.getElementById('bg-btn');
-        if(panel&&btn&&!panel.contains(e.target)&&e.target!==btn){
-          panel.classList.remove('show');
-        }
-      });
     })();
   </script>
 </body>
