@@ -99,7 +99,7 @@
     </div>
   </div>
 
-  <script src="js/token.js"></script>
+  <script src="js/token.js" onerror="this.remove()"></script>
   <script src="js/storage.js"></script>
   <script src="js/components.js"></script>
   <script src="js/app.js"></script>
@@ -247,6 +247,7 @@
 
     // Admin mode
     // Admin with 30-day remember
+    var _isAdmin=false;
     function checkAdminAuto(){
       var d=localStorage.getItem('pgs_admin');
       if(d){try{var o=JSON.parse(d);if(o.exp>Date.now()){_isAdmin=true;}}catch(e){}}
