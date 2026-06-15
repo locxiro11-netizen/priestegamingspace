@@ -214,6 +214,7 @@ const App = (() => {
       if (currentDate) {
         content.innerHTML += Components.renderDayTitle(_currentDateIndex, _dates.length, currentDate);
         const dateData = Storage.getContentByDate(currentDate);
+        if (!_lifeUnlocked) delete dateData.life;
         content.innerHTML += Components.renderContentByDate(dateData, _activeFilter);
       } else {
         content.innerHTML += Components.renderEmpty();
