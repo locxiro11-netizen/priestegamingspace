@@ -79,10 +79,6 @@ const Components = (() => {
       </div>
 
       <div class="filter-pills">
-        ${FILTER_PILLS.filter(p => p.id !== 'life' || lifeUnlocked).map(p => `
-          <button class="filter-pill ${activeFilter === p.id ? 'active' : ''}"
-            data-filter="${p.id}" onclick="App.setFilter('${p.id}')">${p.label}</button>
-        `).join('')}
         <button class="filter-pill" onclick="App.openBookmarks()">📌 收藏</button>
         <button class="filter-pill admin-only" onclick="App.openCreateModal()" style="background:var(--accent);color:#FFF;border-color:var(--accent)">📝 发布</button>
       </div>
