@@ -1,0 +1,6 @@
+# 自定义域名
+# 将下面一行替换为你的域名（如 example.com），保存后推送到 GitHub
+# 同时在域名 DNS 添加 CNAME 记录指向: {你的用户名}.github.io
+#
+# 示例:
+# priestegamingspace.com

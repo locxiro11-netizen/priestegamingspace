@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PriesteGamingSpace</title>
+  <meta name="description" content="PriesteGamingSpace — 游戏UI · 游戏截图 · 工作感悟">
+  <meta name="theme-color" content="#F5F5F5">
+  <meta property="og:title" content="PriesteGamingSpace">
+  <meta property="og:description" content="游戏与生活的交集 · 分享不止于屏幕">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="logo" onclick="App.navigate('home')">
+        <span class="logo-icon">◆</span>
+        <span>PriesteGamingSpace</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式" id="theme-btn">🌙</button>
+        <button class="bg-toggle" onclick="cycleBackground()" title="切换背景图" id="bg-btn">🖼️</button>
+        <button class="header-signin" id="signin-btn">
+          <span class="flame">🔥</span> 连续签到 <span class="streak">0</span> 天
+        </button>
+        <button class="cal-btn" onclick="App.handleExport()">📤</button>
+        <button class="cal-btn" onclick="document.getElementById('import-file').click()">📥</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar" id="stats-bar"></div>
+
+  <!-- Nav Tabs -->
+  <div class="nav-bar">
+    <div class="nav-tabs" id="nav-tabs"></div>
+  </div>
+
+  <!-- Sub Bar (date + filter + bookmarks) -->
+  <div class="sub-bar" id="sub-bar"></div>
+
+  <!-- Main Content -->
+  <main class="main-content" id="content"></main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>© 2026 PriesteGamingSpace · Hosted on <a href="https://pages.github.com" target="_blank" style="color:var(--accent-gold);text-decoration:none">GitHub Pages</a></p>
+  </footer>
+
+  <input type="file" id="import-file" accept=".json" style="display:none">
+
+  <script src="js/storage.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    (function(){
+      var t=localStorage.getItem('pgs_theme')||'light';
+      document.documentElement.setAttribute('data-theme',t);
+      var b=document.getElementById('theme-btn');
+      if(b)b.textContent=t==='dark'?'☀️':'🌙';
+    })();
+    function toggleTheme(){
+      var c=document.documentElement.getAttribute('data-theme');
+      var n=c==='dark'?'light':'dark';
+      document.documentElement.setAttribute('data-theme',n);
+      localStorage.setItem('pgs_theme',n);
+      var b=document.getElementById('theme-btn');
+      if(b)b.textContent=n==='dark'?'☀️':'🌙';
+    }
+    var _bgs=['none','custom'];
+    function cycleBackground(){
+      var cur=localStorage.getItem('pgs_bg')||'none';
+      var idx=_bgs.indexOf(cur);
+      var next=_bgs[(idx+1)%_bgs.length];
+      document.body.className='bg-'+next;
+      localStorage.setItem('pgs_bg',next);
+      var b=document.getElementById('bg-btn');
+      if(b)b.textContent=next==='custom'?'🖼️✨':'🖼️';
+    }
+    (function(){
+      var bg=localStorage.getItem('pgs_bg')||'none';
+      document.body.className='bg-'+bg;
+      var b=document.getElementById('bg-btn');
+      if(b)b.textContent=bg==='custom'?'🖼️✨':'🖼️';
+    })();
+  </script>
+</body>
+</html>
