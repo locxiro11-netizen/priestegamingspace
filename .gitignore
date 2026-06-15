@@ -2,3 +2,5 @@
 .DS_Store
 Thumbs.db
 *.log
+sync-server.py
+start-sync.bat

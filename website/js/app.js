@@ -453,8 +453,13 @@ const App = (() => {
   function syncToCloud() {
     try {
       const data = Storage.getSharedData();
-      localStorage.setItem('pgs_sync_data', JSON.stringify(data));
-      localStorage.setItem('pgs_sync_pending', '1');
+      fetch('http://localhost:9876/sync', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      }).then(r => r.json()).then(res => {
+        if (res.ok) Components.showToast('☁️ 已同步到云端');
+      }).catch(() => {});
     } catch(e) {}
   }
 
