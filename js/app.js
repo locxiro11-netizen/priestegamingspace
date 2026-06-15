@@ -247,9 +247,8 @@ const App = (() => {
   // ========== Modal ==========
 
   function openCreateModal() {
-    if (_currentTab === 'home' || _currentTab === 'archive') {
-      return;
-    }
+    if (!sessionStorage.getItem('pgs_admin')) return;
+    if (_currentTab === 'home' || _currentTab === 'archive') return;
     closeModal();
     document.body.insertAdjacentHTML('beforeend', Components.renderCreateModal(_currentTab));
     document.querySelector('#create-modal').addEventListener('click', (e) => {

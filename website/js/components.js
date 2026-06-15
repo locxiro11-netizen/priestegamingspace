@@ -84,6 +84,7 @@ const Components = (() => {
             data-filter="${p.id}" onclick="App.setFilter('${p.id}')">${p.label}</button>
         `).join('')}
         <button class="filter-pill" onclick="App.openBookmarks()">📌 收藏</button>
+        <button class="filter-pill admin-only" onclick="App.openCreateModal()" style="background:var(--accent);color:#FFF;border-color:var(--accent)">📝 发布</button>
       </div>
     `;
   }
@@ -150,7 +151,7 @@ const Components = (() => {
             <button class="btn-detail" onclick="App.openDetail('${item.category}', '${item.id}')">
               深入阅读 →
             </button>
-            <button class="btn-delete" data-action="delete" data-id="${item.id}" data-cat="${item.category}">✕</button>
+            <button class="btn-delete admin-only" data-action="delete" data-id="${item.id}" data-cat="${item.category}">✕</button>
           </div>
         </div>
       </div>

@@ -23,6 +23,7 @@
         <button class="theme-toggle" onclick="toggleTheme()" title="切换深色/浅色模式" id="theme-btn">🌙</button>
         <button class="bg-toggle" onclick="toggleBgPanel()" title="切换背景图" id="bg-btn">🖼️</button>
         <button class="bgm-btn" onclick="toggleBGM()" title="背景音乐" id="bgm-btn">🎵</button>
+        <button class="cal-btn" id="admin-btn" onclick="toggleAdmin()" title="管理员登录" style="font-size:14px">🔒</button>
         <button class="header-signin" id="signin-btn">
           <span class="flame">🔥</span> 连续签到 <span class="streak">0</span> 天
         </button>
@@ -242,6 +243,33 @@
       if(t&&t.scrollWidth>t.clientWidth){t.classList.add('scroll');
         t.querySelector('span').innerHTML+=('　　'+t.querySelector('span').innerHTML);}
     })();
+
+    // Admin mode
+    var _isAdmin=sessionStorage.getItem('pgs_admin')==='1';
+    function updateAdminUI(){
+      document.querySelectorAll('.admin-only').forEach(function(el){
+        el.style.display=_isAdmin?'':'none';
+      });
+      var btn=document.getElementById('admin-btn');
+      if(btn)btn.textContent=_isAdmin?'🔓':'🔒';
+    }
+    function toggleAdmin(){
+      if(_isAdmin){_isAdmin=false;sessionStorage.removeItem('pgs_admin');updateAdminUI();return;}
+      var overlay=document.createElement('div');
+      overlay.className='modal-overlay';overlay.id='admin-gate';overlay.style.alignItems='center';
+      overlay.onclick=function(e){if(e.target===this)this.remove();};
+      overlay.innerHTML='<div class="modal" style="max-width:340px;padding:28px;text-align:center" onclick="event.stopPropagation()">'+
+        '<button class="modal-close" onclick="this.closest(\'.modal-overlay\').remove()" style="position:static;float:right">✕</button>'+
+        '<div style="font-size:36px;margin-bottom:8px">🔒</div>'+
+        '<h3 style="margin-bottom:16px">管理员登录</h3>'+
+        '<form onsubmit="event.preventDefault();var v=this.querySelector(\'input\').value;if(v===\'22142214\'){_isAdmin=true;sessionStorage.setItem(\'pgs_admin\',\'1\');updateAdminUI();this.closest(\'.modal-overlay\').remove();}else{this.querySelector(\'.err\').style.display=\'block\';this.querySelector(\'input\').value=\'\';}">'+
+        '<input type="password" placeholder="输入管理员密码" required style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;text-align:center;font-size:16px;margin-bottom:8px;outline:none" autofocus>'+
+        '<p class="err" style="color:var(--danger);font-size:13px;display:none;margin-bottom:8px">密码错误</p>'+
+        '<button type="submit" class="btn-submit" style="width:100%">解锁</button></form></div>';
+      document.body.appendChild(overlay);
+      setTimeout(function(){var i=overlay.querySelector('input');if(i)i.focus();},100);
+    }
+    updateAdminUI();
     (function(){
       var a=document.getElementById('bgm-audio');
       a.volume=0.3;
