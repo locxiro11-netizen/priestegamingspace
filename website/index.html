@@ -125,7 +125,7 @@
     function uploadBg(input){
       var f=input.files[0];
       if(!f)return;
-      if(f.size>2*1024*1024){alert('图片不能超过2MB');return;}
+      if(f.size>20*1024*1024){alert('图片不能超过20MB');return;}
       var r=new FileReader();
       r.onload=function(e){
         localStorage.setItem('pgs_bg_upload',e.target.result);
