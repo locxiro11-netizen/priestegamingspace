@@ -386,6 +386,11 @@ body{
 
 /* === Responsive === */
 @media(max-width:768px){
+  .header-inner{padding:8px 12px;flex-wrap:wrap;gap:6px}
+  .header-inner>div:last-child{flex-wrap:wrap;gap:4px}
+  .header-inner .btn-icon,.header-inner .cal-btn{font-size:12px;padding:5px 8px}
+  .header-signin{font-size:12px;padding:5px 10px}
+  .theme-toggle,.bg-toggle,.bgm-btn{font-size:14px;padding:4px 8px}
   .stats-bar{grid-template-columns:repeat(3,1fr);gap:10px}
   .stat-card{padding:14px 16px}
   .stat-num{font-size:22px}
@@ -399,11 +404,18 @@ body{
   .section-header{flex-wrap:wrap}
 }
 @media(max-width:480px){
-  .header-inner{padding:10px 16px}
-  .stats-bar{grid-template-columns:repeat(2,1fr);gap:8px}
+  .header-inner{padding:6px 10px;flex-wrap:wrap;gap:4px}
+  .header-inner>div:last-child{flex-wrap:wrap;gap:3px;justify-content:flex-start}
+  .logo{font-size:14px}.logo-icon{font-size:16px}
+  .header-signin{font-size:11px;padding:4px 8px}
+  .header-signin .flame{font-size:13px}
+  .cal-btn{font-size:12px;padding:4px 7px}
+  .theme-toggle,.bg-toggle,.bgm-btn{font-size:13px;padding:3px 6px}
+  .stats-bar{grid-template-columns:repeat(2,1fr);gap:6px}
   .nav-tabs{overflow-x:auto}
   .day-title{font-size:28px}
   .card-title{font-size:var(--font-md)}
+  .sub-bar{padding:0 10px}
 }
 
 /* === Dark Mode === */
