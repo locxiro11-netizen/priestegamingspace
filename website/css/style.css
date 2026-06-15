@@ -444,16 +444,16 @@ body.bg-custom,body.bg-life,body.bg-upload{
 body.bg-custom{
   background-color:var(--bg);
   background-image:url('assets/backgrounds/bg-custom.png');
-  background-size:cover;
+  background-size:cover;background-position:center top;background-attachment:fixed;
 }
 body.bg-life{
   background-color:var(--bg);
   background-image:url('assets/backgrounds/bg-life.png');
-  background-size:cover;
+  background-size:cover;background-position:center top;background-attachment:fixed;
 }
 body.bg-upload{
   background-color:var(--bg);
-  background-size:cover;
+  background-size:cover;background-position:center top;background-attachment:fixed;
 }
 
 /* === Center Content Panel - Steam Style === */

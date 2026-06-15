@@ -68,6 +68,11 @@
         <input type="file" id="bg-upload-input" accept="image/*" onchange="uploadBg(this)">
         <label for="bg-upload-input">📁 上传自定义背景</label>
       </div>
+      <div class="bg-zoom-row" style="margin-top:14px">
+        <span style="font-size:var(--font-xs);color:var(--text-muted)">🔍 缩放</span>
+        <input type="range" id="bg-zoom" min="50" max="200" value="100" oninput="setBgZoom(this.value)" style="flex:1;margin:0 8px;accent-color:var(--accent-gold)">
+        <span style="font-size:var(--font-xs);color:var(--text-muted);min-width:36px" id="bg-zoom-val">100%</span>
+      </div>
     </div>
   </div>
 
@@ -98,6 +103,8 @@
     }
     function applyBg(name){
       document.body.className='bg-'+name;
+      var zoom=localStorage.getItem('pgs_bg_zoom')||100;
+      document.body.style.backgroundSize=zoom+'%';
       if(name==='upload'){
         var d=localStorage.getItem('pgs_bg_upload');
         if(d)document.body.style.backgroundImage='url('+d+')';
@@ -105,6 +112,16 @@
       var b=document.getElementById('bg-btn');
       var labels={'none':'🖼️','custom':'🖼️✨','life':'🖼️🌿','upload':'🖼️📁'};
       if(b)b.textContent=labels[name]||'🖼️';
+      var s=document.getElementById('bg-zoom');
+      var v=document.getElementById('bg-zoom-val');
+      if(s)s.value=zoom;
+      if(v)v.textContent=zoom+'%';
+    }
+    function setBgZoom(val){
+      localStorage.setItem('pgs_bg_zoom',val);
+      document.body.style.backgroundSize=val+'%';
+      var v=document.getElementById('bg-zoom-val');
+      if(v)v.textContent=val+'%';
     }
     function updateBgPresetBtns(active){
       var btns=document.querySelectorAll('#bg-presets button');
