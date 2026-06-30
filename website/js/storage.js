@@ -184,24 +184,45 @@ const Storage = (() => {
 
   // ========== Shared Content (JSON file) ==========
 
+  // Cloud is the authoritative source for shared content. We mirror it locally
+  // so that deletions made on one device propagate to all devices. Items the
+  // CURRENT device created very recently (and may not have pushed yet) are kept
+  // via the _pendingIds guard so they don't vanish before the next sync.
+  const _pendingIds = new Set();
+
+  function markPending(id) { _pendingIds.add(id); }
+  function clearPending(ids) { (ids || []).forEach(id => _pendingIds.delete(id)); }
+
   function loadSharedContent() {
-    if (_sharedLoaded) return Promise.resolve();
-    return fetch('data/content.json')
+    return fetch('data/content.json?_=' + Date.now())
       .then(r => r.json())
       .then(shared => {
+        let changed = false;
         ['gameUI','screenshots','reflections','life'].forEach(cat => {
           const local = _read(KEYS[cat]);
           const sharedItems = Array.isArray(shared[cat]) ? shared[cat] : [];
-          const localIds = new Set(local.map(i => i.id));
-          const merged = [...local];
-          sharedItems.forEach(si => {
-            if (!localIds.has(si.id)) merged.push(si);
+          const sharedIds = new Set(sharedItems.map(i => i.id));
+          // Start from cloud (authoritative) then append only local pending items
+          // that cloud doesn't have yet (not-yet-synced new posts).
+          const merged = [...sharedItems];
+          local.forEach(li => {
+            if (!sharedIds.has(li.id) && _pendingIds.has(li.id)) {
+              merged.push(li);
+            }
           });
+          // Detect change to decide whether a re-render is needed
+          if (JSON.stringify(local) !== JSON.stringify(merged)) changed = true;
           _write(KEYS[cat], merged);
         });
         _sharedLoaded = true;
+        return changed;
       })
-      .catch(() => {}); // fallback: local only
+      .catch(() => false); // fallback: local only
+  }
+
+  function reloadSharedContent() {
+    _sharedLoaded = false;
+    return loadSharedContent();
   }
 
   function getSharedData() {
@@ -337,6 +358,9 @@ const Storage = (() => {
     getBookmarks,
     isBookmarked,
     loadSharedContent,
-    getSharedData
+    reloadSharedContent,
+    getSharedData,
+    markPending,
+    clearPending
   };
 })();

@@ -13,7 +13,7 @@ const Components = (() => {
   };
 
   const NAV_TABS = [
-    { id: 'home',        label: '今日精选' },
+    { id: 'home',        label: '精选栏目' },
     { id: 'gameUI',      label: '游戏UI' },
     { id: 'screenshots', label: '游戏截图' },
     { id: 'reflections', label: '工作感悟' },
@@ -61,7 +61,7 @@ const Components = (() => {
 
   // ========== Sub Bar (date + filter pills + bookmarks) ==========
 
-  function renderSubBar(currentTab, currentDateIndex, totalDates, dates, activeFilter, lifeUnlocked) {
+  function renderSubBar(currentTab, currentDateIndex, totalDates, dates, activeFilter, lifeUnlocked, canPublish) {
     const currentDate = dates[currentDateIndex] || '—';
     const dateDisplay = formatDateDisplay(currentDate);
     const canPrev = currentDateIndex < totalDates - 1;
@@ -80,7 +80,7 @@ const Components = (() => {
 
       <div class="filter-pills">
         <button class="filter-pill" onclick="App.openBookmarks()">📌 收藏</button>
-        <button class="filter-pill admin-only" onclick="App.openCreateModal()" style="background:var(--accent);color:#FFF;border-color:var(--accent)">📝 发布</button>
+        ${canPublish ? '<button class="filter-pill" onclick="App.openCreateModal()" style="background:var(--accent);color:#FFF;border-color:var(--accent)">📝 发布</button>' : ''}
       </div>
     `;
   }

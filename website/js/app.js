@@ -19,15 +19,13 @@ const App = (() => {
       const now = new Date();
       _calendarYear = now.getFullYear();
       _calendarMonth = now.getMonth() + 1;
-      autoCheckIn();
+      // Show current sign-in status only; do NOT auto-check-in so the manual
+      // sign-in button stays meaningful and the streak reflects real visits.
+      updateSignInBtn(Storage.getSignInData());
       bindEvents();
       render();
+      startAutoSync();
     });
-  }
-
-  function autoCheckIn() {
-    const data = Storage.checkIn();
-    updateSignInBtn(data);
   }
 
   function bindEvents() {
@@ -214,7 +212,7 @@ const App = (() => {
     // Sub bar
     const hasDates = dates.length > 0;
     document.querySelector('#sub-bar').innerHTML = Components.renderSubBar(
-      _currentTab, _currentDateIndex, dates.length, dates, _activeFilter, _lifeUnlocked
+      _currentTab, _currentDateIndex, dates.length, dates, _activeFilter, _lifeUnlocked, isAdmin() && _currentTab !== 'home'
     );
 
     // Content
@@ -224,11 +222,22 @@ const App = (() => {
       content.innerHTML = Components.renderArchive(dates, currentDate);
     } else if (_currentTab === 'home') {
       content.innerHTML = Components.renderHomeHero();
-      if (currentDate) {
-        content.innerHTML += Components.renderDayTitle(_currentDateIndex, dates.length, currentDate);
-        const dateData = Storage.getContentByDate(currentDate);
-        if (!_lifeUnlocked) delete dateData.life;
-        content.innerHTML += Components.renderContentByDate(dateData, _activeFilter);
+
+      let recentItems = Storage.getAllContentSorted().filter(item => _lifeUnlocked || item.category !== 'life');
+      if (_searchQuery) {
+        const q = _searchQuery.toLowerCase();
+        recentItems = recentItems.filter(item =>
+          (item.title && item.title.toLowerCase().includes(q)) ||
+          (item.desc && item.desc.toLowerCase().includes(q)) ||
+          (item.content && item.content.toLowerCase().includes(q)) ||
+          (item.tags && item.tags.some(t => t.toLowerCase().includes(q))) ||
+          (item.game && item.game.toLowerCase().includes(q))
+        );
+      }
+
+      if (recentItems.length) {
+        content.innerHTML += '<div class="day-title fade-in" style="margin-bottom:16px">🆕 最近发布</div>';
+        content.innerHTML += Components.renderAllContent(recentItems.slice(0, 60), 'all');
       } else {
         content.innerHTML += Components.renderEmpty();
       }
@@ -264,18 +273,43 @@ const App = (() => {
 
   function isAdmin() {
     if (sessionStorage.getItem('pgs_admin') === '1') return true;
+
+    const raw = localStorage.getItem('pgs_admin');
+    if (!raw) return false;
+
+    if (raw === '1') {
+      sessionStorage.setItem('pgs_admin', '1');
+      return true;
+    }
+
     try {
-      var d = JSON.parse(localStorage.getItem('pgs_admin'));
-      if (d && d.exp > Date.now()) return true;
-    } catch(e) {}
+      const data = JSON.parse(raw);
+      if (data === 1 || data === true) {
+        sessionStorage.setItem('pgs_admin', '1');
+        return true;
+      }
+      if (data && Number(data.exp) > Date.now()) {
+        sessionStorage.setItem('pgs_admin', '1');
+        return true;
+      }
+    } catch (e) {}
+
     return false;
   }
 
   function openCreateModal() {
-    if (!isAdmin()) return;
-    if (_currentTab === 'home' || _currentTab === 'archive') return;
+    if (!isAdmin()) {
+      Components.showToast('请先解锁管理员权限', 'error');
+      return;
+    }
+
+    let targetCategory = _currentTab;
+    if (_currentTab === 'home' || _currentTab === 'archive') {
+      targetCategory = (_activeFilter && _activeFilter !== 'all') ? _activeFilter : 'gameUI';
+    }
+
     closeModal();
-    document.body.insertAdjacentHTML('beforeend', Components.renderCreateModal(_currentTab));
+    document.body.insertAdjacentHTML('beforeend', Components.renderCreateModal(targetCategory));
     document.querySelector('#create-modal').addEventListener('click', (e) => {
       if (e.target.id === 'create-modal') closeModal();
     });
@@ -340,6 +374,13 @@ const App = (() => {
 
   function handleCreate(event, category) {
     event.preventDefault();
+
+    if (!isAdmin()) {
+      Components.showToast('管理员权限已失效，请重新解锁', 'error');
+      closeModal('create-modal');
+      return;
+    }
+
     const form = event.target;
     const submitBtn = form.querySelector('#submit-btn');
     submitBtn.disabled = true;
@@ -351,7 +392,8 @@ const App = (() => {
     else { data.desc = formData.get('desc')?.trim() || ''; if (_pendingImage) data.image = _pendingImage; }
     if (category === 'screenshots') data.game = formData.get('game')?.trim() || '';
     try {
-      Storage.create(category, data);
+      const created = Storage.create(category, data);
+      if (created) Storage.markPending(created.id);
       _pendingImage = null;
       closeModal();
       _dates = Storage.getDatesWithContent();
@@ -368,6 +410,11 @@ const App = (() => {
   }
 
   async function handleDelete(category, id) {
+    if (!isAdmin()) {
+      Components.showToast('请先解锁管理员权限', 'error');
+      return;
+    }
+
     const confirmed = await Components.showConfirm('确定要删除这条内容吗？此操作不可恢复。');
     if (confirmed) {
       Storage.remove(category, id);
@@ -465,6 +512,24 @@ const App = (() => {
     syncViaGitHub();
   }
 
+  // Periodically reload shared content (every 60s)
+  let _syncInterval = null;
+
+  function startAutoSync() {
+    if (_syncInterval) return;
+    _syncInterval = setInterval(() => {
+      Storage.reloadSharedContent().then((changed) => {
+        // Only re-render when shared content actually changed, to avoid
+        // disrupting the user (closing modals / resetting scroll) needlessly.
+        if (changed) {
+          _dates = Storage.getDatesWithContent();
+          if (_currentDateIndex >= _dates.length) _currentDateIndex = Math.max(0, _dates.length - 1);
+          render();
+        }
+      });
+    }, 60000);
+  }
+
   async function syncViaGitHub() {
     const token = localStorage.getItem('pgs_gh_token');
     if (!token) {
@@ -482,10 +547,13 @@ const App = (() => {
     try {
       const data = Storage.getSharedData();
       const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+      // IMPORTANT: site is deployed from website/, so the live page reads
+      // website/data/content.json — we must write to THAT file, not root data/.
+      const apiUrl = 'https://api.github.com/repos/locxiro11-netizen/priestegamingspace/contents/website/data/content.json';
       // Get current file SHA
       let sha = '';
       try {
-        const r = await fetch('https://api.github.com/repos/locxiro11-netizen/priestegamingspace/contents/data/content.json', {
+        const r = await fetch(apiUrl, {
           headers: { 'Authorization': 'token '+token }
         });
         if (r.ok) { const j = await r.json(); sha = j.sha; }
@@ -493,12 +561,22 @@ const App = (() => {
       // Push update
       const body = { message: 'Auto-sync content', content: content, branch: 'main' };
       if (sha) body.sha = sha;
-      const r = await fetch('https://api.github.com/repos/locxiro11-netizen/priestegamingspace/contents/data/content.json', {
+      const r = await fetch(apiUrl, {
         method: 'PUT',
         headers: { 'Authorization': 'token '+token, 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       });
-      if (r.ok) Components.showToast('☁️ 已同步到云端');
+      if (r.ok) {
+        Components.showToast('☁️ 已同步到云端');
+        // Cloud now holds everything we have locally; clear pending guard so the
+        // next reload mirrors cloud exactly (enables cross-device deletion).
+        const cur = Storage.getSharedData();
+        ['gameUI','screenshots','reflections','life'].forEach(cat => {
+          Storage.clearPending((cur[cat] || []).map(i => i.id));
+        });
+        // Immediately reload to make sure local cache matches cloud
+        Storage.reloadSharedContent();
+      }
       else { const j = await r.json(); console.error('[Sync]', j.message); }
     } catch(e) {
       console.error('[Sync]', e);
@@ -539,7 +617,7 @@ const App = (() => {
     handleImagePreview, clearImagePreview,
     handleExport, handleImport,
     verifyPassword, showPasswordGate, closePasswordGate,
-    unlockLife, syncToCloud, setGitHubToken
+    unlockLife, syncToCloud, setGitHubToken, startAutoSync
   };
 })();
 
