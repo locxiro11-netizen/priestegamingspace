@@ -499,6 +499,35 @@ body.bg-custom .card,body.bg-life .card,body.bg-upload .card{
 }
 body.bg-custom .stat-card,body.bg-life .stat-card,body.bg-upload .stat-card{background:transparent}
 
+/* 壁纸模式：统计区加一条极淡深色玻璃衬底 + 文字投影，避免浅色数字在明亮壁纸下过曝糊掉 */
+body.bg-custom .stats-bar,body.bg-life .stats-bar,body.bg-upload .stats-bar{
+  background:linear-gradient(180deg,rgba(12,10,9,0.34),rgba(12,10,9,0.16));
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+body.bg-custom .stat-num,body.bg-life .stat-num,body.bg-upload .stat-num,
+body.bg-custom .stat-label,body.bg-life .stat-label,body.bg-upload .stat-label,
+body.bg-custom .stat-icon,body.bg-life .stat-icon,body.bg-upload .stat-icon,
+body.bg-custom .day-title,body.bg-life .day-title,body.bg-upload .day-title{
+  text-shadow:0 1px 2px rgba(0,0,0,0.55),0 2px 12px rgba(0,0,0,0.35);
+}
+/* 竖线分隔在浅色壁纸上加深一点 */
+body.bg-custom .stat-card:not(:last-child)::after,
+body.bg-life .stat-card:not(:last-child)::after,
+body.bg-upload .stat-card:not(:last-child)::after{background:rgba(245,237,225,0.28)}
+
+/* 浅色主题 + 壁纸：文字本身是深色，改用浅色投影托底 */
+[data-theme="light"] body.bg-custom .stats-bar,
+[data-theme="light"] body.bg-life .stats-bar,
+[data-theme="light"] body.bg-upload .stats-bar{
+  background:linear-gradient(180deg,rgba(247,243,236,0.5),rgba(247,243,236,0.28));
+}
+[data-theme="light"] body.bg-custom .stat-num,[data-theme="light"] body.bg-life .stat-num,[data-theme="light"] body.bg-upload .stat-num,
+[data-theme="light"] body.bg-custom .stat-label,[data-theme="light"] body.bg-life .stat-label,[data-theme="light"] body.bg-upload .stat-label,
+[data-theme="light"] body.bg-custom .stat-icon,[data-theme="light"] body.bg-life .stat-icon,[data-theme="light"] body.bg-upload .stat-icon,
+[data-theme="light"] body.bg-custom .day-title,[data-theme="light"] body.bg-life .day-title,[data-theme="light"] body.bg-upload .day-title{
+  text-shadow:0 1px 2px rgba(255,255,255,0.7),0 2px 10px rgba(255,255,255,0.5);
+}
+
 /* ==========================================================
    BGM CONTROLS + MUSIC HUD (preserved)
    ========================================================== */
