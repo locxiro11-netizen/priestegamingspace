@@ -105,6 +105,7 @@ const Components = (() => {
       <div class="section-header fade-in">
         <span class="sec-num">${String(num).padStart(2,'0')}</span>
         <span class="sec-title">${title}</span>
+        <span class="sec-line"></span>
         ${sub ? `<span class="sec-sub">${sub}</span>` : ''}
       </div>
     `;
