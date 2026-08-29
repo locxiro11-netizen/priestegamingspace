@@ -31,6 +31,7 @@ import json
 import os
 import sys
 import ssl
+import time
 import urllib.request
 import urllib.error
 from datetime import datetime
@@ -101,13 +102,16 @@ def main():
         cfg = json.load(f)
     repo = cfg["repo"]
 
-    with open(input_path, "r", encoding="utf-8") as f:
-        curated = json.load(f)
-    if isinstance(curated, dict):
-        curated = curated.get("items", [])
-    if not isinstance(curated, list) or not curated:
-        print("精选列表为空，没有可发布的内容", file=sys.stderr)
-        return 1
+    fill_mode = "--fill-content" in sys.argv[1:]
+    curated = []
+    if not fill_mode:
+        with open(input_path, "r", encoding="utf-8") as f:
+            curated = json.load(f)
+        if isinstance(curated, dict):
+            curated = curated.get("items", [])
+        if not isinstance(curated, list) or not curated:
+            print("精选列表为空，没有可发布的内容", file=sys.stderr)
+            return 1
 
     api = (f"https://api.github.com/repos/{repo['owner']}/{repo['name']}"
            f"/contents/{repo['content_path']}")
@@ -132,6 +136,63 @@ def main():
 
     existing_urls = {i.get("source_url") for i in content["news"] if i.get("source_url")}
     existing_ids = {i.get("id") for i in content["news"]}
+
+    # --fill-content：给已发布但缺正文的条目补齐全文和视频（不新增条目）
+    if fill_mode:
+        sys.path.insert(0, os.path.join(ROOT, "scripts"))
+        try:
+            import enrich
+        except Exception as e:
+            print(f"无法导入 enrich.py: {e}", file=sys.stderr)
+            return 1
+
+        targets = [i for i in content["news"]
+                   if i.get("source_url") and not i.get("content_html")]
+        print(f"待补全正文：{len(targets)} 条")
+        filled = 0
+        for it in targets:
+            try:
+                blocks = enrich.blocks_for(it)
+            except Exception as e:
+                print(f"  ! {(it.get('title') or '')[:30]} 提取异常: {e}", file=sys.stderr)
+                blocks = []
+            if not blocks:
+                print(f"  ✗ {(it.get('title') or '')[:30]} 未取到正文")
+                continue
+            it["content_html"] = enrich.blocks_to_html(blocks)
+            v = enrich.first_video(blocks)
+            if v:
+                it["video"] = v
+            print(f"  ✓ {(it.get('title') or '')[:30]} "
+                  f"{len(it['content_html'])}字{' 含视频' if v else ''}")
+            filled += 1
+            time.sleep(0.6)
+
+        if not filled:
+            print("没有补全任何条目，无需推送。")
+            return 0
+
+        body = json.dumps(content, ensure_ascii=False, indent=2)
+        if dry_run:
+            print("\n[dry-run] 未推送。")
+            return 0
+        if not token:
+            print(f"\n缺少 GitHub Token：请设置 GITHUB_TOKEN 或写入 {TOKEN_FILE}", file=sys.stderr)
+            return 1
+        payload = {
+            "message": f"📄 补全资讯正文 {filled} 条 - {now_str()}",
+            "content": base64.b64encode(body.encode("utf-8")).decode("ascii"),
+            "branch": repo["branch"],
+        }
+        if sha:
+            payload["sha"] = sha
+        print("\n推送到 GitHub ...")
+        result = http_json(api, "PUT", token, payload)
+        if result.get("__error__"):
+            print(f"推送失败: {result['__error__']}", file=sys.stderr)
+            return 1
+        print(f"推送成功！补全 {filled} 条正文。")
+        return 0
 
     added, skipped = [], []
     for item in curated:
@@ -161,6 +222,11 @@ def main():
             "source_url": url,
             "likes": 0,
         }
+        # 正文全文与视频由 enrich.py 补齐，供详情页展示
+        if item.get("content_html"):
+            entry["content_html"] = item["content_html"]
+        if item.get("video"):
+            entry["video"] = item["video"]
         content["news"].append(entry)
         existing_ids.add(new_id)
         if url:

@@ -224,12 +224,21 @@ def parse_rss(xml_text, source_name, limit):
                 if published:
                     break
 
+        # 部分源（如 IGN）在 RSS 里就带 content:encoded 全文，留着给 enrich.py 用
+        full_html = ""
+        for tag in ("encoded", "content"):
+            child = _find_local(el, tag)
+            if child is not None and child.text and len(child.text) > len(desc):
+                full_html = child.text
+                break
+
         out.append({
             "uid": uid_of(link),
             "source": source_name,
             "source_url": link,
             "title": title,
             "raw_desc": desc[:900],
+            "content_encoded": full_html[:60000],
             "image": image or "",
             "game": "",
             "published": published.astimezone(timezone.utc).isoformat() if published else "",

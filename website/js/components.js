@@ -321,9 +321,15 @@ const Components = (() => {
       <div class="modal-overlay" id="detail-modal">
         <div class="modal detail-modal">
           <button class="modal-close" onclick="App.closeModal('detail-modal')">✕</button>
-          ${item.image ? `
+          ${item.video ? `
+            <div class="detail-video">
+              <iframe src="${item.video}" frameborder="0"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowfullscreen loading="lazy" title="${escapeHtml(item.title)}"></iframe>
+            </div>
+          ` : (item.image ? `
             <div class="detail-image"><img src="${item.image}" alt="${escapeHtml(item.title)}"></div>
-          ` : ''}
+          ` : '')}
           <div class="detail-body">
             <div class="detail-meta">
               <span>${meta.icon} ${meta.label}</span>
@@ -332,7 +338,17 @@ const Components = (() => {
             </div>
             <h2 class="detail-title">${escapeHtml(item.title)}</h2>
             ${item.game ? `<span style="color:var(--text-muted);font-size:14px">🎯 ${escapeHtml(item.game)}</span>` : ''}
-            <div class="detail-content">${(item.content || item.desc || '').replace(/\n/g, '<br>')}</div>
+            ${item.content_html ? `
+              ${item.video && item.image ? `<div class="detail-image"><img src="${item.image}" alt=""></div>` : ''}
+              <div class="detail-content article-body">${item.content_html}</div>
+            ` : `
+              <div class="detail-content">${(item.content || item.desc || '').replace(/\n/g, '<br>')}</div>
+            `}
+            ${item.source_url ? `
+              <div class="detail-source">
+                来源：<a href="${escapeHtml(item.source_url)}" target="_blank" rel="noopener">${escapeHtml(item.source || '查看原文')}</a>
+              </div>
+            ` : ''}
             ${tagHtml ? `<div class="detail-tags">${tagHtml}</div>` : ''}
           </div>
           <div class="detail-footer">
