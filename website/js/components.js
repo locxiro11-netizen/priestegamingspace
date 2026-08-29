@@ -65,21 +65,43 @@ const Components = (() => {
 
   // ========== Sub Bar (date + filter pills + bookmarks) ==========
 
+  /** 资讯按媒体分的子页签。sources 形如 [{key,label,count}] */
+  function renderSourceTabs(sources, active) {
+    const total = sources.reduce((s, x) => s + x.count, 0);
+    const items = [{ key: 'all', label: '全部', count: total }, ...sources];
+    return `
+      <div class="source-tabs">
+        ${items.map(s => `
+          <button class="source-tab${active === s.key ? ' active' : ''}"
+            data-src="${escapeHtml(s.key)}"
+            onclick="App.setNewsSource(this.dataset.src)">
+            ${escapeHtml(s.label)}<span class="src-count">${s.count}</span>
+          </button>`).join('')}
+      </div>
+    `;
+  }
+
   function renderSubBar(currentTab, currentDateIndex, totalDates, dates, activeFilter, lifeUnlocked, canPublish) {
     const currentDate = dates[currentDateIndex] || '—';
     const dateDisplay = formatDateDisplay(currentDate);
     const canPrev = currentDateIndex < totalDates - 1;
     const canNext = currentDateIndex > 0;
+    // 资讯页签展示全部历史（按时间倒序），日期翻页对它没意义，换成总量提示
+    const showDateNav = currentTab !== 'news';
 
     return `
       <div class="date-selector">
-        <button class="date-arrow" onclick="App.prevDate()" ${canPrev ? '' : 'disabled'}>←</button>
-        <span class="date-text">
-          <span class="day-num">Day ${String(totalDates - currentDateIndex).padStart(3,'0')}</span>
-          / ${totalDates}
-        </span>
-        <button class="date-arrow" onclick="App.nextDate()" ${canNext ? '' : 'disabled'}>→</button>
-        <button class="cal-btn" onclick="App.openCalendar()">📅</button>
+        ${showDateNav ? `
+          <button class="date-arrow" onclick="App.prevDate()" ${canPrev ? '' : 'disabled'}>←</button>
+          <span class="date-text">
+            <span class="day-num">Day ${String(totalDates - currentDateIndex).padStart(3,'0')}</span>
+            / ${totalDates}
+          </span>
+          <button class="date-arrow" onclick="App.nextDate()" ${canNext ? '' : 'disabled'}>→</button>
+          <button class="cal-btn" onclick="App.openCalendar()">📅</button>
+        ` : `
+          <span class="date-text"><span class="day-num">全部资讯</span></span>
+        `}
       </div>
 
       <div class="filter-pills">
@@ -563,7 +585,7 @@ const Components = (() => {
     renderStatsBar, renderNavTabs, renderSubBar, renderDayTitle,
     renderSectionHeader, renderCard, renderContentByDate, renderAllContent,
     renderCalendar, renderBookmarksPanel, renderDetail, renderCreateModal,
-    renderSearchBar, renderArchive, renderHomeHero, renderEmpty, renderPasswordGate,
-    showToast, showConfirm, escapeHtml, truncate, formatDateDisplay
+    renderSearchBar, renderSourceTabs, renderArchive, renderHomeHero, renderEmpty,
+    renderPasswordGate, showToast, showConfirm, escapeHtml, truncate, formatDateDisplay
   };
 })();

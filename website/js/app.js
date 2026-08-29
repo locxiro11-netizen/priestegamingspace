@@ -13,6 +13,8 @@ const App = (() => {
   // 搜索时 render() 会重建整个列表，输入框随之被销毁。
   // 这个标记用来在重绘后把值和光标还回去，否则每敲一个字焦点就丢了。
   let _restoreSearchFocus = false;
+  // 「游戏资讯」页签下按媒体筛选，'all' 表示不筛选
+  let _newsSource = 'all';
 
   // ========== Init ==========
 
@@ -96,10 +98,29 @@ const App = (() => {
     }
     _currentTab = tab;
     _searchQuery = '';
+    if (tab !== 'news') _newsSource = 'all';
     const si = document.querySelector('#search-input');
     if (si) si.value = '';
     render();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /** 资讯页签下按媒体筛选。 */
+  function setNewsSource(src) {
+    _newsSource = src || 'all';
+    render();
+  }
+
+  /** 统计资讯都来自哪些媒体，按条数从多到少排。 */
+  function newsSourceStats() {
+    const counter = new Map();
+    (Storage.getAll('news') || []).forEach(i => {
+      const key = (i.source || '').trim() || '其他';
+      counter.set(key, (counter.get(key) || 0) + 1);
+    });
+    return [...counter.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([key, count]) => ({ key, label: key, count }));
   }
 
   function refresh() {
@@ -243,6 +264,33 @@ const App = (() => {
         content.innerHTML += Components.renderAllContent(recentItems.slice(0, 60), 'all');
       } else {
         content.innerHTML += Components.renderEmpty();
+      }
+    } else if (_currentTab === 'news') {
+      // 资讯是连续流，按天切片没意义，这里展示全部历史（时间倒序），
+      // 再按媒体分子页签——否则「看某家媒体的所有报道」根本做不到。
+      const all = (Storage.getAll('news') || [])
+        .map(item => ({ ...item, category: 'news' }))
+        .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+      content.innerHTML = Components.renderSearchBar();
+      content.innerHTML += Components.renderSourceTabs(newsSourceStats(), _newsSource);
+
+      let items = all;
+      if (_newsSource !== 'all') {
+        items = items.filter(i => ((i.source || '').trim() || '其他') === _newsSource);
+      }
+      if (_searchQuery) {
+        items = items.filter(i => matchesQuery(i, _searchQuery));
+      }
+
+      if (_searchQuery) {
+        content.innerHTML += renderSearchResults(items, _searchQuery);
+      } else if (!items.length) {
+        content.innerHTML += Components.renderEmpty();
+      } else {
+        content.innerHTML +=
+          `<div class="search-summary">共 ${items.length} 条${_newsSource === 'all' ? '' : '来自 ' + Components.escapeHtml(_newsSource)}</div>` +
+          `<div class="card-grid">${items.map((item, i) => Components.renderCard(item, i, true)).join('')}</div>`;
       }
     } else if (_currentTab === 'life') {
       if (!_lifeUnlocked) { showPasswordGate(); return; }
@@ -660,7 +708,7 @@ const App = (() => {
 
   // ========== Public API ==========
   return {
-    init, navigate, refresh, setFilter,
+    init, navigate, refresh, setFilter, setNewsSource,
     prevDate, nextDate, selectDate,
     openCalendar, closeCalendar, calPrevMonth, calNextMonth,
     openBookmarks, closeBookmarks, removeBookmark,

@@ -413,6 +413,24 @@ body{
 /* 搜索结果统计 */
 .search-summary{font-family:var(--mono);font-size:12px;color:var(--text-muted);
   margin:0 0 14px;padding-left:2px}
+
+/* 资讯按媒体分的子页签 */
+.source-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.source-tab{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;
+  border:1px solid var(--border);border-radius:999px;background:var(--card-bg);
+  color:var(--text-secondary);font-size:13px;font-family:inherit;cursor:pointer;
+  transition:all var(--transition);white-space:nowrap}
+.source-tab:hover{border-color:var(--accent-gold);color:var(--text)}
+.source-tab.active{background:var(--accent-gold);border-color:var(--accent-gold);
+  color:#1a1613;font-weight:600}
+.src-count{font-family:var(--mono);font-size:11px;opacity:.7;
+  padding:1px 6px;border-radius:999px;background:rgba(128,128,128,.18)}
+.source-tab.active .src-count{background:rgba(0,0,0,.14);opacity:.85}
+
+@media (max-width:640px){
+  .source-tabs{gap:6px}
+  .source-tab{padding:6px 11px;font-size:12px}
+}
 .detail-footer{display:flex;align-items:center;justify-content:space-between;
   padding:16px 32px;border-top:1px solid var(--border)}
 
