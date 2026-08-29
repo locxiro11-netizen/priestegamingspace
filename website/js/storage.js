@@ -2,6 +2,26 @@
  * PriesteGamingSpace - Storage Layer
  * localStorage CRUD for game UI, screenshots, and reflections
  */
+
+/**
+ * 密码校验：页面里只留 SHA-256 摘要，不再硬编码明文。
+ * 注意这是纯前端校验，挡不住有心人（源码本来就公开），
+ * 目的只是避免 F12 一眼看到密码；真正的权限控制得靠后端。
+ */
+const PWD_SHA256 = '0bd88dacd6f0296816c659a08205dcc01b83b2126c2da988312e4d06d994b67e';
+
+async function checkPassword(value) {
+  try {
+    const buf = await crypto.subtle.digest(
+      'SHA-256', new TextEncoder().encode(String(value == null ? '' : value)));
+    const hex = Array.from(new Uint8Array(buf))
+      .map(b => b.toString(16).padStart(2, '0')).join('');
+    return hex === PWD_SHA256;
+  } catch (e) {
+    return false;
+  }
+}
+
 const Storage = (() => {
   const KEYS = {
     news: 'pgs_news',

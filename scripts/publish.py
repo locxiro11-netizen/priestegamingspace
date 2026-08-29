@@ -277,6 +277,10 @@ def main():
     result = http_json(api, "PUT", token, payload)
     if result.get("__error__"):
         print(f"推送失败: {result['__error__']}", file=sys.stderr)
+        if result.get("__status__") == 401:
+            print("\nToken 已过期或被撤销。请到 "
+                  "https://github.com/settings/personal-access-tokens "
+                  "重新生成，并更新 %s" % TOKEN_FILE, file=sys.stderr)
         return 1
 
     print(f"推送成功！共新增 {len(added)} 条资讯。")

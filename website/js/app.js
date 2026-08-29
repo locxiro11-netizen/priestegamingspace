@@ -480,18 +480,21 @@ const App = (() => {
     event.preventDefault();
     const input = document.querySelector('#pwd-input');
     const error = document.querySelector('#pwd-error');
-    if (input.value === '22142214') {
-      _lifeUnlocked = true;
-      closePasswordGate();
-      _currentTab = 'life';
-      render();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      Components.showToast('解锁成功 🌿');
-    } else {
-      if (error) error.style.display = 'block';
-      input.value = '';
-      input.focus();
-    }
+    if (!input) return;
+    checkPassword(input.value).then((ok) => {
+      if (ok) {
+        _lifeUnlocked = true;
+        closePasswordGate();
+        _currentTab = 'life';
+        render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        Components.showToast('解锁成功 🌿');
+      } else {
+        if (error) error.style.display = 'block';
+        input.value = '';
+        input.focus();
+      }
+    });
   }
 
   function closePasswordGate() {
