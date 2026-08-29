@@ -23,6 +23,7 @@ import base64
 import hashlib
 import urllib.request
 import urllib.error
+import html
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
@@ -286,6 +287,75 @@ def parse_steam(appid, game_name, limit, max_len=700):
     return out
 
 
+def parse_list_page(page_html, base, link_pattern, source_name, limit,
+                    fetch_meta=True, exclude_pattern=None):
+    """国内不少站点（游民星空、3DM）已经关掉 RSS，只能抓列表页。
+
+    做法：用正则捞出文章链接，再在链接附近的一小段 HTML 里找标题/配图；
+    标题找不到时，退一步去抓文章页的 og:title / og:description。
+    """
+    links = []
+    for m in re.finditer(link_pattern, page_html):
+        # 配置里的正则可能带捕获组也可能不带，两种都支持
+        url = m.group(1) if m.re.groups else m.group(0)
+        if url.startswith("/"):
+            url = base.rstrip("/") + url
+        elif not url.startswith("http"):
+            continue
+        if url not in links:
+            links.append(url)
+
+    exclude = re.compile(exclude_pattern) if exclude_pattern else None
+
+    out = []
+    for link in links[:limit]:
+        idx = page_html.find(link)
+        window = page_html[max(0, idx - 400): idx + 1600] if idx >= 0 else ""
+
+        title = ""
+        m = re.search(r'title="([^"]{6,90})"', window)
+        if m:
+            title = html.unescape(m.group(1)).strip()
+
+        image = ""
+        m = re.search(r'<img[^>]+src="(https?://[^"]+\.(?:jpg|jpeg|png|webp)[^"]*)"',
+                      window, re.I)
+        if m:
+            image = m.group(1)
+
+        desc = ""
+        if not title and fetch_meta:
+            page = http_get(link, timeout=20, retries=1)
+            if page:
+                mt = re.search(r'property="og:title"\s+content="([^"]*)"', page) \
+                    or re.search(r"<title>(.*?)</title>", page, re.S)
+                if mt:
+                    title = re.sub(r"\s+", " ", html.unescape(mt.group(1))).strip()
+                    title = re.sub(r"[-_|]\s*(游民星空|3DM|3DMGAME).*$", "", title).strip()
+                md = re.search(r'property="og:description"\s+content="([^"]*)"', page)
+                if md:
+                    desc = re.sub(r"\s+", " ", html.unescape(md.group(1))).strip()
+
+        if not title:
+            continue
+        if exclude and exclude.search(title):
+            continue
+
+        out.append({
+            "uid": uid_of(link),
+            "source": source_name,
+            "source_url": link,
+            "title": title,
+            "raw_desc": desc[:900],
+            "content_encoded": "",
+            "image": image,
+            "game": "",
+            # 列表页拿不到精确发布时间，留空表示「按最新处理」
+            "published": "",
+        })
+    return out
+
+
 # --------------------------------------------------------------------------
 # 去重
 # --------------------------------------------------------------------------
@@ -395,15 +465,23 @@ def main():
         name = sc.get("name", key)
         print(f"抓取 {name} ...")
 
-        if sc.get("type") == "steam":
+        stype = sc.get("type")
+        if stype == "steam":
             items = []
             for appid, gname in (cfg.get("steam_games") or {}).items():
                 items.extend(parse_steam(appid, gname, max(3, max_per_source // 3)))
         else:
             text = http_get(sc.get("url", ""))
-            items = parse_rss(text, name, max_per_source) if text else []
             if not text:
                 print(f"  ! {name} 抓取失败，跳过", file=sys.stderr)
+                items = []
+            elif stype == "list":
+                items = parse_list_page(text, sc.get("url", ""),
+                                        sc.get("link_pattern", ""),
+                                        name, max_per_source,
+                                        exclude_pattern=sc.get("exclude_pattern"))
+            else:
+                items = parse_rss(text, name, max_per_source)
 
         fresh = []
         for it in items:

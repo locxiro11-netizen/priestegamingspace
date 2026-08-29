@@ -20,7 +20,16 @@
   "_max_keep": "content.json 的 news 数组最多保留多少条，超出丢弃最旧的",
   "max_keep": 300,
 
+  "_sources_note": "list = 抓列表页（国内站点 RSS 多已关闭）；rss = 标准 feed；steam = 官方 API",
   "sources": {
+    "gamersky":   { "enabled": true, "name": "游民星空", "type": "list",
+                    "url": "https://www.gamersky.com/news/",
+                    "link_pattern": "https://www\\.gamersky\\.com/news/\\d{6}/\\d+\\.shtml",
+                    "_exclude_note": "该站资讯频道混有娱乐/数码八卦，先粗筛一轮，最终筛选交给 AI",
+                    "exclude_pattern": "骨龄|裙|合照|绯闻|恋情|官宣|结婚|离婚|带货|直播带货|减肥|整容|写真|红毯|综艺|票房|收视|剧照|定档|开机|杀青|iPhone|华为|小米|手机|发布会|显卡价格|售罄" },
+    "3dm":        { "enabled": true, "name": "3DM",     "type": "list",
+                    "url": "https://www.3dmgame.com/news/",
+                    "link_pattern": "https://www\\.3dmgame\\.com/news/\\d{6}/\\d+\\.html" },
     "gcores":     { "enabled": true, "name": "机核",       "type": "rss", "url": "https://www.gcores.com/rss" },
     "ign":        { "enabled": true, "name": "IGN",        "type": "rss", "url": "https://feeds.ign.com/ign/games-all" },
     "gamespot":   { "enabled": true, "name": "GameSpot",   "type": "rss", "url": "https://www.gamespot.com/feeds/game-news" },

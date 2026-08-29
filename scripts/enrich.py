@@ -129,12 +129,33 @@ def _is_video_src(src):
 
 
 # 正文里常见的噪音片段（分享按钮、推荐位、署名行等）
+# 注意：这里的 .{0,6000}? 是有意设上限的。
+# 若用 .*?，一旦页面里同标签嵌套（div 套 div），从噪音 div 开头可以一路匹配到
+# 很远的 </div>，把整段正文一起吞掉——游民星空就踩过这个坑。
 _NOISE_SECTION = re.compile(
     r"<(header|nav|aside|footer|figure|div|ul|section)\b[^>]*class=\"[^\"]*"
     r"(share|social|newsletter|related|recirc|promo|byline|author|"
     r"breadcrumb|tags?-list|most-read|trending|newsletter|affiliate|"
-    r"disclaimer|comment)[^\"]*\"[^>]*>.*?</\1>",
+    r"disclaimer|comment)[^\"]*\"[^>]*>.{0,6000}?</\1>",
     re.S | re.I)
+
+# 部分站点没有 <article> 标签，按域名给正文容器提示
+_SITE_CONTAINERS = [
+    (r"gamersky\.com", r'class="Mid2L_con'),
+    (r"3dmgame\.com", r'class="news_warp_center|class="article-content|id="news_content'),
+    (r"gcores\.com", None),      # 走 API
+]
+
+# 正文结束的标志（用于把容器尾部截掉）。
+# 游民星空正文末尾固定有一句「本文由游民星空制作发布，未经允许请勿转载」，
+# 其后就是评论区与相关推荐，不截掉会把大量缩略图一起收进来。
+_ARTICLE_END = [
+    r"禁止转载",
+    r"请勿转载",
+    r"class=\"comment",
+    r"id=\"SOHUCS",
+    r"相关阅读",
+]
 
 _JUNK_TEXT = re.compile(
     r"^(share(?:\s+this)?(?:\s+article)?|join the conversation|"
@@ -221,6 +242,13 @@ def html_to_blocks(fragment):
             continue
         if _JUNK_TEXT.match(inline.strip()):
             continue
+        # 剥掉标签后几乎没有文字 => 多半是空链接/装饰性标签，直接丢弃
+        if len(re.sub(r"<[^>]+>", "", inline).strip()) < 8:
+            continue
+        # 页脚「Best PC games / Best RPGs / Best co-op games...」这类导航串，
+        # 位置不定，只能按内容特征识别。正常段落很少连着出现 3 个 "Best "
+        if len(re.findall(r"\bbest\s", inline, re.I)) >= 3:
+            continue
         # 短块里出现这些词，几乎必定是分享/关注/订阅控件
         if len(inline) < 60:
             low = inline.lower()
@@ -264,7 +292,7 @@ def first_video(blocks):
     return ""
 
 
-def pick_container(page):
+def pick_container(page, url=""):
     """从整页里挑出正文容器。
 
     按文档顺序取第一个段落数够多的 <article>——正文通常是最先出现的那个，
@@ -274,6 +302,23 @@ def pick_container(page):
         seg = m.group(1)
         if 0 < len(seg) < 400000 and len(re.findall(r"<p[ >]", seg)) >= 2:
             return seg
+
+    # 站点专属容器（游民星空、3DM 等没有 article 标签）
+    for host, hint in _SITE_CONTAINERS:
+        if hint and re.search(host, url):
+            m = re.search(hint, page)
+            if m:
+                seg = page[m.start(): m.start() + 45000]
+                # 截到正文结束处为止，避免把评论区/相关推荐的缩略图收进来
+                cut = -1
+                for pat in _ARTICLE_END:
+                    em = re.search(pat, seg)
+                    if em and em.start() > 500:
+                        cut = em.start() if cut < 0 else min(cut, em.start())
+                if cut > 0:
+                    seg = seg[:cut]
+                if len(re.findall(r"<p[ >]", seg)) >= 2:
+                    return seg
 
     best, best_score = "", 0
     for m in list(re.finditer(r"<div\b[^>]*>(.*?)</div>", page, re.S | re.I))[:200]:
@@ -355,7 +400,7 @@ def from_generic_page(url):
     page = fetch(url)
     if not page:
         return []
-    container = pick_container(page)
+    container = pick_container(page, url)
     if not container:
         return []
 
@@ -381,12 +426,21 @@ def from_generic_page(url):
         else:
             break
 
+    # 正文结束后常常还跟着一串图片/视频（侧边栏推荐位缩略图），一并去掉。
+    # 媒体块也要跳过，否则后面的文字清理循环会因为 blocks[-1] 不是 text 而直接不执行。
+    while blocks and blocks[-1]["type"] in ("image", "video"):
+        blocks.pop()
+
     # 页尾常挂「相关阅读 / 测评列表 / 订阅引导」，从末尾逐个丢弃
     while blocks and blocks[-1]["type"] == "text":
         t = blocks[-1]["text"]
         # 编号链接条目，形如 "3 <a href=...>Star Wars Zero Company review</a>"
         numbered_link = bool(re.match(r"^\d+\s+<a\s", t))
-        if len(t) < 50 or _TAIL_JUNK.search(t) or numbered_link:
+        # 页脚导航空列，形如 "Best gunplay Best RPGs : ... Best co-op games : ..."
+        nav_list = len(re.findall(r"\bbest\s", t, re.I)) >= 3
+        # 剥掉标签后没剩几个字 => 链接占位，同样丢掉
+        hollow = len(re.sub(r"<[^>]+>", "", t).strip()) < 20
+        if len(t) < 50 or _TAIL_JUNK.search(t) or numbered_link or nav_list or hollow:
             blocks.pop()
         else:
             break
@@ -418,9 +472,89 @@ def blocks_for(item):
 
 # --------------------------------------------------------------------------
 
+CJK = re.compile(r"[\u4e00-\u9fff]")
+
+
+def is_chinese(text, threshold=0.15):
+    """判断一段文字是否已经是中文（避免对中文源做无谓翻译）。"""
+    if not text:
+        return True
+    sample = text[:3000]
+    letters = [c for c in sample if c.isalpha()]
+    if not letters:
+        return True
+    return sum(1 for c in letters if CJK.match(c)) / len(letters) >= threshold
+
+
+def write_translate_task(items, path):
+    """把需要翻译的段落抽成纯文本清单，交给 AI 逐段翻译。
+
+    输出结构：{ uid: { "title": ..., "texts": [段落1, 段落2, ...] } }
+    AI 翻译后写回 scripts/out/translated.json，格式相同（值换成译文数组）。
+    """
+    task = {}
+    for it in items:
+        if is_chinese(it.get("content_html", "")):
+            continue
+        texts = [b["text"] for b in (it.get("content_blocks") or [])
+                 if b["type"] == "text" and b.get("text")]
+        if not texts:
+            continue
+        task[it.get("uid") or it.get("source_url")] = {
+            "title": it.get("title", ""),
+            "source": it.get("source", ""),
+            "texts": texts,
+        }
+    out_path = os.path.join(os.path.dirname(path), "to_translate.json")
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(task, f, ensure_ascii=False, indent=2)
+    if task:
+        total = sum(len(v["texts"]) for v in task.values())
+        print("\n待翻译：%d 篇 / %d 段 -> %s" % (len(task), total, out_path))
+    else:
+        print("\n全部为中文，无需翻译")
+    return out_path
+
+
+def apply_translations(items, path):
+    """把 scripts/out/translated.json 的译文填回 content_blocks 并重序列化。"""
+    tr_path = os.path.join(os.path.dirname(path), "translated.json")
+    if not os.path.exists(tr_path):
+        return 0
+    try:
+        with open(tr_path, "r", encoding="utf-8") as f:
+            trans = json.load(f)
+    except Exception as e:
+        print("  ! translated.json 解析失败: %s" % e, file=sys.stderr)
+        return 0
+
+    n = 0
+    for it in items:
+        key = it.get("uid") or it.get("source_url")
+        entry = trans.get(key)
+        if not entry:
+            continue
+        texts = entry.get("texts") if isinstance(entry, dict) else entry
+        if not texts:
+            continue
+        i = 0
+        for b in (it.get("content_blocks") or []):
+            if b["type"] == "text" and b.get("text"):
+                if i < len(texts) and texts[i]:
+                    b["text"] = texts[i]
+                i += 1
+        it["content_html"] = blocks_to_html(it["content_blocks"])
+        it["translated"] = True
+        n += 1
+    if n:
+        print("已应用译文：%d 篇" % n)
+    return n
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     path = args[0] if args else DEFAULT_INPUT
+    apply_only = "--apply-translation" in sys.argv[1:]
 
     if not os.path.exists(path):
         print("找不到输入文件: %s" % path, file=sys.stderr)
@@ -430,6 +564,13 @@ def main():
         items = json.load(f)
     if isinstance(items, dict):
         items = items.get("items", [])
+
+    # 只把译文填回并重序列化，不重新抓原文
+    if apply_only:
+        apply_translations(items, path)
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(items, f, ensure_ascii=False, indent=2)
+        return 0
 
     ok = failed = 0
     for it in items:
@@ -446,6 +587,8 @@ def main():
             continue
 
         it["content_html"] = blocks_to_html(blocks)
+        # 结构化段落留一份，供 AI 逐段翻译后重新拼装
+        it["content_blocks"] = blocks
         video = first_video(blocks)
         if video:
             it["video"] = video
@@ -460,6 +603,7 @@ def main():
         json.dump(items, f, ensure_ascii=False, indent=2)
 
     print("\n补全正文 %d 条，失败 %d 条 -> %s" % (ok, failed, path))
+    write_translate_task(items, path)
     return 0
 
 
