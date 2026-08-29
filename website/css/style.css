@@ -395,6 +395,24 @@ body{
   margin-bottom:16px;padding-top:12px;border-top:1px dashed var(--border)}
 .detail-source a{color:var(--accent-gold);text-decoration:none}
 .detail-source a:hover{text-decoration:underline}
+
+/* 资讯「阅读原文」入口 */
+.detail-origin{display:flex;align-items:center;gap:12px;margin:18px 0 16px;
+  padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius-md);
+  text-decoration:none;color:var(--text);background:var(--card-bg);
+  transition:all var(--transition)}
+.detail-origin:hover{border-color:var(--accent-gold);
+  background:rgba(201,162,77,0.06);transform:translateX(2px)}
+.origin-icon{font-size:18px;flex-shrink:0}
+.origin-text{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.origin-label{font-size:var(--font-body);font-weight:600;color:var(--accent-gold)}
+.origin-host{font-family:var(--mono);font-size:11px;color:var(--text-faint);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.origin-arrow{flex-shrink:0;color:var(--text-muted);font-size:16px}
+
+/* 搜索结果统计 */
+.search-summary{font-family:var(--mono);font-size:12px;color:var(--text-muted);
+  margin:0 0 14px;padding-left:2px}
 .detail-footer{display:flex;align-items:center;justify-content:space-between;
   padding:16px 32px;border-top:1px solid var(--border)}
 

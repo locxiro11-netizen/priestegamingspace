@@ -314,6 +314,15 @@ const Components = (() => {
 
   // ========== Detail Modal ==========
 
+  /** 取链接的域名，用于「阅读原文」处显示出处。 */
+  function originHost(url) {
+    try {
+      return new URL(url).hostname.replace(/^www\./, '');
+    } catch (e) {
+      return (url || '').replace(/^https?:\/\//, '').split('/')[0];
+    }
+  }
+
   function renderDetail(item) {
     const meta = CAT_META[item.category] || {};
     const tagHtml = item.tags?.map(t => `<span class="card-tag">${escapeHtml(t)}</span>`).join('') || '';
@@ -346,9 +355,15 @@ const Components = (() => {
               <div class="detail-content">${(item.content || item.desc || '').replace(/\n/g, '<br>')}</div>
             `}
             ${item.source_url ? `
-              <div class="detail-source">
-                来源：<a href="${escapeHtml(item.source_url)}" target="_blank" rel="noopener">${escapeHtml(item.source || '查看原文')}</a>
-              </div>
+              <a class="detail-origin" href="${escapeHtml(item.source_url)}"
+                 target="_blank" rel="noopener">
+                <span class="origin-icon">🔗</span>
+                <span class="origin-text">
+                  <span class="origin-label">阅读原文</span>
+                  <span class="origin-host">${escapeHtml(originHost(item.source_url))}${item.source ? ' · ' + escapeHtml(item.source) : ''}</span>
+                </span>
+                <span class="origin-arrow">→</span>
+              </a>
             ` : ''}
             ${tagHtml ? `<div class="detail-tags">${tagHtml}</div>` : ''}
           </div>

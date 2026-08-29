@@ -10,6 +10,9 @@ const App = (() => {
   let _dates = [];
   let _calendarYear, _calendarMonth;
   let _lifeUnlocked = false;
+  // 搜索时 render() 会重建整个列表，输入框随之被销毁。
+  // 这个标记用来在重绘后把值和光标还回去，否则每敲一个字焦点就丢了。
+  let _restoreSearchFocus = false;
 
   // ========== Init ==========
 
@@ -244,7 +247,9 @@ const App = (() => {
     } else if (_currentTab === 'life') {
       if (!_lifeUnlocked) { showPasswordGate(); return; }
       content.innerHTML = Components.renderSearchBar();
-      if (currentDate) {
+      if (_searchQuery) {
+        content.innerHTML += renderSearchResults(searchInCategory('life', _searchQuery), _searchQuery);
+      } else if (currentDate) {
         const dateData = Storage.getContentByDate(currentDate);
         const items = dateData['life'] || [];
         content.innerHTML += `<div class="card-grid">${items.map((item,i) => Components.renderCard(item,i,true)).join('') || Components.renderEmpty()}</div>`;
@@ -254,12 +259,27 @@ const App = (() => {
     } else {
       // Category-specific view
       content.innerHTML = Components.renderSearchBar();
-      if (currentDate) {
+      if (_searchQuery) {
+        // 有搜索词时跨日期检索，否则只能搜到当天那几条，等于没法搜
+        content.innerHTML += renderSearchResults(searchInCategory(_currentTab, _searchQuery), _searchQuery);
+      } else if (currentDate) {
         const dateData = Storage.getContentByDate(currentDate);
         const items = dateData[_currentTab] || [];
         content.innerHTML += `<div class="card-grid">${items.map((item,i) => Components.renderCard(item,i,true)).join('') || Components.renderEmpty()}</div>`;
       } else {
         content.innerHTML += Components.renderEmpty();
+      }
+    }
+
+    // 重绘后把搜索框的值和光标放回去
+    if (_restoreSearchFocus) {
+      _restoreSearchFocus = false;
+      const si = document.querySelector('#search-input');
+      if (si) {
+        si.value = _searchQuery;
+        si.focus();
+        const end = si.value.length;
+        try { si.setSelectionRange(end, end); } catch (e) {}
       }
     }
 
@@ -428,7 +448,36 @@ const App = (() => {
 
   function handleSearch(query) {
     _searchQuery = query;
+    _restoreSearchFocus = true;
     refresh();
+  }
+
+  /** 条目是否命中搜索词。资讯额外支持按来源检索。 */
+  function matchesQuery(item, q) {
+    if (!q) return true;
+    const s = q.trim().toLowerCase();
+    if (!s) return true;
+    const hit = (v) => v && String(v).toLowerCase().includes(s);
+    return hit(item.title) || hit(item.desc) || hit(item.content)
+        || hit(item.game) || hit(item.source)
+        || (Array.isArray(item.tags) && item.tags.some(t => hit(t)));
+  }
+
+  /** 在指定分类里跨日期检索（分类视图默认只显示当前日期，搜索时要放开）。 */
+  function searchInCategory(cat, q) {
+    return (Storage.getAll(cat) || [])
+      .map(item => ({ ...item, category: cat }))
+      .filter(item => matchesQuery(item, q))
+      .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  }
+
+  function renderSearchResults(hits, keyword) {
+    if (!hits.length) {
+      return `<div class="search-summary">没有找到与「${Components.escapeHtml(keyword)}」相关的内容</div>`
+           + Components.renderEmpty();
+    }
+    return `<div class="search-summary">找到 ${hits.length} 条与「${Components.escapeHtml(keyword)}」相关的内容</div>`
+         + `<div class="card-grid">${hits.map((item, i) => Components.renderCard(item, i, true)).join('')}</div>`;
   }
 
   // ========== Export / Import ==========
