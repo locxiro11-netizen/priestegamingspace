@@ -19,6 +19,7 @@ import re
 import ssl
 import sys
 import time
+import base64
 import hashlib
 import urllib.request
 import urllib.error
@@ -280,25 +281,63 @@ def parse_steam(appid, game_name, limit, max_len=700):
 # 去重
 # --------------------------------------------------------------------------
 
-def load_published_urls(live_url):
-    """读取线上已发布内容，收集 source_url，防止重复发布。"""
-    text = http_get(live_url, timeout=20, retries=1)
+def _collect_published(data):
     urls = set()
-    if not text:
-        print("  ! 无法读取线上 content.json，跳过线上去重", file=sys.stderr)
-        return urls
-    try:
-        data = json.loads(text)
-    except Exception as e:
-        print(f"  ! 线上 content.json 解析失败: {e}", file=sys.stderr)
-        return urls
     for item in data.get("news", []) or []:
         if item.get("source_url"):
             urls.add(item["source_url"])
         if item.get("uid"):
             urls.add("uid:" + item["uid"])
-    print(f"  线上已发布 {len(urls)} 条，用于去重")
     return urls
+
+
+def load_published(cfg):
+    """读取已发布内容用于去重。
+
+    优先走 GitHub API 读仓库里真正的 content.json（权威来源），读不到再退回公开网址。
+    公开网址可能落后于仓库，且部署来源变动时可能读到完全不同的文件，
+    拿它做去重依据会导致重复发布。
+    """
+    repo = cfg.get("repo") or {}
+    api = (f"https://api.github.com/repos/{repo.get('owner')}/{repo.get('name')}"
+           f"/contents/{repo.get('content_path')}?ref={repo.get('branch', 'main')}")
+
+    token = os.environ.get("GITHUB_TOKEN", "").strip()
+    if not token:
+        try:
+            token = open(os.path.join(ROOT, ".gh_token"), encoding="utf-8").read().strip()
+        except Exception:
+            token = ""
+
+    if token and repo.get("owner"):
+        req = urllib.request.Request(api, headers={
+            "Authorization": "Bearer " + token,
+            "User-Agent": "PriesteGamingSpace-NewsBot",
+            "Accept": "application/vnd.github+json",
+        })
+        for ctx in (_SSL_OK, _SSL_LOOSE):
+            try:
+                with urllib.request.urlopen(req, timeout=25, context=ctx) as resp:
+                    payload = json.loads(resp.read().decode("utf-8"))
+                data = json.loads(base64.b64decode(payload["content"]).decode("utf-8"))
+                urls = _collect_published(data)
+                print(f"  仓库内已发布 {len(urls)} 条，用于去重（来源：GitHub API）")
+                return urls
+            except Exception:
+                continue
+        print("  ! GitHub API 读取失败，改用公开网址", file=sys.stderr)
+
+    text = http_get(cfg.get("live_content_url", ""), timeout=20, retries=1)
+    if not text:
+        print("  ! 无法读取已发布内容，跳过去重", file=sys.stderr)
+        return set()
+    try:
+        urls = _collect_published(json.loads(text))
+        print(f"  线上已发布 {len(urls)} 条，用于去重（来源：公开网址）")
+        return urls
+    except Exception as e:
+        print(f"  ! content.json 解析失败: {e}", file=sys.stderr)
+        return set()
 
 
 def load_seen():
@@ -334,8 +373,8 @@ def main():
     max_per_source = cfg.get("max_per_source", 15)
     cutoff = datetime.now(timezone.utc) - timedelta(days=max_age_days)
 
-    print("读取线上已发布内容（去重依据）...")
-    published = load_published_urls(cfg.get("live_content_url", ""))
+    print("读取已发布内容（去重依据）...")
+    published = load_published(cfg)
     seen = load_seen()
 
     all_items = []
