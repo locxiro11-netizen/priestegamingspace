@@ -1,5 +1,101 @@
 {
-  "news": [],
+  "news": [
+    {
+      "id": "news-228cb4f4c7e6",
+      "date": "2026/08/30 01:17",
+      "title": "《GTA 6》首段实机演示峰值观众近 400 万，碾压同期所有直播",
+      "desc": "Rockstar 公布的首段《GTA 6》实机演示，在全平台直播中创下 3,970,738 人同时在线的峰值，成为今年游戏圈规模最大的一次直播事件。",
+      "tags": [
+        "GTA6",
+        "Rockstar",
+        "实机演示"
+      ],
+      "image": "https://assetsio.gnwcdn.com/GTA-6-Extended-Look-roundup-header-new.jpg?width=690&quality=85&format=jpg&auto=webp",
+      "game": "GTA 6",
+      "source": "Eurogamer",
+      "source_url": "https://www.eurogamer.net/gta-6-gameplay-reveal-streaming-viewership-record-twitch-netflix",
+      "likes": 0
+    },
+    {
+      "id": "news-95f263c4b69a",
+      "date": "2026/08/30 01:17",
+      "title": "《42中队》再度跳票至 2027 年，开发商把原因归咎于《GTA 6》",
+      "desc": "Cloud Imperium 宣布《星际公民》的单人战役《42中队》推迟到 2027 年发售，官方直言需要避开《GTA 6》的档期冲击。",
+      "tags": [
+        "42中队",
+        "星际公民",
+        "跳票"
+      ],
+      "image": "https://assetsio.gnwcdn.com/crytek-wants-to-dismiss-its-own-lawsuit-against-the-star-citizen-developer-until-squadron-42-comes-out-1578155315461.jpg?width=690&quality=85&format=jpg&auto=webp",
+      "game": "Squadron 42",
+      "source": "Eurogamer",
+      "source_url": "https://www.eurogamer.net/squadron-42-delayed-2027-gta-6",
+      "likes": 0
+    },
+    {
+      "id": "news-fb9afaa9900f",
+      "date": "2026/08/30 01:17",
+      "title": "技术专家盛赞《GTA 6》：迄今为止视觉最先进的游戏",
+      "desc": "多位图形技术专家逐帧分析了《GTA 6》的演示画面，认为其光照、材质与角色细节已经达到目前业界的最高水准。",
+      "tags": [
+        "GTA6",
+        "画面技术"
+      ],
+      "image": "https://www.gamespot.com/wp-content/uploads/2026/08/GTA-6-SITE_Zs4Re2o.webp?w=300",
+      "game": "GTA 6",
+      "source": "GameSpot",
+      "source_url": "https://www.gamespot.com/articles/tech-experts-call-grand-theft-auto-6-the-most-visually-advanced-game-to-date-which-explains-why-its-stuck-at-30fps/",
+      "likes": 0
+    },
+    {
+      "id": "news-68dc87a690d4",
+      "date": "2026/08/30 01:17",
+      "title": "讲讲那个吟游诗人的故事——《巫师》系列主创科隆专访",
+      "desc": "科隆期间机核对《巫师》系列主创做了专访，聊到《巫师 3》完全重制版基于 UE5 重做、资料片一并收录，以及 9 月 29 日上线 Switch 2 与 Battle.net 的安排。",
+      "tags": [
+        "巫师3",
+        "CDPR",
+        "科隆"
+      ],
+      "image": "https://image.gcores.com/81b87c0b019d6f1c2ad846ec574f1aa4-950-600.jpeg?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
+      "game": "巫师3",
+      "source": "机核",
+      "source_url": "https://www.gcores.com/articles/219014",
+      "likes": 0
+    },
+    {
+      "id": "news-496d102e265f",
+      "date": "2026/08/30 01:17",
+      "title": "DLSS 5 遭泄露：AI 滤镜能把游戏画面改成什么样",
+      "desc": "一段泄露的 DLSS 5 模组展示了英伟达新一代 AI 超分与滤镜的实际效果，风格化能力远超上代，同时也引发了关于画面被 AI 改写的争议。",
+      "tags": [
+        "DLSS",
+        "英伟达",
+        "显卡"
+      ],
+      "image": "https://www.gamespot.com/wp-content/uploads/2026/08/NVIDIA-DLSS-5-NR-DEMO-20-2000x1125-1.jpg?w=300",
+      "game": "",
+      "source": "GameSpot",
+      "source_url": "https://www.gamespot.com/articles/leaked-dlss-5-mod-shows-just-how-much-nvidias-ai-filter-can-mess-with-your-games/",
+      "likes": 0
+    },
+    {
+      "id": "news-3ac33635ba1d",
+      "date": "2026/08/30 01:17",
+      "title": "EA《钢铁侠》实机泄露后首次回应：好吧，这不在计划内",
+      "desc": "Motive 开发的《钢铁侠》遭实机片段泄露，EA 随后用一句自嘲的 well, that didn't go as planned 打破沉默。",
+      "tags": [
+        "钢铁侠",
+        "EA",
+        "泄露"
+      ],
+      "image": "https://cdn.mos.cms.futurecdn.net/uTQEwZRKhVS3N9qwnKXMTR-1280-80.jpg",
+      "game": "Marvel's Iron Man",
+      "source": "PC Gamer",
+      "source_url": "https://www.pcgamer.com/games/action/well-that-didnt-go-as-planned-says-ea-as-it-footage-of-its-iron-man-game-leaks-online/",
+      "likes": 0
+    }
+  ],
   "gameUI": [
     {
       "id": "t1",
