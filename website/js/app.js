@@ -189,7 +189,7 @@ const App = (() => {
       // Filter dates that only have life content
       dates = dates.filter(d => {
         const dd = Storage.getContentByDate(d);
-        return (dd.gameUI.length+dd.screenshots.length+dd.reflections.length) > 0;
+        return (dd.news.length+dd.gameUI.length+dd.screenshots.length+dd.reflections.length) > 0;
       });
       totalDays = dates.length;
     }
@@ -571,7 +571,7 @@ const App = (() => {
         // Cloud now holds everything we have locally; clear pending guard so the
         // next reload mirrors cloud exactly (enables cross-device deletion).
         const cur = Storage.getSharedData();
-        ['gameUI','screenshots','reflections','life'].forEach(cat => {
+        ['news','gameUI','screenshots','reflections','life'].forEach(cat => {
           Storage.clearPending((cur[cat] || []).map(i => i.id));
         });
         // Immediately reload to make sure local cache matches cloud

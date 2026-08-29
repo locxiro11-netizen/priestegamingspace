@@ -4,6 +4,7 @@
  */
 const Storage = (() => {
   const KEYS = {
+    news: 'pgs_news',
     gameUI: 'pgs_game_ui',
     screenshots: 'pgs_screenshots',
     reflections: 'pgs_reflections',
@@ -144,7 +145,7 @@ const Storage = (() => {
     );
   }
 
-  const ALL_CATS = ['gameUI','screenshots','reflections','life'];
+  const ALL_CATS = ['news','gameUI','screenshots','reflections','life'];
 
   function getRecent(limit = 3) {
     const all = [];
@@ -156,6 +157,7 @@ const Storage = (() => {
 
   function getStats() {
     return {
+      news: getAll('news').length,
       gameUI: getAll('gameUI').length,
       screenshots: getAll('screenshots').length,
       reflections: getAll('reflections').length,
@@ -165,6 +167,7 @@ const Storage = (() => {
 
   function exportAll() {
     return {
+      news: getAll('news'),
       gameUI: getAll('gameUI'),
       screenshots: getAll('screenshots'),
       reflections: getAll('reflections'),
@@ -175,6 +178,7 @@ const Storage = (() => {
 
   function importAll(data) {
     if (!data || typeof data !== 'object') return false;
+    if (Array.isArray(data.news)) _write(KEYS.news, data.news);
     if (Array.isArray(data.gameUI)) _write(KEYS.gameUI, data.gameUI);
     if (Array.isArray(data.screenshots)) _write(KEYS.screenshots, data.screenshots);
     if (Array.isArray(data.reflections)) _write(KEYS.reflections, data.reflections);
@@ -198,7 +202,7 @@ const Storage = (() => {
       .then(r => r.json())
       .then(shared => {
         let changed = false;
-        ['gameUI','screenshots','reflections','life'].forEach(cat => {
+        ['news','gameUI','screenshots','reflections','life'].forEach(cat => {
           const local = _read(KEYS[cat]);
           const sharedItems = Array.isArray(shared[cat]) ? shared[cat] : [];
           const sharedIds = new Set(sharedItems.map(i => i.id));
@@ -227,6 +231,7 @@ const Storage = (() => {
 
   function getSharedData() {
     return {
+      news: _read(KEYS.news),
       gameUI: _read(KEYS.gameUI),
       screenshots: _read(KEYS.screenshots),
       reflections: _read(KEYS.reflections),
@@ -279,7 +284,7 @@ const Storage = (() => {
   }
 
   function getContentByDate(dateStr) {
-    const result = { gameUI: [], screenshots: [], reflections: [], life: [] };
+    const result = { news: [], gameUI: [], screenshots: [], reflections: [], life: [] };
     ALL_CATS.forEach(cat => {
       getAll(cat).forEach(item => {
         const m = item.date.match(/(\d{4})\/(\d{1,2})\/(\d{1,2})/);

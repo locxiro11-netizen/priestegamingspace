@@ -7,3 +7,8 @@ start-sync.bat
 sync-server.log
 website/js/token.js
 js/token.js
+
+# 自动发布资讯相关：Token 与中间产物不进版本库
+.gh_token
+scripts/out/
+scripts/state/

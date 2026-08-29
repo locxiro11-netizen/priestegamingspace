@@ -6,6 +6,7 @@ const Components = (() => {
 
   const CAT_META = {
     home:        { label: '全部',       icon: '', key: 'home' },
+    news:        { label: '游戏资讯',   icon: '📰', key: 'news' },
     gameUI:      { label: '游戏UI分享', icon: '🎮', key: 'gameUI' },
     screenshots: { label: '游戏截图',   icon: '📸', key: 'screenshots' },
     reflections: { label: '工作感悟',   icon: '📝', key: 'reflections' },
@@ -14,6 +15,7 @@ const Components = (() => {
 
   const NAV_TABS = [
     { id: 'home',        label: '精选栏目' },
+    { id: 'news',        label: '📰 游戏资讯' },
     { id: 'gameUI',      label: '游戏UI' },
     { id: 'screenshots', label: '游戏截图' },
     { id: 'reflections', label: '工作感悟' },
@@ -23,6 +25,7 @@ const Components = (() => {
 
   const FILTER_PILLS = [
     { id: 'all',         label: '全部' },
+    { id: 'news',        label: '游戏资讯' },
     { id: 'gameUI',      label: '游戏UI' },
     { id: 'screenshots', label: '游戏截图' },
     { id: 'reflections', label: '工作感悟' },
@@ -33,6 +36,7 @@ const Components = (() => {
 
   function renderStatsBar(stats, totalDays) {
     const items = [
+      { num: stats.news, label: '游戏资讯', icon: '📰' },
       { num: stats.gameUI, label: '游戏UI', icon: '🎮' },
       { num: stats.screenshots, label: '游戏截图', icon: '📸' },
       { num: stats.reflections, label: '工作感悟', icon: '📝' },
@@ -161,10 +165,11 @@ const Components = (() => {
     if (!dateData) return renderEmpty();
 
     const sections = [
-      { cat: 'gameUI', num: 1, title: '游戏UI分享', sub: 'Game UI Sharing' },
-      { cat: 'screenshots', num: 2, title: '游戏截图', sub: 'Game Screenshots' },
-      { cat: 'reflections', num: 3, title: '工作感悟', sub: 'Work Reflections' },
-      { cat: 'life', num: 4, title: '生活与自然', sub: 'Life & Nature' }
+      { cat: 'news', num: 1, title: '游戏资讯', sub: 'Gaming News' },
+      { cat: 'gameUI', num: 2, title: '游戏UI分享', sub: 'Game UI Sharing' },
+      { cat: 'screenshots', num: 3, title: '游戏截图', sub: 'Game Screenshots' },
+      { cat: 'reflections', num: 4, title: '工作感悟', sub: 'Work Reflections' },
+      { cat: 'life', num: 5, title: '生活与自然', sub: 'Life & Nature' }
     ];
 
     let html = '';
@@ -183,7 +188,7 @@ const Components = (() => {
 
     if (!html) {
       // Check if there's content but filtered out
-      const totalItems = (dateData.gameUI?.length || 0) + (dateData.screenshots?.length || 0) + (dateData.reflections?.length || 0);
+      const totalItems = (dateData.news?.length || 0) + (dateData.gameUI?.length || 0) + (dateData.screenshots?.length || 0) + (dateData.reflections?.length || 0);
       if (totalItems > 0) {
         html = `<div class="empty-state fade-in"><div class="empty-icon">🔍</div><p>该分类下没有内容</p></div>`;
       } else {

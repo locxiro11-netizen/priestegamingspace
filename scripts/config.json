@@ -1,0 +1,40 @@
+{
+  "_comment": "PriesteGamingSpace 游戏资讯自动抓取配置",
+
+  "repo": {
+    "owner": "locxiro11-netizen",
+    "name": "priestegamingspace",
+    "branch": "main",
+    "content_path": "website/data/content.json"
+  },
+
+  "_live_content_url": "线上已发布内容的读取地址，用于去重，避免重复发布",
+  "live_content_url": "https://locxiro11-netizen.github.io/priestegamingspace/data/content.json",
+
+  "_max_age_days": "只保留最近 N 天内发布的资讯，避免抓到旧闻",
+  "max_age_days": 3,
+
+  "_max_per_source": "每个源最多抓取的条目数",
+  "max_per_source": 15,
+
+  "_max_keep": "content.json 的 news 数组最多保留多少条，超出丢弃最旧的",
+  "max_keep": 300,
+
+  "sources": {
+    "gcores":     { "enabled": true, "name": "机核",       "type": "rss", "url": "https://www.gcores.com/rss" },
+    "ign":        { "enabled": true, "name": "IGN",        "type": "rss", "url": "https://feeds.ign.com/ign/games-all" },
+    "gamespot":   { "enabled": true, "name": "GameSpot",   "type": "rss", "url": "https://www.gamespot.com/feeds/game-news" },
+    "pcgamer":    { "enabled": true, "name": "PC Gamer",   "type": "rss", "url": "https://www.pcgamer.com/rss/" },
+    "eurogamer":  { "enabled": true, "name": "Eurogamer",  "type": "rss", "url": "https://www.eurogamer.net/feed" },
+    "steam":      { "enabled": true, "name": "Steam",      "type": "steam" }
+  },
+
+  "_steam_games": "Steam 官方新闻源：appid -> 游戏名。添加游戏就往这里加，appid 可在商店页面网址里找到",
+  "steam_games": {
+    "730": "CS2",
+    "570": "Dota 2",
+    "2358720": "黑神话：悟空",
+    "1085660": "Destiny 2",
+    "1938090": "Call of Duty"
+  }
+}
