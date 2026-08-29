@@ -273,7 +273,9 @@ def blocks_to_html(blocks):
         if b["type"] == "text":
             out.append("<%s>%s</%s>" % (b["tag"], b["text"], b["tag"]))
         elif b["type"] == "image":
-            out.append('<img src="%s" alt="%s" loading="lazy">'
+            # referrerpolicy 是必须的：游民星空 / 3DM 等站点有防盗链，
+            # 带外站 Referer 请求图片会 403，不发送才正常
+            out.append('<img src="%s" alt="%s" loading="lazy" referrerpolicy="no-referrer">'
                        % (html.escape(b["src"], quote=True),
                           html.escape(b.get("alt", ""), quote=True)))
         elif b["type"] == "video":

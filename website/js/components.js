@@ -128,6 +128,7 @@ const Components = (() => {
         ${item.image ? `
           <div class="card-image">
             <img src="${item.image}" alt="${escapeHtml(item.title)}" loading="lazy"
+              referrerpolicy="no-referrer"
               onclick="App.openDetail('${item.category}', '${item.id}')">
           </div>
         ` : ''}
@@ -328,7 +329,7 @@ const Components = (() => {
                 allowfullscreen loading="lazy" title="${escapeHtml(item.title)}"></iframe>
             </div>
           ` : (item.image ? `
-            <div class="detail-image"><img src="${item.image}" alt="${escapeHtml(item.title)}"></div>
+            <div class="detail-image"><img src="${item.image}" alt="${escapeHtml(item.title)}" referrerpolicy="no-referrer"></div>
           ` : '')}
           <div class="detail-body">
             <div class="detail-meta">
@@ -339,7 +340,7 @@ const Components = (() => {
             <h2 class="detail-title">${escapeHtml(item.title)}</h2>
             ${item.game ? `<span style="color:var(--text-muted);font-size:14px">🎯 ${escapeHtml(item.game)}</span>` : ''}
             ${item.content_html ? `
-              ${item.video && item.image ? `<div class="detail-image"><img src="${item.image}" alt=""></div>` : ''}
+              ${item.video && item.image ? `<div class="detail-image"><img src="${item.image}" alt="" referrerpolicy="no-referrer"></div>` : ''}
               <div class="detail-content article-body">${item.content_html}</div>
             ` : `
               <div class="detail-content">${(item.content || item.desc || '').replace(/\n/g, '<br>')}</div>
