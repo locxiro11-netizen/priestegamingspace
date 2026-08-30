@@ -33,8 +33,8 @@ CURATED_PATH = os.path.join(OUT_DIR, "curated.json")
 TRANSLATE_TASK_PATH = os.path.join(OUT_DIR, "to_translate.json")
 TRANSLATED_PATH = os.path.join(OUT_DIR, "translated.json")
 
-ENDPOINT = os.environ.get("LLM_ENDPOINT", "https://api.deepseek.com/chat/completions")
-MODEL = os.environ.get("LLM_MODEL", "deepseek-chat")
+ENDPOINT = os.environ.get("LLM_ENDPOINT", "").strip() or "https://api.deepseek.com/chat/completions"
+MODEL = os.environ.get("LLM_MODEL", "").strip() or "deepseek-chat"
 
 _SSL_OK = ssl.create_default_context()
 _SSL_LOOSE = ssl.create_default_context()
