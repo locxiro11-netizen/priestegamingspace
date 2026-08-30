@@ -32,6 +32,7 @@ CANDIDATES_PATH = os.path.join(OUT_DIR, "candidates.json")
 CURATED_PATH = os.path.join(OUT_DIR, "curated.json")
 TRANSLATE_TASK_PATH = os.path.join(OUT_DIR, "to_translate.json")
 TRANSLATED_PATH = os.path.join(OUT_DIR, "translated.json")
+UNTRANSLATED_PATH = os.path.join(OUT_DIR, "untranslated.json")
 
 ENDPOINT = os.environ.get("LLM_ENDPOINT", "").strip() or "https://open.bigmodel.cn/api/paas/v4/chat/completions"
 MODEL = os.environ.get("LLM_MODEL", "").strip() or "glm-4-flash"
@@ -161,6 +162,47 @@ def build_candidate_brief(items):
     return "\n".join(lines)
 
 
+CN_SOURCES = {"机核", "游民星空", "3DM"}
+
+
+def _title_grams(title, n=3):
+    """标题归一化后取字符 n-gram 集合，用于跨源撞题检测。"""
+    t = re.sub(r"[《》「』「『\"'：:，,。.!！?？\-—_\s\[\]（）()]", "", (title or "").lower())
+    if len(t) < n:
+        return {t} if t else set()
+    return {t[i:i + n] for i in range(len(t) - n + 1)}
+
+
+def dedupe_curated(curated):
+    """同一事件的多源报道只留一条（模型的漏网之鱼在这里兜底）。
+    保留优先级：国内源 > 模型排序靠前。"""
+    kept = []
+    for c in curated:
+        g = _title_grams(c.get("title"))
+        dup_of = None
+        for k in kept:
+            kg = _title_grams(k.get("title"))
+            if not g or not kg:
+                continue
+            inter = len(g & kg)
+            union = len(g | kg)
+            if union and inter / union >= 0.45:
+                dup_of = k
+                break
+        if dup_of is None:
+            kept.append(c)
+            continue
+        # 撞题：国内源顶替国外源，否则保留先来的（模型眼里更重要的）
+        if c.get("source") in CN_SOURCES and dup_of.get("source") not in CN_SOURCES:
+            print("  ~ 去重：[%s] 顶替 [%s]《%s》"
+                  % (c["source"], dup_of["source"], (dup_of.get("title") or "")[:30]))
+            kept[kept.index(dup_of)] = c
+        else:
+            print("  ~ 去重：丢弃 [%s]《%s》（与 [%s] 撞题）"
+                  % (c["source"], (c.get("title") or "")[:30], dup_of["source"]))
+    return kept
+
+
 def do_select():
     with open(CANDIDATES_PATH, encoding="utf-8") as f:
         data = json.load(f)
@@ -222,9 +264,10 @@ def do_select():
                 "content_encoded": src.get("content_encoded", ""),
             })
 
+    curated = dedupe_curated(curated)
+
     with open(CURATED_PATH, "w", encoding="utf-8") as f:
         json.dump(curated, f, ensure_ascii=False, indent=2)
-
     print("精选完成，共 %d 条：" % len(curated))
     for c in curated:
         print("  · [%s] %s" % (c["source"], c["title"][:48]))
@@ -248,6 +291,33 @@ TRANSLATE_SYSTEM = """你是游戏资讯译者。把英文段落逐段译成简�
 CHUNK_CHARS = 5000
 
 
+def translate_chunk(chunk, total, ci, nchunks, depth=0):
+    """翻译一批段落。返回译文列表；长度对不上时递归拆半重试，
+    拆到单段仍失败才放弃（返回 None，由调用方决定保留原文）。"""
+    payload = json.dumps(chunk, ensure_ascii=False)
+    resp = chat([
+        {"role": "system", "content": TRANSLATE_SYSTEM},
+        {"role": "user", "content":
+            "共 %d 段（第 %d/%d 批）。严格按同样顺序输出 JSON 数组：\n%s"
+            % (total, ci + 1, nchunks, payload)},
+    ], max_tokens=8192, temperature=0.2)
+    arr = extract_json(resp)
+    if arr and len(arr) == len(chunk):
+        return arr
+    # 长度不符：拆半重试（最多拆到单段）
+    if len(chunk) > 1 and depth < 4:
+        print("  ! 第 %d 批返回长度不符（期望 %d，实际 %s），拆半重试"
+              % (ci + 1, len(chunk), len(arr) if arr else "无法解析"), file=sys.stderr)
+        mid = len(chunk) // 2
+        left = translate_chunk(chunk[:mid], total, ci, nchunks, depth + 1)
+        right = translate_chunk(chunk[mid:], total, ci, nchunks, depth + 1)
+        if left is not None and right is not None:
+            return left + right
+        return None
+    print("  ! 单段翻译仍无法对齐，保留原文: %s..." % chunk[0][:40], file=sys.stderr)
+    return None
+
+
 def do_translate():
     if not os.path.exists(TRANSLATE_TASK_PATH):
         print("没有待翻译内容。")
@@ -259,6 +329,7 @@ def do_translate():
         return 0
 
     result = {}
+    untranslated_uids = []
     for uid, entry in task.items():
         texts = entry.get("texts") or []
         if not texts:
@@ -276,31 +347,31 @@ def do_translate():
             chunks.append(cur)
 
         translated = []
-        offset = 0
+        failed = False
         for ci, chunk in enumerate(chunks):
-            payload = json.dumps(chunk, ensure_ascii=False)
-            resp = chat([
-                {"role": "system", "content": TRANSLATE_SYSTEM},
-                {"role": "user", "content":
-                    "共 %d 段（第 %d/%d 批）。严格按同样顺序输出 JSON 数组：\n%s"
-                    % (len(texts), ci + 1, len(chunks), payload)},
-            ], max_tokens=8192, temperature=0.2)
-            arr = extract_json(resp)
-            if not arr or len(arr) != len(chunk):
-                print("  ! 第 %d 批返回长度不符（期望 %d，实际 %s），该批保留原文"
-                      % (ci + 1, len(chunk), len(arr) if arr else "无法解析"), file=sys.stderr)
-                arr = chunk
+            arr = translate_chunk(chunk, len(texts), ci, len(chunks))
+            if arr is None:
+                failed = True
+                arr = chunk  # 该批保留原文
             translated.extend(arr)
-            offset += len(chunk)
 
         if len(translated) != len(texts):
             print("  ! 译文总数对不上，保留原文", file=sys.stderr)
             translated = texts
+            failed = True
+        if failed:
+            untranslated_uids.append(uid)
         result[uid] = translated
 
     with open(TRANSLATED_PATH, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
     print("译文已写入 %s（%d 篇）" % (TRANSLATED_PATH, len(result)))
+    # 翻译失败的篇目记入黑名单，回填阶段直接剔除，绝不发布英文原文
+    with open(UNTRANSLATED_PATH, "w", encoding="utf-8") as f:
+        json.dump(untranslated_uids, f, ensure_ascii=False)
+    if untranslated_uids:
+        print("注意：%d 篇正文翻译失败，将在回填阶段被剔除（不会发布英文原文）"
+              % len(untranslated_uids), file=sys.stderr)
     return 0
 
 

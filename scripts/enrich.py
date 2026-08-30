@@ -674,6 +674,25 @@ def apply_translations(items, path):
         n += 1
     if n:
         print("已应用译文：%d 篇" % n)
+
+    # 翻译黑名单：正文仍是英文的篇目直接剔除，不发布
+    ut_path = os.path.join(os.path.dirname(path), "untranslated.json")
+    if os.path.exists(ut_path):
+        try:
+            with open(ut_path, "r", encoding="utf-8") as f:
+                blocked = set(json.load(f))
+        except Exception:
+            blocked = set()
+        if blocked:
+            kept = []
+            for it in items:
+                key = it.get("uid") or it.get("source_url")
+                if key in blocked and not is_chinese(it.get("content_html", "")):
+                    print("  ✗ 剔除未翻译篇目: %s" % (it.get("title") or "")[:40])
+                    continue
+                kept.append(it)
+            items[:] = kept
+            os.remove(ut_path)
     return n
 
 

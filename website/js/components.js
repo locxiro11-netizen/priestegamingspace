@@ -345,6 +345,29 @@ const Components = (() => {
     }
   }
 
+  // 视频 URL 处理：去掉 autoplay（骚扰且耗流量）；YouTube 生成可点击的观看链接
+  function sanitizeVideoUrl(url) {
+    if (!url) return url;
+    return url.replace(/([?&])autoplay=1&?/, '$1').replace(/[?&]$/, '');
+  }
+
+  function videoWatchUrl(url) {
+    if (!url) return '';
+    const m = url.match(/youtube(?:-nocookie)?\.com\/embed\/([\w-]+)/);
+    if (m) return 'https://www.youtube.com/watch?v=' + m[1];
+    return url;
+  }
+
+  function isYoutube(url) {
+    return /youtube(?:-nocookie)?\.com/.test(url || '');
+  }
+
+  // content_html 里的内嵌 iframe 同样去掉 autoplay
+  function sanitizeContentHtml(html) {
+    if (!html) return html;
+    return html.replace(/(<iframe[^>]*src="[^"]*?)autoplay=1&?/g, '$1');
+  }
+
   function renderDetail(item) {
     const meta = CAT_META[item.category] || {};
     const tagHtml = item.tags?.map(t => `<span class="card-tag">${escapeHtml(t)}</span>`).join('') || '';
@@ -355,10 +378,16 @@ const Components = (() => {
           <button class="modal-close" onclick="App.closeModal('detail-modal')">✕</button>
           ${item.video ? `
             <div class="detail-video">
-              <iframe src="${item.video}" frameborder="0"
+              <iframe src="${sanitizeVideoUrl(item.video)}" frameborder="0"
                 allow="autoplay; encrypted-media; picture-in-picture"
                 allowfullscreen loading="lazy" title="${escapeHtml(item.title)}"></iframe>
             </div>
+            ${isYoutube(item.video) ? `
+              <div class="video-fallback">
+                📺 视频托管在 YouTube，若无法加载可
+                <a href="${videoWatchUrl(item.video)}" target="_blank" rel="noopener">点击前往观看 →</a>
+              </div>
+            ` : ''}
           ` : (item.image ? `
             <div class="detail-image"><img src="${item.image}" alt="${escapeHtml(item.title)}" referrerpolicy="no-referrer"></div>
           ` : '')}
@@ -372,7 +401,7 @@ const Components = (() => {
             ${item.game ? `<span style="color:var(--text-muted);font-size:14px">🎯 ${escapeHtml(item.game)}</span>` : ''}
             ${item.content_html ? `
               ${item.video && item.image ? `<div class="detail-image"><img src="${item.image}" alt="" referrerpolicy="no-referrer"></div>` : ''}
-              <div class="detail-content article-body">${item.content_html}</div>
+              <div class="detail-content article-body">${sanitizeContentHtml(item.content_html)}</div>
             ` : `
               <div class="detail-content">${(item.content || item.desc || '').replace(/\n/g, '<br>')}</div>
             `}

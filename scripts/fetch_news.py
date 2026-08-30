@@ -515,6 +515,15 @@ def main():
             else:
                 items = parse_rss(text, name, max_per_source)
 
+        # 按 URL 过滤（如机核 /radios/ 电台节目没有文章正文）
+        excl_url = sc.get("exclude_url_pattern")
+        if excl_url:
+            rx_url = re.compile(excl_url)
+            n0 = len(items)
+            items = [it for it in items if not rx_url.search(it.get("source_url", ""))]
+            if n0 != len(items):
+                print(f"  URL 规则过滤掉 {n0 - len(items)} 条")
+
         fresh = []
         stale_by_url = 0
         for it in items:
