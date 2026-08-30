@@ -11,6 +11,14 @@ fetch_news.py — 抓取多源游戏资讯，输出去重后的候选列表。
 
 用法:
     python scripts/fetch_news.py
+    python scripts/fetch_news.py --ignore-seen   # 恢复用：忽略「已看过」状态
+
+去重说明:
+  - 「已发布」：以线上 content.json 的 source_url 为准，防止重复发布。
+  - 「已看过」：由 publish.py 在发布成功后写入 scripts/state/seen.json，
+    作用是避免第二天重复评估同一批已被淘汰的新闻。
+    抓取阶段**不写**该状态，否则中途失败会污染候选池。
+    若状态被误污染，用 --ignore-seen 恢复。
 """
 
 import json
@@ -356,6 +364,26 @@ def parse_list_page(page_html, base, link_pattern, source_name, limit,
     return out
 
 
+def url_month_stale(url, max_months=1):
+    """用 URL 里的年月判断条目是否明显过期。
+
+    列表页（3DM / 游民星空）的条目拿不到发布时间，而列表页往往混着
+    「热门推荐」板块的老文章 —— 实测 3DM 首页带了 5 条 2023-11 的旧闻。
+    这类条目 published 为空，天数过滤器拦不住，会被当成新闻发出去。
+    这两家的正文 URL 都带 /YYYYMM/ 段，拿它做兜底校验。
+
+    返回 True 表示该丢弃。识别不出年月时返回 False（保守保留）。
+    """
+    m = re.search(r"/(20\d{2})(\d{2})/", url or "")
+    if not m:
+        return False
+    year, month = int(m.group(1)), int(m.group(2))
+    if not 1 <= month <= 12:
+        return False
+    now = datetime.now()
+    return (now.year * 12 + now.month) - (year * 12 + month) > max_months
+
+
 # --------------------------------------------------------------------------
 # 去重
 # --------------------------------------------------------------------------
@@ -448,13 +476,17 @@ def main():
     with open(CONFIG_PATH, "r", encoding="utf-8") as f:
         cfg = json.load(f)
 
+    ignore_seen = "--ignore-seen" in sys.argv[1:]
+
     max_age_days = cfg.get("max_age_days", 3)
     max_per_source = cfg.get("max_per_source", 15)
     cutoff = datetime.now(timezone.utc) - timedelta(days=max_age_days)
 
     print("读取已发布内容（去重依据）...")
     published = load_published(cfg)
-    seen = load_seen()
+    seen = set() if ignore_seen else load_seen()
+    if ignore_seen:
+        print("  --ignore-seen：本次忽略「已看过」状态，只按已发布去重")
 
     all_items = []
     sources = cfg.get("sources", {})
@@ -484,13 +516,18 @@ def main():
                 items = parse_rss(text, name, max_per_source)
 
         fresh = []
+        stale_by_url = 0
         for it in items:
             pub = parse_time(it["published"]) if it["published"] else None
-            # 没有时间的条目保守保留（交给后续筛选）
             if pub and pub < cutoff:
                 continue
+            # 没有发布时间的（列表页源）用 URL 年月兜底，挡掉推荐位里的老文章
+            if not pub and url_month_stale(it["source_url"]):
+                stale_by_url += 1
+                continue
             fresh.append(it)
-        print(f"  得到 {len(items)} 条，{max_age_days} 天内 {len(fresh)} 条")
+        extra = f"，URL 年月判定过期 {stale_by_url} 条" if stale_by_url else ""
+        print(f"  得到 {len(items)} 条，{max_age_days} 天内 {len(fresh)} 条{extra}")
         all_items.extend(fresh)
 
     # 去重：源内重复 + 已发布 + 历史上已看过
@@ -521,7 +558,10 @@ def main():
             "items": deduped,
         }, f, ensure_ascii=False, indent=2)
 
-    save_seen([it["uid"] for it in deduped])
+    # 注意：这里**不能**把候选标记为「已看过」。
+    # 抓取阶段就标记的话，只要后续（精选/补正文/发布）中途失败，
+    # 当天候选池就被永久污染，之后每天都会误报「今日无新闻」。
+    # 已看过状态改由 publish.py 在**发布成功后**写入，见 publish.py:mark_candidates_seen()。
 
     print(f"\n共 {len(all_items)} 条原始资讯，去重后 {len(deduped)} 条候选")
     print(f"已写入: {CANDIDATES_PATH}")

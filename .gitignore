@@ -8,7 +8,8 @@ sync-server.log
 website/js/token.js
 js/token.js
 
-# 自动发布资讯相关：Token 与中间产物不进版本库
+# 自动发布资讯相关：Token / Key 与中间产物不进版本库
 .gh_token
+.llm_key
 scripts/out/
 scripts/state/

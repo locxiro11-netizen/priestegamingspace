@@ -89,6 +89,30 @@ def now_str():
     return datetime.now().strftime("%Y/%m/%d %H:%M")
 
 
+def mark_candidates_seen():
+    """发布成功后，把本轮抓到的全部候选标记为「已看过」。
+
+    放在发布成功之后（而不是抓取阶段）是刻意的：一轮流程只有真正走完，
+    才说明这批候选已被评估过；中途失败时候选池保持干净，下次还能重新评估。
+    """
+    cand_path = os.path.join(ROOT, "scripts", "out", "candidates.json")
+    if not os.path.exists(cand_path):
+        return
+    try:
+        with open(cand_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        uids = [i["uid"] for i in data.get("items", []) if i.get("uid")]
+        if not uids:
+            return
+        sys.path.insert(0, os.path.join(ROOT, "scripts"))
+        import fetch_news
+        fetch_news.save_seen(uids)
+        print(f"已把 {len(uids)} 条候选标记为「已看过」")
+    except Exception as e:
+        # 标记失败不影响发布结果，只是下次会重复评估
+        print(f"  ! 标记已看过失败（不影响发布）: {e}", file=sys.stderr)
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     dry_run = "--dry-run" in sys.argv[1:]
@@ -109,9 +133,13 @@ def main():
             curated = json.load(f)
         if isinstance(curated, dict):
             curated = curated.get("items", [])
-        if not isinstance(curated, list) or not curated:
-            print("精选列表为空，没有可发布的内容", file=sys.stderr)
+        if not isinstance(curated, list):
+            print("curated.json 格式不对，应为数组", file=sys.stderr)
             return 1
+        if not curated:
+            # 「今天没有够分量的新闻」是正常结果，不该让定时任务报错
+            print("今日无可发布内容（精选结果为空）")
+            return 0
 
     api = (f"https://api.github.com/repos/{repo['owner']}/{repo['name']}"
            f"/contents/{repo['content_path']}")
@@ -284,6 +312,7 @@ def main():
         return 1
 
     print(f"推送成功！共新增 {len(added)} 条资讯。")
+    mark_candidates_seen()
     print(f"提交: {result.get('commit', {}).get('sha', '')[:8]}")
     print("GitHub Actions 会自动部署，约 1-2 分钟后可见：")
     print("https://locxiro11-netizen.github.io/priestegamingspace/")

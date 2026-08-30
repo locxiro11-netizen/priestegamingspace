@@ -1,0 +1,73 @@
+name: 每日游戏资讯自动发布
+
+on:
+  schedule:
+    # GitHub Actions 的 cron 用 UTC。UTC 01:00 = 北京时间 09:00
+    - cron: '0 1 * * *'
+  workflow_dispatch:    # 允许在 Actions 页面手动点一次
+
+concurrency:
+  group: daily-news
+  cancel-in-progress: false
+
+jobs:
+  publish-news:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: 准备 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 恢复已看过条目（避免重复筛选）
+        uses: actions/cache@v4
+        with:
+          path: scripts/state
+          key: news-seen-${{ github.run_id }}
+          restore-keys: |
+            news-seen-
+
+      - name: 抓取候选资讯
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        run: python scripts/fetch_news.py
+
+      - name: 大模型精选（爆点判断 + 中文重写）
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_ENDPOINT: ${{ secrets.LLM_ENDPOINT }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+        run: python scripts/ai_curate.py
+
+      - name: 补全正文与视频
+        run: python scripts/enrich.py
+
+      - name: 翻译非中文正文
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_ENDPOINT: ${{ secrets.LLM_ENDPOINT }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+        run: python scripts/ai_curate.py --translate
+
+      - name: 回填译文
+        run: python scripts/enrich.py --apply-translation
+
+      - name: 发布到站点
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        run: python scripts/publish.py
+
+      - name: 保存已看过条目
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: scripts/state
+          key: news-seen-${{ github.run_id }}
