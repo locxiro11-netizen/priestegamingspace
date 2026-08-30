@@ -380,6 +380,7 @@ const Components = (() => {
             <div class="detail-video">
               <iframe src="${sanitizeVideoUrl(item.video)}" frameborder="0"
                 allow="autoplay; encrypted-media; picture-in-picture"
+                referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen loading="lazy" title="${escapeHtml(item.title)}"></iframe>
             </div>
             ${isYoutube(item.video) ? `

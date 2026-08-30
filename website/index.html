@@ -6,10 +6,10 @@
   <title>PriesteGamingSpace</title>
   <meta name="description" content="PriesteGamingSpace — 游戏UI · 游戏截图 · 工作感悟">
   <meta name="theme-color" content="#0c0a09">
-  <!-- 资讯配图来自游民星空、3DM 等站点，它们都有防盗链：
-       带外站 Referer 请求图片会返回 403，不发送 Referer 则正常。
-       这里让整页都不发送 Referer，外链图片才能正常显示。 -->
-  <meta name="referrer" content="no-referrer">
+  <!-- 资讯配图来自游民星空、3DM 等防盗链站点：图片标签上单独加
+       referrerpolicy="no-referrer" 即可破防盗链。
+       注意：不能用全局 meta no-referrer——YouTube 嵌入播放器
+       校验 Referer，缺失会报「错误 153 视频播放器配置错误」。 -->
   <meta property="og:title" content="PriesteGamingSpace">
   <meta property="og:description" content="游戏与生活的交集 · 分享不止于屏幕">
   <meta property="og:type" content="website">
