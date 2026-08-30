@@ -19,6 +19,7 @@ publish.py — 把精选好的资讯写入 website/data/content.json 并推送�
 用法:
     python scripts/publish.py                      # 正常发布
     python scripts/publish.py --dry-run            # 只预览合并结果，不推送
+    python scripts/publish.py --repair             # 重新提取已发布但内容有问题的条目
     python scripts/publish.py path/to/file.json    # 指定输入文件
 
 Token 来源（二选一）:
@@ -87,6 +88,38 @@ def load_token():
 
 def now_str():
     return datetime.now().strftime("%Y/%m/%d %H:%M")
+
+
+def push_content(api, token, sha, content, message, branch, dry_run):
+    """把整个 content.json 推回 GitHub。返回 True 成功 / False 失败 / None 未推送。"""
+    body = json.dumps(content, ensure_ascii=False, indent=2)
+    if dry_run:
+        print("\n[dry-run] 未推送。")
+        return None
+    if not token:
+        print(f"\n缺少 GitHub Token：请设置 GITHUB_TOKEN 或写入 {TOKEN_FILE}",
+              file=sys.stderr)
+        return False
+
+    payload = {
+        "message": message,
+        "content": base64.b64encode(body.encode("utf-8")).decode("ascii"),
+        "branch": branch,
+    }
+    if sha:
+        payload["sha"] = sha
+
+    print("\n推送到 GitHub ...")
+    result = http_json(api, "PUT", token, payload)
+    if result.get("__error__"):
+        print(f"推送失败: {result['__error__']}", file=sys.stderr)
+        if result.get("__status__") == 401:
+            print("\nToken 已过期或被撤销。请到 "
+                  "https://github.com/settings/personal-access-tokens "
+                  f"重新生成，并更新 {TOKEN_FILE}", file=sys.stderr)
+        return False
+    print(f"提交: {result.get('commit', {}).get('sha', '')[:8]}")
+    return True
 
 
 def mark_candidates_seen():
@@ -180,10 +213,10 @@ def main():
         filled = 0
         for it in targets:
             try:
-                blocks = enrich.blocks_for(it)
+                blocks, cover = enrich.blocks_for(it)
             except Exception as e:
                 print(f"  ! {(it.get('title') or '')[:30]} 提取异常: {e}", file=sys.stderr)
-                blocks = []
+                blocks, cover = [], ""
             if not blocks:
                 print(f"  ✗ {(it.get('title') or '')[:30]} 未取到正文")
                 continue
@@ -191,6 +224,8 @@ def main():
             v = enrich.first_video(blocks)
             if v:
                 it["video"] = v
+            if not (it.get("image") or "").strip():
+                it["image"] = enrich.first_image(blocks) or cover
             print(f"  ✓ {(it.get('title') or '')[:30]} "
                   f"{len(it['content_html'])}字{' 含视频' if v else ''}")
             filled += 1
@@ -200,26 +235,66 @@ def main():
             print("没有补全任何条目，无需推送。")
             return 0
 
-        body = json.dumps(content, ensure_ascii=False, indent=2)
-        if dry_run:
-            print("\n[dry-run] 未推送。")
+        ok = push_content(api, token, sha, content,
+                          f"📄 补全资讯正文 {filled} 条 - {now_str()}",
+                          repo["branch"], dry_run)
+        if ok is False:
+            return 1
+        if ok:
+            print(f"推送成功！补全 {filled} 条正文。")
+        return 0
+
+    # --repair：正文/封面被广告图或尾部推荐位污染时，用修复后的逻辑重新提取。
+    # 典型场景：enrich 修好之后，之前已发布的条目仍是脏的，需要回刷一遍。
+    if "--repair" in sys.argv[1:]:
+        sys.path.insert(0, os.path.join(ROOT, "scripts"))
+        try:
+            import enrich
+        except Exception as e:
+            print(f"无法导入 enrich.py: {e}", file=sys.stderr)
+            return 1
+
+        targets = [i for i in content["news"]
+                   if i.get("source_url") and enrich.content_is_dirty(i)]
+        print(f"待修复：{len(targets)} 条")
+        for t in targets:
+            print(f"  · [{t.get('source') or '?'}] {t.get('title')}")
+
+        fixed = 0
+        for it in targets:
+            try:
+                blocks, cover = enrich.blocks_for(it)
+            except Exception as e:
+                print(f"  ! {(it.get('title') or '')[:30]} 提取异常: {e}",
+                      file=sys.stderr)
+                continue
+            if not blocks:
+                print(f"  ✗ {(it.get('title') or '')[:30]} 重新提取失败，保留原文")
+                continue
+            it["content_html"] = enrich.blocks_to_html(blocks)
+            v = enrich.first_video(blocks)
+            if v:
+                it["video"] = v
+            # 封面若是广告图，换成正文首图或页头 meta 封面
+            cur_img = (it.get("image") or "").strip()
+            if not cur_img or enrich._AD_IMAGE.search(cur_img):
+                it["image"] = enrich.first_image(blocks) or cover
+            print(f"  ✓ {(it.get('title') or '')[:30]} "
+                  f"{len(it['content_html'])}字 图：{(it.get('image') or '无')[:52]}")
+            fixed += 1
+            time.sleep(0.6)
+
+        if not fixed:
+            print("没有修复任何条目，无需推送。")
             return 0
-        if not token:
-            print(f"\n缺少 GitHub Token：请设置 GITHUB_TOKEN 或写入 {TOKEN_FILE}", file=sys.stderr)
+
+        ok = push_content(api, token, sha, content,
+                          f"🧹 修复资讯正文 {fixed} 条 - {now_str()}",
+                          repo["branch"], dry_run)
+        if ok is False:
             return 1
-        payload = {
-            "message": f"📄 补全资讯正文 {filled} 条 - {now_str()}",
-            "content": base64.b64encode(body.encode("utf-8")).decode("ascii"),
-            "branch": repo["branch"],
-        }
-        if sha:
-            payload["sha"] = sha
-        print("\n推送到 GitHub ...")
-        result = http_json(api, "PUT", token, payload)
-        if result.get("__error__"):
-            print(f"推送失败: {result['__error__']}", file=sys.stderr)
-            return 1
-        print(f"推送成功！补全 {filled} 条正文。")
+        if ok:
+            print(f"推送成功！修复 {fixed} 条。")
         return 0
 
     added, skipped = [], []
@@ -273,8 +348,6 @@ def main():
     if len(content["news"]) > max_keep:
         content["news"] = content["news"][:max_keep]
 
-    body = json.dumps(content, ensure_ascii=False, indent=2)
-
     print(f"\n准备发布 {len(added)} 条：")
     for e in added:
         print(f"  · [{e['source'] or '未标注'}] {e['title']}")
@@ -288,32 +361,14 @@ def main():
         print(json.dumps(content["news"][:len(added)], ensure_ascii=False, indent=2))
         return 0
 
-    if not token:
-        print("\n缺少 GitHub Token：请设置环境变量 GITHUB_TOKEN，"
-              f"或把 Token 写入 {TOKEN_FILE}", file=sys.stderr)
-        return 1
-
-    payload = {
-        "message": f"📰 自动发布游戏资讯 {len(added)} 条 - {now_str()}",
-        "content": base64.b64encode(body.encode("utf-8")).decode("ascii"),
-        "branch": repo["branch"],
-    }
-    if sha:
-        payload["sha"] = sha
-
-    print("\n推送到 GitHub ...")
-    result = http_json(api, "PUT", token, payload)
-    if result.get("__error__"):
-        print(f"推送失败: {result['__error__']}", file=sys.stderr)
-        if result.get("__status__") == 401:
-            print("\nToken 已过期或被撤销。请到 "
-                  "https://github.com/settings/personal-access-tokens "
-                  "重新生成，并更新 %s" % TOKEN_FILE, file=sys.stderr)
+    ok = push_content(api, token, sha, content,
+                      f"📰 自动发布游戏资讯 {len(added)} 条 - {now_str()}",
+                      repo["branch"], dry_run)
+    if ok is False:
         return 1
 
     print(f"推送成功！共新增 {len(added)} 条资讯。")
     mark_candidates_seen()
-    print(f"提交: {result.get('commit', {}).get('sha', '')[:8]}")
     print("GitHub Actions 会自动部署，约 1-2 分钟后可见：")
     print("https://locxiro11-netizen.github.io/priestegamingspace/")
     return 0

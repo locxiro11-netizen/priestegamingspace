@@ -2,6 +2,8 @@
 .DS_Store
 Thumbs.db
 *.log
+__pycache__/
+*.pyc
 sync-server.py
 start-sync.bat
 sync-server.log

@@ -173,6 +173,40 @@ _TAIL_JUNK = re.compile(
     r"watch on|listen to|tags?\s*:)",
     re.I)
 
+# 整段尾注的起始标记（命中就把其后内容全部截断）
+_TAIL_SECTION = re.compile(
+    r"^(相关资讯|相关阅读|相关推荐|推荐阅读|延伸阅读|猜你喜欢|编辑推荐|"
+    r"热门推荐|本文由.{0,20}发布|标签[:：]|TAG[:：])",
+    re.I)
+
+# 封面图候选。顺序即优先级：
+#   og:image        —— 通行标准，多数站点都有
+#   id="coverUrl"   —— 3DM 把封面图藏在 hidden input 的 value 里
+_COVER_PATTERNS = (
+    r'<meta[^>]*property="og:image"[^>]*content="([^"]+)"',
+    r'<meta[^>]*content="([^"]+)"[^>]*property="og:image"',
+    r'<input[^>]*value="(https?://[^"]+)"[^>]*id="coverUrl"',
+    r'<input[^>]*id="coverUrl"[^>]*value="(https?://[^"]+)"',
+)
+
+# 商城/推广横幅：这类图常被误当成封面或正文配图
+_AD_IMAGE = re.compile(
+    r"(mall\.|shop\.|/ad[s_]?/|banner|advert|_gg_|1784518943_551412)",
+    re.I)
+
+
+def extract_cover(page):
+    """从整页里找文章封面图（正文容器外也可能有，比如 3DM 的 hidden input）。"""
+    for pat in _COVER_PATTERNS:
+        m = re.search(pat, page, re.I)
+        if m:
+            src = html.unescape(m.group(1)).strip()
+            if src.startswith("//"):
+                src = "https:" + src
+            if src.startswith("http") and not _AD_IMAGE.search(src):
+                return src
+    return ""
+
 
 def strip_noise(fragment):
     """去掉页头、分享栏、推荐位、评论区等非正文区块。"""
@@ -294,6 +328,38 @@ def first_video(blocks):
     return ""
 
 
+def first_image(blocks):
+    for b in blocks:
+        if b["type"] == "image" and b.get("src"):
+            return b["src"]
+    return ""
+
+
+def slice_balanced_div(page, pos):
+    """从属性位置 pos 回退到所属的 <div>，按 div 嵌套配平切出整个容器。
+
+    为什么必须配平：3DM 的正文容器 news_warp_center 在正文最后一段就 </div> 闭合了，
+    文末的商城广告横幅、「相关资讯」推荐列表都在容器外面。早先直接切
+    page[start:start+45000] 不看闭合位置，于是把广告图（785×92 的细长横幅）
+    和一堆 2023 年的推荐链接全当成了正文。配平后这些自然被排除。
+
+    返回 None 表示配平失败，调用方需回退到定长切片。
+    """
+    lt = page.rfind("<div", 0, pos)
+    if lt < 0:
+        return None
+    depth = 0
+    for m in re.finditer(r"<div\b[^>]*?(/?)>|</div\s*>", page[lt:], re.I):
+        tok = m.group(0)
+        if tok.startswith("</"):
+            depth -= 1
+            if depth <= 0:
+                return page[lt: lt + m.end()]
+        elif m.group(1) != "/":        # 自闭合 <div .../> 不计入深度
+            depth += 1
+    return None
+
+
 def pick_container(page, url=""):
     """从整页里挑出正文容器。
 
@@ -310,7 +376,10 @@ def pick_container(page, url=""):
         if hint and re.search(host, url):
             m = re.search(hint, page)
             if m:
-                seg = page[m.start(): m.start() + 45000]
+                # 优先按 div 配平切出容器本体；配不出来才退回定长切片
+                seg = slice_balanced_div(page, m.start())
+                if seg is None:
+                    seg = page[m.start(): m.start() + 45000]
                 # 截到正文结束处为止，避免把评论区/相关推荐的缩略图收进来
                 cut = -1
                 for pat in _ARTICLE_END:
@@ -398,13 +467,18 @@ def from_gcores(url):
 
 
 def from_generic_page(url):
-    """通用网页：挑正文容器后走白名单序列化。"""
+    """通用网页：挑正文容器后走白名单序列化。
+
+    返回 (blocks, cover)：cover 是从页头 meta / hidden input 里挖到的封面图，
+    正文没图时可以拿它顶上，避免列表页卡片开天窗。
+    """
     page = fetch(url)
     if not page:
-        return []
+        return [], ""
+    cover = extract_cover(page)
     container = pick_container(page, url)
     if not container:
-        return []
+        return [], cover
 
     # og:description 基本就是正文首段，用它定位起点，切掉前面的页头/分享控件
     m = (re.search(r'property="og:description"\s+content="([^"]{20,})"', page)
@@ -446,28 +520,63 @@ def from_generic_page(url):
             blocks.pop()
         else:
             break
-    return blocks
+
+    # 第二道防线：3DM 这类站点正文后会整段挂「相关资讯 / 标签：...」推荐列表，
+    # 而且推荐列表前还夹着一张广告图，上面「从末尾逐个丢弃」的写法会在广告图
+    # 处断掉、清不干净。这里再从后往前找明确的尾注起点，命中就整段截断。
+    for i in range(len(blocks) - 1, 0, -1):
+        b = blocks[i]
+        if b["type"] != "text":
+            continue
+        plain = re.sub(r"<[^>]+>", "", b["text"]).strip()
+        if _TAIL_SECTION.match(plain):
+            del blocks[i:]
+            break
+
+    return blocks, cover
 
 
 def from_ign_feed(content_encoded):
     """IGN 的 RSS 自带 content:encoded 全文。"""
     if not content_encoded:
-        return []
-    return html_to_blocks(content_encoded)
+        return [], ""
+    return html_to_blocks(content_encoded), ""
+
+
+# 尾部推荐位残留的常见字样（用于回检已发布条目是否「脏」了）
+_TAIL_HINT = re.compile(
+    r"(相关资讯|相关阅读|相关推荐|热门推荐|推荐阅读|延伸阅读|猜你喜欢|"
+    r"标签[:：]|TAG[:：]|已有\s*\d+\s*人评分|您还未评分)")
+
+
+def content_is_dirty(item):
+    """判断一条已发布内容是否需要重新提取。
+
+    两类问题都只在修复 enrich 之后才回检出得来：
+      1. 正文或封面图混进了商城推广横幅；
+      2. 正文尾部残留「相关资讯 / 评分」推荐位。
+    """
+    h = item.get("content_html") or ""
+    img = (item.get("image") or "").strip()
+    if _AD_IMAGE.search(img) or _AD_IMAGE.search(h):
+        return True
+    plain = re.sub(r"<[^>]+>", "", h)
+    return bool(_TAIL_HINT.search(plain[-300:]) if plain else False)
 
 
 def blocks_for(item):
+    """返回 (blocks, cover)。各源处理器失败时自动降级到下一个。"""
     source = (item.get("source") or "").lower()
     url = item.get("source_url") or ""
 
     if "gcores" in url or source == "机核":
         blocks = from_gcores(url)
         if blocks:
-            return blocks
+            return blocks, ""
 
-    blocks = from_ign_feed(item.get("content_encoded"))
+    blocks, _ = from_ign_feed(item.get("content_encoded"))
     if blocks:
-        return blocks
+        return blocks, ""
 
     return from_generic_page(url)
 
@@ -577,8 +686,9 @@ def main():
     ok = failed = 0
     for it in items:
         title = (it.get("title") or "")[:34]
+        cover = ""
         try:
-            blocks = blocks_for(it)
+            blocks, cover = blocks_for(it)
         except Exception as e:
             print("  ! %s 提取异常: %s" % (title, e), file=sys.stderr)
             blocks = []
@@ -594,10 +704,24 @@ def main():
         video = first_video(blocks)
         if video:
             it["video"] = video
+        # 列表页源（3DM/游民星空）常拿不到缩略图，卡片会开天窗；
+        # 有时又会把文末的商城推广横幅当成封面（3DM 那张 785×92 的细长广告图）。
+        # 两种情况都走同一套兜底：优先正文首图，其次页头 meta 里的封面图。
+        filled_cover = False
+        cur_img = (it.get("image") or "").strip()
+        if not cur_img or _AD_IMAGE.search(cur_img):
+            fallback = first_image(blocks) or cover
+            if fallback:
+                it["image"] = fallback
+                filled_cover = True
+            elif _AD_IMAGE.search(cur_img):
+                # 拿不到替代图时宁可留空，也别把广告横幅挂到卡片上
+                it["image"] = ""
         n_img = sum(1 for b in blocks if b["type"] == "image")
         chars = len(it["content_html"])
-        print("  ✓ %-36s %5d字 %2d图 %s"
-              % (title, chars, n_img, "含视频" if video else ""))
+        print("  ✓ %-36s %5d字 %2d图 %s%s"
+              % (title, chars, n_img, "含视频" if video else "",
+                 " 卡片图取自正文" if filled_cover else ""))
         ok += 1
         time.sleep(0.6)  # 对源站友好一点
 
