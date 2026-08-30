@@ -502,14 +502,22 @@ def from_generic_page(url):
         else:
             break
 
-    # 正文结束后常常还跟着一串图片/视频（侧边栏推荐位缩略图），一并去掉。
-    # 媒体块也要跳过，否则后面的文字清理循环会因为 blocks[-1] 不是 text 而直接不执行。
-    while blocks and blocks[-1]["type"] in ("image", "video"):
-        blocks.pop()
-
-    # 页尾常挂「相关阅读 / 测评列表 / 订阅引导」，从末尾逐个丢弃
-    while blocks and blocks[-1]["type"] == "text":
-        t = blocks[-1]["text"]
+    # 正文结束后常常还跟着一串图片/视频（侧边栏推荐位缩略图）和
+    # 「相关阅读 / 订阅引导」文字。这两类残留是**交替出现**的，必须放在同一个
+    # 循环里反复处理：pop 掉若干文字块后，底下可能又露出图片块；pop 掉图片后，
+    # 下面可能还有文字。
+    # 早先写成「先循环 pop 图片、再循环 pop 文字」两个独立的循环，一旦末尾是
+    # 「文字→图片→文字」的夹心结构，第二个循环一遇到图片就停住，后面整串残留
+    # 全都清不掉——GameSpot 的 "Follow Us / Featured In This Story" 和 3DM 的
+    # 商城横幅 + 相关资讯都是这么漏进来的。
+    while blocks:
+        b = blocks[-1]
+        if b["type"] in ("image", "video"):
+            blocks.pop()
+            continue
+        if b["type"] != "text":
+            break
+        t = b["text"]
         # 编号链接条目，形如 "3 <a href=...>Star Wars Zero Company review</a>"
         numbered_link = bool(re.match(r"^\d+\s+<a\s", t))
         # 页脚导航空列，形如 "Best gunplay Best RPGs : ... Best co-op games : ..."
@@ -518,8 +526,8 @@ def from_generic_page(url):
         hollow = len(re.sub(r"<[^>]+>", "", t).strip()) < 20
         if len(t) < 50 or _TAIL_JUNK.search(t) or numbered_link or nav_list or hollow:
             blocks.pop()
-        else:
-            break
+            continue
+        break
 
     # 第二道防线：3DM 这类站点正文后会整段挂「相关资讯 / 标签：...」推荐列表，
     # 而且推荐列表前还夹着一张广告图，上面「从末尾逐个丢弃」的写法会在广告图
@@ -546,22 +554,29 @@ def from_ign_feed(content_encoded):
 # 尾部推荐位残留的常见字样（用于回检已发布条目是否「脏」了）
 _TAIL_HINT = re.compile(
     r"(相关资讯|相关阅读|相关推荐|热门推荐|推荐阅读|延伸阅读|猜你喜欢|"
-    r"标签[:：]|TAG[:：]|已有\s*\d+\s*人评分|您还未评分)")
+    r"标签[:：]|TAG[:：]|已有\s*\d+\s*人评分|您还未评分|"
+    r"follow us|featured in this story|advertisement|more from|read next)",
+    re.I)
 
 
 def content_is_dirty(item):
     """判断一条已发布内容是否需要重新提取。
 
-    两类问题都只在修复 enrich 之后才回检出得来：
-      1. 正文或封面图混进了商城推广横幅；
-      2. 正文尾部残留「相关资讯 / 评分」推荐位。
+    两类问题都只在 enrich 修好之后才回检得出来：
+      1. 封面图或正文配图是商城推广横幅；
+      2. 正文尾部残留「相关资讯 / 评分 / Follow Us」推荐位。
     """
     h = item.get("content_html") or ""
     img = (item.get("image") or "").strip()
-    if _AD_IMAGE.search(img) or _AD_IMAGE.search(h):
+    if _AD_IMAGE.search(img):
         return True
+    # 只检查图片地址。直接对整段 HTML 跑 _AD_IMAGE 会误判：GameSpot 正文里
+    # 出现 "Advertisement" 这个词就会被当成广告图。
+    for src in re.findall(r'<img[^>]+src="([^"]+)"', h):
+        if _AD_IMAGE.search(src):
+            return True
     plain = re.sub(r"<[^>]+>", "", h)
-    return bool(_TAIL_HINT.search(plain[-300:]) if plain else False)
+    return bool(plain) and bool(_TAIL_HINT.search(plain[-300:]))
 
 
 def blocks_for(item):
