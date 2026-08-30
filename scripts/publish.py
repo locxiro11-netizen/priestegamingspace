@@ -35,7 +35,7 @@ import ssl
 import time
 import urllib.request
 import urllib.error
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_PATH = os.path.join(ROOT, "scripts", "config.json")
@@ -87,7 +87,8 @@ def load_token():
 
 
 def now_str():
-    return datetime.now().strftime("%Y/%m/%d %H:%M")
+    # 统一用北京时间打戳（本地跑和 GitHub Actions UTC 跑都一致）
+    return datetime.now(timezone(timedelta(hours=8))).strftime("%Y/%m/%d %H:%M")
 
 
 def push_content(api, token, sha, content, message, branch, dry_run):
