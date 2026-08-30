@@ -303,7 +303,18 @@ def translate_chunk(chunk, total, ci, nchunks, depth=0):
     ], max_tokens=8192, temperature=0.2)
     arr = extract_json(resp)
     if arr and len(arr) == len(chunk):
-        return arr
+        # 长度对但模型偶尔返回嵌套数组/对象，逐元素校验并尽量修复
+        fixed = []
+        for a in arr:
+            if isinstance(a, str):
+                fixed.append(a)
+            elif isinstance(a, list) and a and isinstance(a[0], str):
+                fixed.append(a[0])
+            else:
+                fixed = None
+                break
+        if fixed is not None:
+            return fixed
     # 长度不符：拆半重试（最多拆到单段）
     if len(chunk) > 1 and depth < 4:
         print("  ! 第 %d 批返回长度不符（期望 %d，实际 %s），拆半重试"
