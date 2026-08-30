@@ -7,10 +7,10 @@ ai_curate.py — 调用大模型完成「爆点判断 + 中文重写 + 正文翻
   默认          读 candidates.json，挑出最有爆点的几条，写出 curated.json
   --translate   读 to_translate.json，把非中文正文逐段译成中文，写出 translated.json
 
-接口用 OpenAI 兼容的 chat/completions，默认 DeepSeek，可用环境变量覆盖：
+接口用 OpenAI 兼容的 chat/completions，默认智谱 GLM，可用环境变量覆盖：
   LLM_API_KEY    必填（也可放仓库根目录 .llm_key）
-  LLM_ENDPOINT   默认 https://api.deepseek.com/chat/completions
-  LLM_MODEL      默认 deepseek-chat
+  LLM_ENDPOINT   默认 https://open.bigmodel.cn/api/paas/v4/chat/completions
+  LLM_MODEL      默认 glm-4-flash（智谱免费模型）
 
 用法:
     python scripts/ai_curate.py
@@ -33,8 +33,8 @@ CURATED_PATH = os.path.join(OUT_DIR, "curated.json")
 TRANSLATE_TASK_PATH = os.path.join(OUT_DIR, "to_translate.json")
 TRANSLATED_PATH = os.path.join(OUT_DIR, "translated.json")
 
-ENDPOINT = os.environ.get("LLM_ENDPOINT", "").strip() or "https://api.deepseek.com/chat/completions"
-MODEL = os.environ.get("LLM_MODEL", "").strip() or "deepseek-chat"
+ENDPOINT = os.environ.get("LLM_ENDPOINT", "").strip() or "https://open.bigmodel.cn/api/paas/v4/chat/completions"
+MODEL = os.environ.get("LLM_MODEL", "").strip() or "glm-4-flash"
 
 _SSL_OK = ssl.create_default_context()
 _SSL_LOOSE = ssl.create_default_context()
