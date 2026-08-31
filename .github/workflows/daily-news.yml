@@ -2,9 +2,14 @@ name: 每日游戏资讯自动发布
 
 on:
   schedule:
-    # GitHub Actions 的 cron 用 UTC。UTC 01:00 = 北京时间 09:00
-    - cron: '0 1 * * *'
-  workflow_dispatch:    # 允许在 Actions 页面手动点一次
+    # GitHub Actions 的 cron 用 UTC，且整点极易因平台高负载被延迟甚至丢弃。
+    # 因此全部避开整点，并设三档错峰重试作冗余（由下方「今日已发布」护栏保证只发一次）。
+    - cron: '7 1 * * *'     # UTC 01:07 = 北京时间 09:07（主档）
+    - cron: '47 1 * * *'    # UTC 01:47 = 北京时间 09:47（备档一）
+    - cron: '37 2 * * *'    # UTC 02:37 = 北京时间 10:37（备档二）
+  workflow_dispatch:        # 允许在 Actions 页面手动点一次
+  repository_dispatch:      # 允许外部定时服务（如 cron-job.org）触发
+    types: [daily-news]
 
 concurrency:
   group: daily-news
@@ -21,13 +26,34 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 50    # 护栏需要读近期提交记录判断今天是否已发布
+
+      - name: 判断今天是否已发布（错峰重试护栏）
+        id: guard
+        run: |
+          TODAY=$(TZ=Asia/Shanghai date +%Y/%m/%d)
+          echo "北京时间今天：$TODAY"
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "非定时触发（${{ github.event_name }}）：跳过护栏，强制执行"
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if git log -n 50 --pretty=%s | grep -q "自动发布游戏资讯.*- $TODAY"; then
+            echo "今天已成功发布过，本次错峰重试直接跳过"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "今天尚未发布，继续执行"
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: 准备 Python
+        if: steps.guard.outputs.skip != 'true'
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: 恢复已看过条目（避免重复筛选）
+        if: steps.guard.outputs.skip != 'true'
         uses: actions/cache@v4
         with:
           path: scripts/state
@@ -36,11 +62,13 @@ jobs:
             news-seen-
 
       - name: 抓取候选资讯
+        if: steps.guard.outputs.skip != 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: python scripts/fetch_news.py
 
       - name: 大模型精选（爆点判断 + 中文重写）
+        if: steps.guard.outputs.skip != 'true'
         env:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_ENDPOINT: ${{ secrets.LLM_ENDPOINT }}
@@ -48,9 +76,11 @@ jobs:
         run: python scripts/ai_curate.py
 
       - name: 补全正文与视频
+        if: steps.guard.outputs.skip != 'true'
         run: python scripts/enrich.py
 
       - name: 翻译非中文正文
+        if: steps.guard.outputs.skip != 'true'
         env:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_ENDPOINT: ${{ secrets.LLM_ENDPOINT }}
@@ -58,16 +88,18 @@ jobs:
         run: python scripts/ai_curate.py --translate
 
       - name: 回填译文
+        if: steps.guard.outputs.skip != 'true'
         run: python scripts/enrich.py --apply-translation
 
       - name: 发布到站点
+        if: steps.guard.outputs.skip != 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: python scripts/publish.py
 
       - name: 保存已看过条目
+        if: always() && steps.guard.outputs.skip != 'true'
         uses: actions/cache/save@v4
-        if: always()
         with:
           path: scripts/state
           key: news-seen-${{ github.run_id }}

@@ -1,0 +1,40 @@
+name: 保活心跳
+
+# GitHub 会在仓库连续 60 天无活动后自动禁用所有 scheduled workflow。
+# 本工作流每月推一次极小的时间戳提交，把「活动」续上，避免每日资讯任务被静默停掉。
+
+on:
+  schedule:
+    - cron: '23 3 1 * *'    # 每月 1 日 UTC 03:23 = 北京时间 11:23
+  workflow_dispatch:
+
+concurrency:
+  group: keepalive
+  cancel-in-progress: false
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GH_PAT }}
+
+      - name: 更新心跳时间戳并提交
+        run: |
+          mkdir -p .github
+          TZ=Asia/Shanghai date '+%Y/%m/%d %H:%M (北京时间)' > .github/last-keepalive.txt
+          git config user.name  "PriesteGamingSpace NewsBot"
+          git config user.email "newsbot@users.noreply.github.com"
+          git add .github/last-keepalive.txt
+          if git diff --cached --quiet; then
+            echo "内容无变化，跳过提交"
+          else
+            git commit -m "chore: 保活心跳，避免 scheduled workflow 被自动禁用"
+            git push
+          fi
