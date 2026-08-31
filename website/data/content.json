@@ -1,6 +1,127 @@
 {
   "news": [
     {
+      "id": "news-ef5fb9cb61df",
+      "date": "2026/08/31 10:48",
+      "title": "V社数据泄露",
+      "desc": "V社发生大规模数据泄露，12TB内部游戏档案曝光，包含早期原型和未公开项目，引发玩家热议。",
+      "tags": [
+        "数据泄露",
+        "V社",
+        "游戏档案"
+      ],
+      "image": "https://image.gcores.com/d87eef2c82dd8e835dbe4ac6965d18fb-596-335.jpg?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
+      "game": "V社游戏",
+      "source": "机核",
+      "source_url": "https://www.gcores.com/articles/219049",
+      "likes": 0,
+      "content_html": "<p>Valve公司于日前发生大规模数据泄露事件。据悉，由于旧版服务器未正确设置保护权限，数据挖掘者发现了12TB的未公开内容。这些数据涵盖2003年至2013年间的数百款游戏，包含大量早期软件原型和未公开项目。此次事件并非遭遇网络攻击，而是由于旧版Steam2系统接口配置失误所致。</p>\n<img src=\"https://image.gcores.com/284cf8849fdf8026016757792fe479d3-1280-717.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>在本次泄露的内容中，《传送门2》包含了诸多被砍掉的内容。内部文件展示了此前被取消的 F-STOP 玩法机制。在这一机制中，玩家使用机械相机拍摄物体并更改其大小，随后将其放回场景。社区已成功恢复该机制的3D相机模型和界面图标，并发现了带有《半条命》联合军标志的传送门枪原型。</p>\n<img src=\"https://image.gcores.com/d6f6b1083d23ddb7757ee497b57d7f33-1920-1080.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>此外，《传送门2》早期测试房间还曾使用《军团要塞2》的角色手臂作为替代模型。《半条命2：第三章》中名为 Weaponizer 的3D武器模型，也因被挪用为《传送门2》的临时素材而得以保留。</p>\n<img src=\"https://image.gcores.com/1f30677140f5d6673b2255cdd8a7e0d9-1922-1112.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>泄露文件还展示了多款V社多人游戏的早期版本。《反恐精英：全球攻势》早期原型画面与《反恐精英：起源》几乎一致，其中包含恐怖分子护送坦克的取消玩法。《求生之路》早期可运行版本呈现了废弃的第一人称爬梯动画，以及毫不留情战役顶楼终局的早期地形设计。</p>\n<img src=\"https://image.gcores.com/206a2cae8441c2e1617d41ef9b1372e4-680-396.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>泄露内容并不限于V社自家项目，还涵盖数百款第三方游戏。研究人员已在其中发现《刺猬索尼克4：第二章》的测试版本，以及与《辐射：新维加斯》相关的隐藏文件。由于泄露数据量极其庞大，玩家社区目前仍处于数据梳理阶段。</p>"
+    },
+    {
+      "id": "news-2a3733ab95d1",
+      "date": "2026/08/31 10:48",
+      "title": "科隆展盗窃事件",
+      "desc": "德国科隆游戏展发生盗窃事件，多台存有未公开游戏演示版本的电脑与掌机被盗，引发行业关注。",
+      "tags": [
+        "科隆游戏展",
+        "盗窃",
+        "游戏演示"
+      ],
+      "image": "https://image.gcores.com/1dbf3ee95280ad50b7f0a1eef7a30d88-650-366.webp?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
+      "game": "Mimic, Petal Runner, Escape Academy 2",
+      "source": "机核",
+      "source_url": "https://www.gcores.com/articles/219047",
+      "likes": 0,
+      "content_html": "<p>在2026年德国科隆游戏展期间，多家游戏开发商与发行商遭遇了盗窃事件。据悉，盗贼撬开锁住的展柜，盗走多台存有未公开游戏演示版本的电脑与掌机。受害方包括游戏《Mimic》开发者Ryan Laley、发行商iam8bit以及Tessera Studios。</p>\n<img src=\"https://image.gcores.com/aa1fe36b512678a83d48cb3c23e055fe-399-501.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>其中，Ryan Laley展台上的笔记本电脑被全部盗走。iam8bit丢失了两台用于向媒体展示《Petal Runner》和《Escape Academy 2》的电脑。Tessera Studios的展柜被强行撬开，丢失了两台电脑和一台Steam Deck。</p>\n<p>科隆游戏展主办方表示，所有案件均已报案并由警方调查。主办方强调，展会现场安排了统一的巡逻安保，但在如此大规模的活动中难免有人伺机作案。参展指南中已建议展商购买盗窃险，还可单独付费预订展位专用的独立安保。</p>"
+    },
+    {
+      "id": "news-dddfe80bcbc3",
+      "date": "2026/08/31 10:48",
+      "title": "索尼考虑推迟停产光盘",
+      "desc": "索尼因微软竞争压力考虑推迟停产光盘，转向数字化计划可能被顺延。",
+      "tags": [
+        "索尼",
+        "微软",
+        "光盘停产"
+      ],
+      "image": "https://image.gcores.com/bf7110c9e3d6bdd5df27e03749cc1a32-800-450.webp?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
+      "game": "PlayStation",
+      "source": "机核",
+      "source_url": "https://www.gcores.com/articles/219046",
+      "likes": 0,
+      "content_html": "<p>据 mp1st 报道，索尼正在考虑推迟 PlayStation 停产光盘并全面转向数字化的计划，原定于2028年底前实施的计划可能被顺延一到两年。据悉，策略调整的主要原因源于微软的竞争压力。目前，微软正在向各大发行商推介代号为 Project Helix 的新主机。微软宣称该主机将支持全实体盘发售，并允许玩家将实体版游戏转换为数字版。</p>\n<img src=\"https://image.gcores.com/836e41e2f7cfaf7aa8c122bc3ab75693-800-544.webp\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>内部人士透露称，索尼担心微软利用玩家和开发商对实体盘的需求抢占市场。在科隆游戏展期间，索尼推行无光驱计划已面临来自第三方合作商的压力。据称，某家拥有重磅作品的知名游戏厂商曾向索尼提出交涉。若索尼无法保证推出实体版，该厂商将放弃 PlayStation 平台，改为仅在微软与任天堂平台上线该作品。</p>\n<p>此前，索尼缩减实体游戏的规划引发了玩家抵制浪潮。虽然取消实体版能为大制作游戏每份节省最高16美元的成本，但微软近期推出的实体盘转数字服务让索尼感到了压力。后续索尼是否会做出让步并保留部分大作的实体版，仍有待进一步观察。</p>"
+    },
+    {
+      "id": "news-ba019debcea4",
+      "date": "2026/08/31 10:48",
+      "title": "Valve档案泄露含《半条命2》",
+      "desc": "Valve开发档案泄露，包含《半条命2：第三章》武器和《传送门2》早期版本。",
+      "tags": [
+        "Valve",
+        "档案泄露",
+        "半条命2"
+      ],
+      "image": "https://assetsio.gnwcdn.com/HQ6xhIdWcAAMhTL.jpeg?width=690&quality=85&format=jpg&auto=webp",
+      "game": "Valve游戏",
+      "source": "Eurogamer",
+      "source_url": "https://www.eurogamer.net/valve-steam2-leak-12tb-portal-2-half-life-episode-three",
+      "likes": 0,
+      "content_html": "<p>一份据称包含约12TB旧Valve开发文件的泄露档案，时间跨度为2003年至2013年，已经在网上出现，粉丝们已经开始在其中寻找已取消的《半条命2：第三幕》的任何线索。</p>\n<p>Half-Life 2: Episode Three.</p>\n<p>这次泄露最初是在周五由Twitter/X用户<a href=\"https://x.com/gabefollower/status/2093806496534446200\" target=\"_blank\" rel=\"noopener\"></a>标记的。</p>\n<p>Gabe Follower 表示，这个档案包括了《传送门2》的早期版本、左4死、以及《CS:GO》，还有取消的《传送门》前传 F-Stop 的资产，以及可能与第三季相关的“可能”材料。</p>\n<p>有人泄露了 12TB 的 Valve 内部构建和游戏资产，时间跨度从 2003 年到 2013 年。这包括《传送门2》、左4死、《CS:GO》、F-Stop 以及可能与 EP3 相关的内容。社区仍在研究所有内容，所以接下来的几天可能会非常疯狂... 有一个武器化器... <a href=\"https://t.co/Sg7OqJjL2X\" target=\"_blank\" rel=\"noopener\">pic.twitter.com/Sg7OqJjL2X</a>— ‎Gabe Follower (@gabefollower) <a href=\"https://x.com/gabefollower/status/2093806496534446200?ref_src=twsrc%5Etfw\" target=\"_blank\" rel=\"noopener\">2026 年 8 月 29 日</a> 要查看此内容，请启用目标 cookies。</p>\n<p>到目前为止，泄露的内容被认为包含了一个 2009 年代的《传送门2》测试版构建，以及一个“武器化器”的模型，这个武器之前（尽管从未确认）与第三季相关，但在这里显然被重新用作《传送门2》本身中的一个占位符资产。</p>\n<p>在其他存档中，人们发现了一个2008年6月的完整可玩《Left 4 Dead》测试版，其中包括早期的HUD、一个仍在开发中的大厅屏幕和剪辑音频，包括原本由Alésia Glidewell为Zoey录制的台词，后来被Jen Taylor在最终游戏中取代。</p>\n<p>据称，这些材料来自Valve旧的Steam2内容分发基础设施，该工作室在2010年代初逐步淘汰，转而采用SteamPipe。</p>\n<p>这与<a href=\"https://www.eurogamer.net/valve-steam-machine-controller-europe-logistics-partner-hack\" target=\"_blank\" rel=\"noopener\"></a>不同</p>\n<p>Valve在本月初披露的网络安全攻击事件，当时其欧洲物流合作伙伴CEVA Logistics遭到入侵，硬件客户的个人信息被泄露，而不是Valve自己的游戏数据。Valve尚未对此最新泄露事件发表评论。</p>\n<p>由于需要处理12TB的数据，社区可能需要几天时间才能对其中确切内容有更清晰的了解，包括第三集。</p>\n<p>我们之前已经有所预感——尽管没有具体的确认——Valve正在开发一个某种类型的新《半条命》大型项目。在<a href=\"https://www.eurogamer.net/more-evidence-of-fully-fledged-half-life-game-revealed-by-valve-dataminer\" target=\"_blank\" rel=\"noopener\"></a>，</p>\n<p>一份可靠的报告在2024年详细介绍了数据挖掘到的资产，证实了一个<a href=\"https://www.eurogamer.net/half-life-3-may-have-been-announced-by-a-voice-actor-who-probably-has-never-heard-of-steam\" target=\"_blank\" rel=\"noopener\">演员泄露的消息</a>，我们被告知这个新的《半条命》项目，代号为HLX，不仅正在开发中<a href=\"https://www.eurogamer.net/half-life-3-is-not-just-in-development-its-now-playable-end-to-end-leaker-suggests\" target=\"_blank\" rel=\"noopener\">，现在甚至已经可以从头到尾玩通了。</a></p>"
+    },
+    {
+      "id": "news-90255a1e782e",
+      "date": "2026/08/31 10:48",
+      "title": "GTA6无微交易和AI",
+      "desc": "Rockstar确认GTA6将不包含微交易和生成式AI，引发玩家讨论。",
+      "tags": [
+        "GTA6",
+        "Rockstar",
+        "微交易"
+      ],
+      "image": "https://assetsio.gnwcdn.com/GTA-6-Lucia-Caminos.jpg?width=690&quality=85&format=jpg&auto=webp",
+      "game": "GTA6",
+      "source": "Eurogamer",
+      "source_url": "https://www.eurogamer.net/gta-6-microtransactions-generative-ai-rockstar",
+      "likes": 0,
+      "content_html": "<p>Rockstar已经确认<a href=\"https://www.eurogamer.net/gta-6-everything-we-know-so-far-9357\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>《侠盗猎车手6》将不会包含微交易或生成式AI。</p>\n<p>这一确认是在与<a href=\"https://www.youtube.com/watch?v=Nd81Md-kByI\" target=\"_blank\" rel=\"noopener\"></a>的一次群聊中得出的</p>\n<p>Kinda Funny Games 在《GTA 6: Extended Look》发布之前进行了报道，其中Kinda Funny的Andy Cortez询问玩家是否能够在游戏中使用真实货币进行购买。为了观看此内容，请启用跟踪cookies。GTA 6 (Grand Theft Auto 6) - 官方扩展游戏玩法。<a href=\"https://www.youtube.com/watch?v=kcN1oGfJzIM\" target=\"_blank\" rel=\"noopener\">在YouTube上观看</a></p>\n<p>Rockstar表示游戏中“没有货币化”，Greg Miller随后“直言不讳”地询问是否在GTA 6的开发中使用了生成式AI。Rockstar告诉他，游戏中也没有AI（感谢<a href=\"https://www.ign.com/articles/gta-6-will-have-no-microtransactions-or-generative-ai-at-launch-rockstar-says\" target=\"_blank\" rel=\"noopener\"></a>）</p>\n<p>今年早些时候，<a href=\"https://www.eurogamer.net/companies/take-two-interactive\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>Take-Two Interactive，GTA 开发商 <a href=\"https://www.eurogamer.net/companies/rockstar-games\" target=\"_blank\" rel=\"noopener\">Rockstar Games</a> 的母公司，据报道裁减了其人工智能团队，包括其人工智能负责人。Take-Two 首席执行官 Strauss Zelnick <a href=\"https://www.eurogamer.net/gta-6-couldnt-be-made-by-ai-suggests-take-two-boss-there-is-no-creativity-that-can-exist-by-definition-in-any-ai-model\" target=\"_blank\" rel=\"noopener\">之前明确表示</a>，人工智能无法拥有自己的创造力，但这是他迄今为止最强烈的声明，表明 Take-Two 对人工智能的方法与行业趋势背道而驰，该趋势看到越来越多的工作室 <a href=\"https://www.eurogamer.net/after-chasing-nfts-and-the-metaverse-square-enix-wants-generative-ai-to-do-70-of-its-qa-by-2027\" target=\"_blank\" rel=\"noopener\">转向使用人工智能工具</a>，最近甚至以牺牲 <a href=\"https://www.eurogamer.net/new-report-claims-kingdom-come-deliverance-2-studio-fired-translator-to-replace-them-with-ai-and-save-finances\" target=\"_blank\" rel=\"noopener\">人工翻译</a> 和人工制作的 <a href=\"https://www.eurogamer.net/fortnite-fans-are-saying-no-to-ai-slop-after-spotting-what-they-believe-are-ai-generated-images-in-game\" target=\"_blank\" rel=\"noopener\">游戏内艺术作品</a> 为代价。</p>\n<p>然而，Zelnick 是一个例外。许多其他游戏公司，包括 <a href=\"https://www.eurogamer.net/pubg-and-inzoi-publisher-krafton-declares-itself-an-ai-first-company-placing-ai-at-the-centre-of-problem-solving\" target=\"_blank\" rel=\"noopener\"></a>，</p>\n<p>Krafton，<a href=\"https://www.eurogamer.net/after-chasing-nfts-and-the-metaverse-square-enix-wants-generative-ai-to-do-70-of-its-qa-by-2027\" target=\"_blank\" rel=\"noopener\">Square Enix</a>，<a href=\"https://www.eurogamer.net/ai-is-the-very-core-of-our-business-says-ea-ceo\" target=\"_blank\" rel=\"noopener\">EA</a> 以及更多公司，都 <a href=\"https://www.eurogamer.net/over-half-of-japanese-game-companies-are-using-ai-in-development-states-report-from-tokyo-games-show-organiser\" target=\"_blank\" rel=\"noopener\">大力投资了这项新技术</a>。</p>\n<p>然而，GTA 6 的终极版将包含封闭内容。售价为 90 英镑——比 70 英镑的标准版高出 20 英镑——它包含独家外观、车辆、武器，甚至还有一些标准版所有者无法获得商店和服务，包括 Electric Fang 纹身店和 Stock 305 服装店。</p>\n<p>Rockstar 自己的 <a href=\"https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>支持页面确认，标准版所有者可以在兑换副本后单独购买终极版升级，附带的内容“贯穿贾森和露西亚故事的各个方面”，章节逐个解锁。</p>\n<p>《侠盗猎车手6》将于11月19日发布，适用于PlayStation 5和Xbox Series X/S。本周的<a href=\"https://www.eurogamer.net/everything-announced-in-gta-6-extended-look\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>《GTA 6》狂欢揭示了关于游戏的大量新信息，例如 <a href=\"https://www.eurogamer.net/gta-6-revamping-wanted-system-adding-criminal-profiles\" target=\"_blank\" rel=\"noopener\">一个改变的通缉系统</a>，<a href=\"https://www.eurogamer.net/gta-6-driving-car-theft-more-challenging-rockstar-realism-push\" target=\"_blank\" rel=\"noopener\">一个改变的车辆盗窃系统</a>，<a href=\"https://www.eurogamer.net/gta-6-romance-relationship-system-jason-lucia\" target=\"_blank\" rel=\"noopener\">一个全新的浪漫系统</a>，<a href=\"https://www.eurogamer.net/gta-6-has-more-than-10-times-the-animations-in-gta-5-and-double-the-amount-in-red-dead-redemption-2-rockstar-confirms\" target=\"_blank\" rel=\"noopener\">一个巨大的游戏世界</a>，以及 <a href=\"https://www.eurogamer.net/gta-6-activities-things-to-do-spotted-so-far\" target=\"_blank\" rel=\"noopener\">一份游戏内活动列表</a>。</p>"
+    },
+    {
+      "id": "news-fccdc0612136",
+      "date": "2026/08/30 16:06",
+      "title": "新《钢铁侠》游戏泄露",
+      "desc": "EA Motive开发的《钢铁侠》游戏新片段泄露，展示了游戏的速度和自由度。",
+      "tags": [
+        "游戏泄露",
+        "钢铁侠"
+      ],
+      "image": "https://assetsio.gnwcdn.com/EA-Marvel-Motive-Iron-Man-teaser-image.jpg?width=690&quality=85&format=jpg&auto=webp",
+      "game": "钢铁侠游戏",
+      "source": "Eurogamer",
+      "source_url": "https://www.eurogamer.net/ea-motive-iron-man-gameplay-footage-leak",
+      "likes": 0,
+      "content_html": "<p>似乎有来自EA Motive长期开发——并且有些开发缺失的——《钢铁侠》游戏的画面泄露。</p>\n<p>《钢铁侠》画面（via Resetera）展示了游戏不同区域的2分半钟游戏玩法。最令人印象深刻的是，你飞越一个看似开放世界城市空间和开阔战场时，感受到的自由和速度，以及在一瞬间从地面战斗回到空中战斗。</p>\n<p>战斗中，钢铁侠将敌人扔来扔去，或将其撞向墙壁或地面，战斗节奏和冲击感也很令人愉悦。他的武器库似乎非常庞大，拥有激光束——是的，胸甲激光束——火箭和许多破坏性装置。</p>\n<img src=\"https://i.ytimg.com/vi/eRo2dVSuqv8/hqdefault.jpg\" alt=\"Cover image for YouTube video\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>《漫威复仇者联盟》：官方预告片</p>\n<div class=\"news-video\"><iframe src=\"https://www.youtube.com/embed/eRo2dVSuqv8?\" frameborder=\"0\" allow=\"autoplay; encrypted-media; picture-in-picture\" allowfullscreen loading=\"lazy\"></iframe></div>\n<p>我无法在这里分享泄露的视频，所以这里有一段几年前平均水平的《复仇者联盟》游戏视频。<a href=\"https://www.youtube.com/watch?v=eRo2dVSuqv8\" target=\"_blank\" rel=\"noopener\">在YouTube上观看</a></p>\n<p>说到钢铁侠的武器库：游戏中似乎有一些定制化的装备。我们看到托尼·斯塔克——虽然不是基于罗伯特·唐尼的模型，但也不远——在一个被钢铁侠装备包围的房间里，然后他触摸了一个面板，可能对其中一件装备进行了修改。装备随后围绕他重新配置。</p>\n<p>预告片本身还在制作中，所以有一些未完成的部分，但很明显，重点在于电影般的叙事，斯塔克访问了著名地点，如巨大的S.H.I.E.L.D直升机母舰，并与我们一旦知道他们的名字就会认出的角色交谈。甚至还有一个简短的片段，他似乎在某个竹林的某个地方。</p>\n<p>顺便说一下，这段画面被标记为来自“Aug26测试”，所以按字面意思理解，它是最近的。没有发布日期；预告片末尾出现了一个占位符“发布窗口”短语，但没有具体的窗口。（视频还列出了执行制片人“乌尔tron”和世界导演“绿巨人”，这很有趣。）我已经向EA请求评论。</p>\n<p>EA Motive的《钢铁侠》游戏四年前宣布，当时是EA与漫威合作的“几个”超级英雄游戏之一。然而，几年后，<a href=\"https://www.eurogamer.net/eas-black-panther-game-reportedly-cancelled-and-studio-closed-resulting-in-more-layoffs\" target=\"_blank\" rel=\"noopener\">EA正在制作的《黑豹》游戏据报道被取消</a>。</p>\n<p>这不是最近记忆中第一次尝试制作《钢铁侠》游戏。<a href=\"https://www.eurogamer.net/iron-man-avalanche-studios-gameplay-leak\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>据说Just Cause开发者Avalanche在2012年左右开发了一款《钢铁侠》游戏，而这周意外泄露了相关画面。</p>\n<p>我们还看到了《钢铁侠》在<a href=\"https://www.eurogamer.net/marvels-avengers-review-not-super-enough\" target=\"_blank\" rel=\"noopener\"></a></p>",
+      "video": "https://www.youtube.com/embed/eRo2dVSuqv8",
+      "translated": true
+    },
+    {
+      "id": "news-0074a6690722",
+      "date": "2026/08/30 16:06",
+      "title": "GTA6地图巨大",
+      "desc": "GTA6地图大小是GTA5的两倍，预计游戏时长也将增加。",
+      "tags": [
+        "GTA6",
+        "地图"
+      ],
+      "image": "https://assetsio.gnwcdn.com/GTA-6-Extended-Look-Sky-Diving.png?width=690&quality=85&format=jpg&auto=webp",
+      "game": "GTA6",
+      "source": "Eurogamer",
+      "source_url": "https://www.eurogamer.net/gta-6-map-size-length-how-big-revealed",
+      "likes": 0,
+      "content_html": "<p>Rockstar一直在谈论地图大小和游戏长度，确认其最新的开放世界史诗级游戏将在一个比GTA 5大两倍的世界上展开，完成时间大约需要80小时。</p>\n<p>Rockstar的开发负责人Rob Nelson在<a href=\"https://www.youtube.com/watch?v=Mfx1B_LBSV0\" target=\"_blank\" rel=\"noopener\"></a>与YouTuber TGG的聊天中分享了地图大小的消息。</p>\n<p>聊天中，TGG透露了GTA 6版本中的Vice City以及其周边区域究竟有多么庞大。总结那些引人注目的数字，TGG解释说，\"地图面积是GTA 5地图的两倍，是Red Dead 2地图的三倍。Vice City本身是Los Santos的两倍大，而Vice City及其周边郊区比Los Santos及其周边地区大11倍，这真是太疯狂了，伙计。\" <a href=\"https://www.youtube.com/embed/kcN1oGfJzIM?\" target=\"_blank\" rel=\"noopener\"></a></p>\n<img src=\"https://i.ytimg.com/vi/kcN1oGfJzIM/hqdefault.jpg\" alt=\"Cover image for YouTube video\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>GTA 6（侠盗猎车手6）- 官方扩展游戏演示</p>\n<div class=\"news-video\"><iframe src=\"https://www.youtube.com/embed/kcN1oGfJzIM?\" frameborder=\"0\" allow=\"autoplay; encrypted-media; picture-in-picture\" allowfullscreen loading=\"lazy\"></iframe></div>\n<p>新的GTA 6扩展预告片。<a href=\"https://www.youtube.com/watch?v=kcN1oGfJzIM\" target=\"_blank\" rel=\"noopener\">在YouTube上观看</a></p>\n<p>截至目前，Rockstar推出的各种预告片和公告已经揭示了Leonida州六个关键地点，这是GTA 6以佛罗里达为灵感的设定。当然包括维萨城本身，还有曾经的旅游热点Port Gellhorn，阳光明媚的Leonida群岛，Grassrivers沼泽，Kalaga国家公园，以及Ambrosia。尽管我们肯定还有许多未知的信息，但很明显，地图很大，里面的内容也很多。</p>\n<p>这里有<a href=\"https://www.eurogamer.net/gta-6-romance-relationship-system-jason-lucia\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>首先，是关系系统，以及更注重<a href=\"https://www.eurogamer.net/gta-6-driving-car-theft-more-challenging-rockstar-realism-push\" target=\"_blank\" rel=\"noopener\">更真实的驾驶和偷车</a>，以及<a href=\"https://www.eurogamer.net/gta-6-revamping-wanted-system-adding-criminal-profiles\" target=\"_blank\" rel=\"noopener\">改进的通缉系统</a>等。那么，要完成所有这些内容需要多长时间呢？Nelson，这次在接受<a href=\"https://www.nytimes.com/2026/08/27/arts/grand-theft-auto-vi-trailer-extended-look-rockstar.html\" target=\"_blank\" rel=\"noopener\">纽约时报</a>采访时提到，他今年2月的最新游玩时长大约为80小时。这包括了主线故事和一些具有叙事影响的\"可选目标\"，暗示了对于那些喜欢额外内容的人来说，还有很多游戏时间——而且<a href=\"https://www.eurogamer.net/gta-6-activities-things-to-do-spotted-so-far\" target=\"_blank\" rel=\"noopener\">《GTA 6》似乎有很多活动和娱乐项目</a>。</p>\n<p>今晚在Netflix和其他地方的大揭秘非常令人印象深刻，帮助Rockstar在经历了一周的GTA 6泄露事件后夺回了叙事控制权<a href=\"https://www.eurogamer.net/gta-6-leaks-rockstar-statement-spoilers\" target=\"_blank\" rel=\"noopener\"></a>，尽管<a href=\"https://www.eurogamer.net/rockstar-workers-dont-boycott-grand-theft-auto-6-support-union-costs\" target=\"_blank\" rel=\"noopener\">它在英国仍然因为涉嫌破坏工会而陷入争议</a>。</p>\n<p>在Netflix展示之后——<a href=\"https://www.eurogamer.net/grand-theft-auto-6-netflix-something-went-wrong\" target=\"_blank\" rel=\"noopener\"></a></p>",
+      "video": "https://www.youtube.com/embed/kcN1oGfJzIM",
+      "translated": true
+    },
+    {
       "id": "news-e7983854e597",
       "date": "2026/08/30 15:40",
       "title": "开发者电脑科隆展被盗，主办方「自己小心点」引众怒",
@@ -118,42 +239,6 @@
       "source_url": "https://www.3dmgame.com/news/202608/3951821.html",
       "likes": 0,
       "content_html": "<p>《秘密邻居》是2017年恐怖游戏《<a href=\"https://www.3dmgame.com/games/helloneighbor/\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>你好邻居》的多人衍生作品。近日，一名黑客入侵游戏后端系统，删除玩家数据，目前游戏已暂时停服。</p>\n<p>这起事件发生于上周，涉事人员获取了游戏的管理员权限凭证，随后清空了玩家档案、游戏内进度等各类数据。开发商Hologryph与发行商tinyBuild表示，该黑客还对全平台的“服务器系统与基础设施发起了协同攻击”。</p>\n<p>Hologryph与tinyBuild在Steam发布公告回应此事（消息来源delistedgames）。官方说明，除了发动攻击，黑客还“扬言会持续针对游戏及其后端系统，直到游戏在全平台下架停售”。</p>\n<p>两家公司均表示，本次攻击未造成任何个人数据或信息泄露。但由于事件仍在发酵，官方决定“暂时关停游戏，直至修复此次安全漏洞，封堵所有可能引发事故的安全隐患”。</p>\n<p>官方在声明中称，已就此事上报相关部门，同时正与《秘密邻居》的后端服务商PlayFab合作，尝试恢复被清空的数据。</p>\n<p>至于问题何时能解决，官方暂未给出时间表。目前《秘密邻居》仍在Steam平台上架，可正常购买。Hologryph与tinyBuild表示，会持续向玩家同步“修复进度与后续事态进展”。</p>\n<p>《秘密邻居》于2019年正式推出。次年，tinyBuild向Hologryph投资300万美元，成为该公司大股东。而就在此前几个月，tinyBuild刚收购了《你好邻居》初代的开发商Dynamic Pixels。</p>\n<p>《你好邻居》续作已于2022年发售，第三部作品据称也在开发中。初代《你好邻居》的热度依旧居高不下，今年3月还创下了在线玩家数的历史峰值。</p>"
-    },
-    {
-      "id": "news-fccdc0612136",
-      "date": "2026/08/30 16:06",
-      "title": "新《钢铁侠》游戏泄露",
-      "desc": "EA Motive开发的《钢铁侠》游戏新片段泄露，展示了游戏的速度和自由度。",
-      "tags": [
-        "游戏泄露",
-        "钢铁侠"
-      ],
-      "image": "https://assetsio.gnwcdn.com/EA-Marvel-Motive-Iron-Man-teaser-image.jpg?width=690&quality=85&format=jpg&auto=webp",
-      "game": "钢铁侠游戏",
-      "source": "Eurogamer",
-      "source_url": "https://www.eurogamer.net/ea-motive-iron-man-gameplay-footage-leak",
-      "likes": 0,
-      "content_html": "<p>似乎有来自EA Motive长期开发——并且有些开发缺失的——《钢铁侠》游戏的画面泄露。</p>\n<p>《钢铁侠》画面（via Resetera）展示了游戏不同区域的2分半钟游戏玩法。最令人印象深刻的是，你飞越一个看似开放世界城市空间和开阔战场时，感受到的自由和速度，以及在一瞬间从地面战斗回到空中战斗。</p>\n<p>战斗中，钢铁侠将敌人扔来扔去，或将其撞向墙壁或地面，战斗节奏和冲击感也很令人愉悦。他的武器库似乎非常庞大，拥有激光束——是的，胸甲激光束——火箭和许多破坏性装置。</p>\n<img src=\"https://i.ytimg.com/vi/eRo2dVSuqv8/hqdefault.jpg\" alt=\"Cover image for YouTube video\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>《漫威复仇者联盟》：官方预告片</p>\n<div class=\"news-video\"><iframe src=\"https://www.youtube.com/embed/eRo2dVSuqv8?\" frameborder=\"0\" allow=\"autoplay; encrypted-media; picture-in-picture\" allowfullscreen loading=\"lazy\"></iframe></div>\n<p>我无法在这里分享泄露的视频，所以这里有一段几年前平均水平的《复仇者联盟》游戏视频。<a href=\"https://www.youtube.com/watch?v=eRo2dVSuqv8\" target=\"_blank\" rel=\"noopener\">在YouTube上观看</a></p>\n<p>说到钢铁侠的武器库：游戏中似乎有一些定制化的装备。我们看到托尼·斯塔克——虽然不是基于罗伯特·唐尼的模型，但也不远——在一个被钢铁侠装备包围的房间里，然后他触摸了一个面板，可能对其中一件装备进行了修改。装备随后围绕他重新配置。</p>\n<p>预告片本身还在制作中，所以有一些未完成的部分，但很明显，重点在于电影般的叙事，斯塔克访问了著名地点，如巨大的S.H.I.E.L.D直升机母舰，并与我们一旦知道他们的名字就会认出的角色交谈。甚至还有一个简短的片段，他似乎在某个竹林的某个地方。</p>\n<p>顺便说一下，这段画面被标记为来自“Aug26测试”，所以按字面意思理解，它是最近的。没有发布日期；预告片末尾出现了一个占位符“发布窗口”短语，但没有具体的窗口。（视频还列出了执行制片人“乌尔tron”和世界导演“绿巨人”，这很有趣。）我已经向EA请求评论。</p>\n<p>EA Motive的《钢铁侠》游戏四年前宣布，当时是EA与漫威合作的“几个”超级英雄游戏之一。然而，几年后，<a href=\"https://www.eurogamer.net/eas-black-panther-game-reportedly-cancelled-and-studio-closed-resulting-in-more-layoffs\" target=\"_blank\" rel=\"noopener\">EA正在制作的《黑豹》游戏据报道被取消</a>。</p>\n<p>这不是最近记忆中第一次尝试制作《钢铁侠》游戏。<a href=\"https://www.eurogamer.net/iron-man-avalanche-studios-gameplay-leak\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>据说Just Cause开发者Avalanche在2012年左右开发了一款《钢铁侠》游戏，而这周意外泄露了相关画面。</p>\n<p>我们还看到了《钢铁侠》在<a href=\"https://www.eurogamer.net/marvels-avengers-review-not-super-enough\" target=\"_blank\" rel=\"noopener\"></a></p>",
-      "video": "https://www.youtube.com/embed/eRo2dVSuqv8",
-      "translated": true
-    },
-    {
-      "id": "news-0074a6690722",
-      "date": "2026/08/30 16:06",
-      "title": "GTA6地图巨大",
-      "desc": "GTA6地图大小是GTA5的两倍，预计游戏时长也将增加。",
-      "tags": [
-        "GTA6",
-        "地图"
-      ],
-      "image": "https://assetsio.gnwcdn.com/GTA-6-Extended-Look-Sky-Diving.png?width=690&quality=85&format=jpg&auto=webp",
-      "game": "GTA6",
-      "source": "Eurogamer",
-      "source_url": "https://www.eurogamer.net/gta-6-map-size-length-how-big-revealed",
-      "likes": 0,
-      "content_html": "<p>Rockstar一直在谈论地图大小和游戏长度，确认其最新的开放世界史诗级游戏将在一个比GTA 5大两倍的世界上展开，完成时间大约需要80小时。</p>\n<p>Rockstar的开发负责人Rob Nelson在<a href=\"https://www.youtube.com/watch?v=Mfx1B_LBSV0\" target=\"_blank\" rel=\"noopener\"></a>与YouTuber TGG的聊天中分享了地图大小的消息。</p>\n<p>聊天中，TGG透露了GTA 6版本中的Vice City以及其周边区域究竟有多么庞大。总结那些引人注目的数字，TGG解释说，\"地图面积是GTA 5地图的两倍，是Red Dead 2地图的三倍。Vice City本身是Los Santos的两倍大，而Vice City及其周边郊区比Los Santos及其周边地区大11倍，这真是太疯狂了，伙计。\" <a href=\"https://www.youtube.com/embed/kcN1oGfJzIM?\" target=\"_blank\" rel=\"noopener\"></a></p>\n<img src=\"https://i.ytimg.com/vi/kcN1oGfJzIM/hqdefault.jpg\" alt=\"Cover image for YouTube video\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>GTA 6（侠盗猎车手6）- 官方扩展游戏演示</p>\n<div class=\"news-video\"><iframe src=\"https://www.youtube.com/embed/kcN1oGfJzIM?\" frameborder=\"0\" allow=\"autoplay; encrypted-media; picture-in-picture\" allowfullscreen loading=\"lazy\"></iframe></div>\n<p>新的GTA 6扩展预告片。<a href=\"https://www.youtube.com/watch?v=kcN1oGfJzIM\" target=\"_blank\" rel=\"noopener\">在YouTube上观看</a></p>\n<p>截至目前，Rockstar推出的各种预告片和公告已经揭示了Leonida州六个关键地点，这是GTA 6以佛罗里达为灵感的设定。当然包括维萨城本身，还有曾经的旅游热点Port Gellhorn，阳光明媚的Leonida群岛，Grassrivers沼泽，Kalaga国家公园，以及Ambrosia。尽管我们肯定还有许多未知的信息，但很明显，地图很大，里面的内容也很多。</p>\n<p>这里有<a href=\"https://www.eurogamer.net/gta-6-romance-relationship-system-jason-lucia\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>首先，是关系系统，以及更注重<a href=\"https://www.eurogamer.net/gta-6-driving-car-theft-more-challenging-rockstar-realism-push\" target=\"_blank\" rel=\"noopener\">更真实的驾驶和偷车</a>，以及<a href=\"https://www.eurogamer.net/gta-6-revamping-wanted-system-adding-criminal-profiles\" target=\"_blank\" rel=\"noopener\">改进的通缉系统</a>等。那么，要完成所有这些内容需要多长时间呢？Nelson，这次在接受<a href=\"https://www.nytimes.com/2026/08/27/arts/grand-theft-auto-vi-trailer-extended-look-rockstar.html\" target=\"_blank\" rel=\"noopener\">纽约时报</a>采访时提到，他今年2月的最新游玩时长大约为80小时。这包括了主线故事和一些具有叙事影响的\"可选目标\"，暗示了对于那些喜欢额外内容的人来说，还有很多游戏时间——而且<a href=\"https://www.eurogamer.net/gta-6-activities-things-to-do-spotted-so-far\" target=\"_blank\" rel=\"noopener\">《GTA 6》似乎有很多活动和娱乐项目</a>。</p>\n<p>今晚在Netflix和其他地方的大揭秘非常令人印象深刻，帮助Rockstar在经历了一周的GTA 6泄露事件后夺回了叙事控制权<a href=\"https://www.eurogamer.net/gta-6-leaks-rockstar-statement-spoilers\" target=\"_blank\" rel=\"noopener\"></a>，尽管<a href=\"https://www.eurogamer.net/rockstar-workers-dont-boycott-grand-theft-auto-6-support-union-costs\" target=\"_blank\" rel=\"noopener\">它在英国仍然因为涉嫌破坏工会而陷入争议</a>。</p>\n<p>在Netflix展示之后——<a href=\"https://www.eurogamer.net/grand-theft-auto-6-netflix-something-went-wrong\" target=\"_blank\" rel=\"noopener\"></a></p>",
-      "video": "https://www.youtube.com/embed/kcN1oGfJzIM",
-      "translated": true
     },
     {
       "id": "news-228c6c807018",
