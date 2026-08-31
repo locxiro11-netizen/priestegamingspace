@@ -214,17 +214,32 @@ def do_select():
         return 0
 
     print("候选 %d 条，交给大模型精选 ..." % len(items))
-    resp = chat([
+    messages = [
         {"role": "system", "content": SELECT_SYSTEM.format(pmin=PICK_MIN)},
         {"role": "user", "content": SELECT_USER.format(
             n=len(items), pmin=PICK_MIN, pmax=PICK_MAX,
             candidates=build_candidate_brief(items))},
-    ], max_tokens=4096)
+    ]
 
-    picks = extract_json(resp)
+    # 模型偶尔会返回夹带解释文字、截断或非 JSON 的内容，extract_json 兜不住。
+    # 这里多试两轮并逐步升高 temperature 换个说法，避免一次抽风就让当天开天窗。
+    picks, resp = None, ""
+    for attempt in range(3):
+        resp = chat(messages, max_tokens=4096,
+                    temperature=0.3 + 0.2 * attempt)
+        picks = extract_json(resp)
+        if picks:
+            break
+        print("  ! 第 %d 次返回无法解析为 JSON，重试" % (attempt + 1),
+              file=sys.stderr)
+
     if not picks:
-        print("模型返回无法解析：\n%s" % (resp or "")[:500], file=sys.stderr)
-        return 1
+        # 关键：不能 return 1。精选失败若中断整个流程，
+        # 后面的补正文/翻译/发布全部跳过，当天直接开天窗。
+        # 退化为「按来源取最新几条」，让流程继续往下走。
+        print("模型连续 3 次返回无法解析，退化为取最新 %d 条。最后一次回复片段：\n%s"
+              % (PICK_MIN, (resp or "")[:300]), file=sys.stderr)
+        picks = [{"i": i} for i in range(min(PICK_MIN, len(items)))]
 
     curated, seen_idx = [], set()
     for p in picks:
@@ -236,12 +251,15 @@ def do_select():
             continue
         src = items[i]
         seen_idx.add(i)
+        # 退化路径（模型没给 title/desc）时用源站原始字段兜底，
+        # 否则卡片会出现空标题或空摘要。
+        fallback_desc = re.sub(r"\s+", " ", src.get("raw_desc") or "")[:120]
         curated.append({
             "uid": src.get("uid", ""),
             "title": (p.get("title") or src.get("title", "")).strip(),
-            "desc": (p.get("desc") or "").strip(),
-            "tags": p.get("tags") or [],
-            "game": (p.get("game") or "").strip(),
+            "desc": (p.get("desc") or "").strip() or fallback_desc,
+            "tags": p.get("tags") or ([src.get("source")] if src.get("source") else []),
+            "game": (p.get("game") or src.get("game") or "").strip(),
             "image": src.get("image", ""),
             "source": src.get("source", ""),
             "source_url": src.get("source_url", ""),
@@ -360,7 +378,17 @@ def do_translate():
         translated = []
         failed = False
         for ci, chunk in enumerate(chunks):
-            arr = translate_chunk(chunk, len(texts), ci, len(chunks))
+            # 单批调用彻底失败（额度耗尽、接口 5xx、网络断）时不能让异常冒出去：
+            # 一旦冒到 main 就 return 1，整个 workflow 中断，
+            # 已经抓好精选好的内容全部作废，当天开天窗。
+            # 这里降级为「该批保留原文」，并把本篇记入黑名单，
+            # 由回填阶段剔除，既不发英文原文，也不影响其余中文篇目正常发布。
+            try:
+                arr = translate_chunk(chunk, len(texts), ci, len(chunks))
+            except Exception as e:
+                print("  ! 第 %d 批翻译调用失败（%s），该批保留原文"
+                      % (ci + 1, e), file=sys.stderr)
+                arr = None
             if arr is None:
                 failed = True
                 arr = chunk  # 该批保留原文
@@ -386,6 +414,37 @@ def do_translate():
     return 0
 
 
+def _degrade_select():
+    """精选阶段大模型完全不可用时的降级：直接取最新几条写出 curated.json。
+
+    宁可发几条未经精选的，也不要让当天完全开天窗。
+    """
+    try:
+        with open(CANDIDATES_PATH, encoding="utf-8") as f:
+            data = json.load(f)
+        items = data.get("items", []) if isinstance(data, dict) else data
+    except Exception:
+        items = []
+
+    curated = []
+    for src in items[:PICK_MIN]:
+        curated.append({
+            "uid": src.get("uid", ""),
+            "title": src.get("title", ""),
+            "desc": re.sub(r"\s+", " ", src.get("raw_desc") or "")[:120],
+            "tags": [src.get("source")] if src.get("source") else [],
+            "game": src.get("game", ""),
+            "image": src.get("image", ""),
+            "source": src.get("source", ""),
+            "source_url": src.get("source_url", ""),
+            "content_encoded": src.get("content_encoded", ""),
+        })
+    os.makedirs(OUT_DIR, exist_ok=True)
+    with open(CURATED_PATH, "w", encoding="utf-8") as f:
+        json.dump(curated, f, ensure_ascii=False, indent=2)
+    print("已降级写出 %d 条（未经模型精选）" % len(curated), file=sys.stderr)
+
+
 def main():
     mode = "--translate" if "--translate" in sys.argv[1:] else "--select"
     try:
@@ -393,7 +452,20 @@ def main():
     except RuntimeError as e:
         # 缺 Key、接口调不通这类问题直接讲清楚，别甩一屏堆栈
         print("错误：%s" % e, file=sys.stderr)
-        return 1
+        # 翻译阶段挂掉不该阻断发布：正文保持原文，
+        # 回填阶段会按 is_chinese 判断，非中文的本来就不会被发出去。
+        if mode == "--translate":
+            print("翻译阶段不可用，跳过翻译继续后续流程。", file=sys.stderr)
+            return 0
+        # 精选阶段挂掉则降级取最新几条，避免当天完全没内容
+        _degrade_select()
+        return 0
+    except Exception as e:
+        print("未预期的错误：%s: %s" % (type(e).__name__, e), file=sys.stderr)
+        if mode == "--translate":
+            return 0
+        _degrade_select()
+        return 0
 
 
 if __name__ == "__main__":

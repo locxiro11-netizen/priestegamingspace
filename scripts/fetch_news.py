@@ -448,21 +448,43 @@ def load_published(cfg):
 
 
 def load_seen():
+    """返回已看过的 uid 集合（仅用于判断是否命中）。"""
+    return set(load_seen_ordered())
+
+
+def load_seen_ordered():
+    """返回已看过的 uid 列表，保持写入顺序（旧的在前，新的在后）。
+
+    顺序很重要：save_seen 截断时要丢掉最旧的，靠的就是这个顺序。
+    """
     if not os.path.exists(SEEN_PATH):
-        return set()
+        return []
     try:
         with open(SEEN_PATH, "r", encoding="utf-8") as f:
-            return set(json.load(f).get("uids", []))
+            uids = json.load(f).get("uids", [])
+        return uids if isinstance(uids, list) else []
     except Exception:
-        return set()
+        return []
+
+
+SEEN_LIMIT = 3000
 
 
 def save_seen(uids):
+    """把本轮 uid 追加到「已看过」清单尾部，超出上限时丢弃最旧的。
+
+    注意：这里必须保持列表顺序去重，不能用 set。
+    早先的实现是 list(set)[-3000:]，set 无序导致截断变成随机丢弃，
+    本轮刚标记的 uid 也可能当场被扔掉，「已看过」状态形同失效。
+    """
     os.makedirs(STATE_DIR, exist_ok=True)
-    existing = load_seen()
-    existing.update(uids)
-    # 只保留最近 3000 条，避免无限膨胀
-    trimmed = list(existing)[-3000:]
+    ordered = load_seen_ordered()
+    known = set(ordered)
+    for u in uids:                 # 新 uid 追加到尾部，保持「旧前新后」
+        if u and u not in known:
+            ordered.append(u)
+            known.add(u)
+    trimmed = ordered[-SEEN_LIMIT:]    # 超限时从头部（最旧）丢弃
     with open(SEEN_PATH, "w", encoding="utf-8") as f:
         json.dump({"uids": trimmed, "updated": datetime.now().isoformat(timespec="seconds")},
                   f, ensure_ascii=False, indent=2)
