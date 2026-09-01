@@ -7,7 +7,9 @@ on:
     - cron: '7 1 * * *'     # UTC 01:07 = 北京时间 09:07（主档）
     - cron: '47 1 * * *'    # UTC 01:47 = 北京时间 09:47（备档一）
     - cron: '37 2 * * *'    # UTC 02:37 = 北京时间 10:37（备档二）
-    - cron: '0 3 * * *'     # 临时探针：验证调度器是否恢复，验证后删除
+    # 注：2026-09-01 实测，本仓库 schedule 事件从未被派发（累计 0 条），
+    # 以下 cron 目前形同虚设。实际触发依赖外部定时服务走 repository_dispatch，
+    # 保留这些 cron 是为了万一 GitHub 调度器日后恢复时可自动接管。
   workflow_dispatch:        # 允许在 Actions 页面手动点一次
   repository_dispatch:      # 允许外部定时服务（如 cron-job.org）触发
     types: [daily-news]
