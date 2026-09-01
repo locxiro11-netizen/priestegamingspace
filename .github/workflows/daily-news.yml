@@ -32,9 +32,12 @@ jobs:
         id: guard
         run: |
           TODAY=$(TZ=Asia/Shanghai date +%Y/%m/%d)
-          echo "北京时间今天：$TODAY"
-          if [ "${{ github.event_name }}" != "schedule" ]; then
-            echo "非定时触发（${{ github.event_name }}）：跳过护栏，强制执行"
+          EVENT="${{ github.event_name }}"
+          echo "北京时间今天：$TODAY（触发方式：$EVENT）"
+          # 只有「在 Actions 页面手动点」才是强制重跑；
+          # 定时触发与外部定时服务触发都受护栏约束，一天只发一次。
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            echo "页面手动触发：跳过护栏，强制执行"
             echo "skip=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
