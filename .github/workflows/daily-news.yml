@@ -7,6 +7,7 @@ on:
     - cron: '7 1 * * *'     # UTC 01:07 = 北京时间 09:07（主档）
     - cron: '47 1 * * *'    # UTC 01:47 = 北京时间 09:47（备档一）
     - cron: '37 2 * * *'    # UTC 02:37 = 北京时间 10:37（备档二）
+    - cron: '0 3 * * *'     # 临时探针：验证调度器是否恢复，验证后删除
   workflow_dispatch:        # 允许在 Actions 页面手动点一次
   repository_dispatch:      # 允许外部定时服务（如 cron-job.org）触发
     types: [daily-news]
