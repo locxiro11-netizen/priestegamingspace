@@ -373,8 +373,11 @@ def url_month_stale(url, max_months=1):
     这两家的正文 URL 都带 /YYYYMM/ 段，拿它做兜底校验。
 
     返回 True 表示该丢弃。识别不出年月时返回 False（保守保留）。
+
+    年月格式各家不统一：游民星空 / 3DM 是 /202409/，游侠网是 /2026-9/（月份一位），
+    所以正则要同时容忍可选的连字符和 1~2 位月份。
     """
-    m = re.search(r"/(20\d{2})(\d{2})/", url or "")
+    m = re.search(r"/(20\d{2})-?(\d{1,2})/", url or "")
     if not m:
         return False
     year, month = int(m.group(1)), int(m.group(2))

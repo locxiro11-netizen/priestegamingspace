@@ -42,10 +42,10 @@ _SSL_LOOSE = ssl.create_default_context()
 _SSL_LOOSE.check_hostname = False
 _SSL_LOOSE.verify_mode = ssl.CERT_NONE
 
-PICK_MIN = int(os.environ.get("PICK_MIN", "4"))
-PICK_MAX = int(os.environ.get("PICK_MAX", "6"))
+PICK_MIN = int(os.environ.get("PICK_MIN", "6"))
+PICK_MAX = int(os.environ.get("PICK_MAX", "8"))
 
-SELECT_SYSTEM = """你是资深游戏资讯主编，为一个游戏自媒体站点挑选每日要闻。
+SELECT_SYSTEM = """你是资深游戏资讯主编，为一个中文游戏自媒体站点挑选每日要闻。
 
 判断标准只有一条：这条新闻会不会让玩家在群里讨论起来？
 
@@ -56,11 +56,17 @@ SELECT_SYSTEM = """你是资深游戏资讯主编，为一个游戏自媒体站�
 - 现象级话题：破圈争议、销量纪录、现象级爆款
 - 顶级 IP 的关键动向（GTA、塞尔达、宝可梦、黑神话等）
 
+国内热点（重点，别在这上面漏稿）：
+- 爆火的独立游戏：销量 / 在线人数 / 口碑突然起飞的黑马，玩家在自发传播的那种
+- 时下正在吵的话题：玩家社群、论坛、评论区正在激烈争论的事
+- 国产游戏重大动向：上线、定档、版号、停运、争议、出海成绩
+- 手游 / 二游 / 主机圈的爆点事件
+
 明确排除：
-- 小众独立游戏的常规消息（除非本身成了话题）
+- 独立游戏的常规开发日志、无人讨论的小众作品（爆火的不算这条）
 - 普通版本更新、小补丁、常规 DLC 上架
 - 单纯的评分 / 评测 / 榜单 / 周报汇总
-- 促销折扣、硬件降价
+- 促销折扣、硬件降价、没有信息量的厂商通稿
 - 娱乐八卦、明星、手机数码
 - 同一事件的多家重复报道只留信息量最大的一条
 
@@ -78,7 +84,9 @@ SELECT_USER = """下面是今天的候选资讯（共 {n} 条）。请挑出 {pm
 要求：
 - i 必须是上面给出的编号
 - 标题一律写成中文，英文原标题要翻译，不要保留英文
-- 国内源优先，中文内容应占一半以上
+- 中文源（游民星空 / 3DM / 机核 / indienova / GameLook / 游侠网）合计至少占一半，
+  优先给国内玩家真正关心的话题让位
+- 独立游戏和玩家热议话题，只要真的火就值得选，不要因为「不是 3A」而漏掉
 - 如果确实没有够分量的，就少选，不要硬凑"""
 
 
@@ -162,7 +170,7 @@ def build_candidate_brief(items):
     return "\n".join(lines)
 
 
-CN_SOURCES = {"机核", "游民星空", "3DM"}
+CN_SOURCES = {"机核", "游民星空", "3DM", "indienova", "GameLook", "游侠网"}
 
 
 def _title_grams(title, n=3):
