@@ -1,6 +1,85 @@
 {
   "news": [
     {
+      "id": "news-c372889b3450",
+      "date": "2026/09/02 09:09",
+      "title": "英伟达发布DLSS5",
+      "desc": "英伟达发布DLSS5技术，将首发应用于《NBA 2K27》，标志着AI实时图形向好莱坞级别的高画质迈出关键一步，玩家讨论新技术应用和效果。",
+      "tags": [
+        "技术更新",
+        "游戏优化"
+      ],
+      "image": "https://image.gcores.com/a66981dcb3967e3392564ea3fc855acd-1920-1080.gif?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
+      "game": "NBA 2K27",
+      "source": "机核",
+      "source_url": "https://www.gcores.com/articles/219109",
+      "likes": 0,
+      "content_html": "<p>英伟达于今日正式公布 DLSS 5 技术，将于9月3日首发登陆《NBA 2K27》。据悉，这项技术适用于所有GeForce RTX 50系列显卡、笔记本电脑以及GeForce NOW。英伟达引入了3D引导神经渲染，标志着AI实时图形向好莱坞级别的高画质迈出了关键一步。</p>\n<img src=\"https://image.gcores.com/b7be82b04df3a683d079e08e883688d6-3840-2160.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<img src=\"https://image.gcores.com/fc5a8282b61a4a6a3bd121203ecfac20-3840-1795.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>Visual Concepts高级制作人Peter Kavic表示，这项技术赋予了开发团队极高的控制力。团队可以设定整体色调和风格以匹配原有的艺术方向，还能使用像素级的细节提升控制遮罩在关键部位精细调整角色，同时细致地还原角色外貌。</p>\n<img src=\"https://image.gcores.com/8d5b5ce43c51225f9767bcd3b59c2f13-3840-2160.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>官方表示，DLSS 5将游戏引擎渲染的画面作为坚实的底层基础。在图形管线的最后渲染阶段，DLSS 为场景注入逼真的光照和材质。同时，开发者可以确保引擎帧决定保留的内容，并由美术人员指导修改的部分。</p>\n<img src=\"https://image.gcores.com/cbe11698fce689a0a6cad7b0e2d926ff-3840-2160.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>为了实现DLSS 5，NVIDIA研发了全新的实时AI模型。该模型能够以确定性的方式运行，在处理相同的输入帧时输出一致的结果。本次的技术直接锚定渲染帧，通过学习识别引擎数据来分析屏幕上的物体、材质、空间关系和光源。</p>\n<img src=\"https://image.gcores.com/212969c377334ffdc03bae380b3e240b-1920-1080.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>在性能方面，DLSS 5采用严格的单帧输入和单帧输出模型，并直接利用游戏引擎的运动向量来保证每一帧都保持稳定。它配备了专为实时3D渲染管线设计的紧凑型神经网络，能够利用GeForce RTX 50系列显卡的Tensor Core在本地单GPU上运行，在最高4K分辨率下保持流畅的帧率。</p>\n<img src=\"https://image.gcores.com/acd2c16b7ca04392a506f4e82e324dbe-1920-1080.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>官方强调，DLSS 5为开发者提供了丰富的艺术控制工具。开发团队可以通过不同的模型选择、结构强度和色调强度调整，以及语义AI遮罩，在不改变核心身份的前提下，为角色和场景增添逼真的光响应和材质细节。</p>\n<img src=\"https://image.gcores.com/7702a9b36725fe621e9520952a6bd3dc-1887-901.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>在《NBA 2K27》中，GeForce RTX 50系列用户开启 DLSS 后能够获得更自然的皮肤次表面散射、发丝光影以及更深的接触阴影。GeForce RTX 5090用户在4K分辨率、超级预设加光线追踪和DLSS 5的加持下，帧率最高可达370帧。在2560x1440分辨率下，RTX 5090的帧率最高可达590帧。</p>\n<img src=\"https://image.gcores.com/f8da27824ce71e78e418e97961ee8d7d-1920-1080.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<img src=\"https://image.gcores.com/a75c4b2064e04793d6d652d4ce264c26-1920-1080.gif\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>若要体验本技术，玩家需要下载9月3日推出的 GeForce 驱动程序并在游戏中开启DLSS神经渲染选项。NVIDIA表示，未来还将持续推进模型优化，在秋季带来更多性能提升。</p>"
+    },
+    {
+      "id": "news-13b87b93f4df",
+      "date": "2026/09/02 09:09",
+      "title": "GTA6预告片大受欢迎",
+      "desc": "《GTA6》预告片在Netflix上获得超过3100万观看量，成为该平台上周最受欢迎的内容，玩家讨论剧情和制作水平。",
+      "tags": [
+        "预告片",
+        "观看量"
+      ],
+      "image": "https://cdn.mos.cms.futurecdn.net/aPWeH3auDGetjVpE4BuTHa-1280-80.jpg",
+      "game": "GTA 6",
+      "source": "PC Gamer",
+      "source_url": "https://www.pcgamer.com/games/grand-theft-auto/that-grand-theft-auto-6-exclusive-reveal-worked-out-pretty-well-for-netflix-it-was-the-platforms-biggest-show-last-week/",
+      "likes": 0,
+      "content_html": "<p>Netflix与<a href=\"https://www.pcgamer.com/grand-theft-auto-6/\" target=\"_blank\" rel=\"noopener\"></a>的独家合作协议</p>\n<p>八月份宣布《侠盗猎车手6》让我觉得有点荒谬。当然，正如PC Gamer的Harvey Randall当时所说，这可能会带来‘一点小收入’，但一个只保留六个小时的独家视频？不是几天？这能真正产生多大的影响？</p>\n<p>嗯，实际上，影响相当大。我们已经知道Netflix对《侠盗猎车手6》的扩展预览感到非常满意，这使它的网络流量翻了一番多。</p>\n<p>可能对结果非常满意，但一个<a href=\"https://variety.com/2026/tv/news/gta-6-netflix-extended-look-views-1236848409/\" target=\"_blank\" rel=\"noopener\">Variety</a>报道更具体、更令人印象深刻，称Netflix在8月27日首播至8月30日期间，通过GTA 6的揭晓吸引了3110万次观看，这是其每周前十名排名的截止日期。</p>\n<p>这不仅仅是一个巨大的数字，它使揭晓展示成为Netflix当周观看次数最多的标题，在它被分类的93个国家中的87个国家中超过了英语电影列表。</p>\n<p>由于他们在计算“观看次数”方面的差异，这不是一个直接的比较，但Netflix的这个数字——再次强调，仅仅是四天内——几乎是<a href=\"https://www.youtube.com/watch?v=tJbzMqJGH4k\" target=\"_blank\" rel=\"noopener\"></a>的两倍。</p>\n<p>YouTube 总共发布了 1700 万次观看，自从展示在平台上上线以来。</p>\n<p>这里就是它，如果你还没有看过——尽管考虑到这些观看次数，我猜如果你想看，你很可能已经看过了。</p>\n<div class=\"news-video\"><iframe src=\"https://www.youtube-nocookie.com/embed/tJbzMqJGH4k\" frameborder=\"0\" allow=\"autoplay; encrypted-media; picture-in-picture\" allowfullscreen loading=\"lazy\"></iframe></div>\n<p>GTA 6 的发布是一个独特的现象，不是那种每年都能轻易复制的，但显然这对 Netflix 来说是一个巨大的胜利，它成为了 <em></em> 的尖端。</p>\n<p>非常尖锐的长矛，在一段短暂但有利可图的时期内。Take-Two 没有透露从这笔交易中得到了什么，尽管我想钱的因素可能很重要。</p>\n<p>但它的成功规模让我怀疑未来我们是否能看到更多类似的情况：GTA 是一种稀有鸟类，但我可以想象微软可能会为未来的《使命召唤》揭晓活动设置一些东西，也许，或者索尼可能会为特别重要的《State of Play》展示选择类似的独家窗口。游戏现在是主流——这可能是那最终的样子。</p>\n<p><strong>GTA 6 指南</strong>：我们所知道的一切<br><strong></strong><a href=\"https://www.pcgamer.com/gta-6-cars-list/\" target=\"_blank\" rel=\"noopener\"><strong>GTA 6 车辆</strong></a>：车库阵容<br><strong></strong><a href=\"https://www.pcgamer.com/games/action/grand-theft-auto/gta6-characters/\" target=\"_blank\" rel=\"noopener\"><strong>GTA 6 角色</strong></a>：你的反英雄阵容<br><strong></strong><a href=\"https://www.pcgamer.com/games/grand-theft-auto/gta6-map/\" target=\"_blank\" rel=\"noopener\"><strong>GTA 6 地图</strong></a>：已确认的维加斯地区<br><a href=\"https://www.pcgamer.com/games/grand-theft-auto/gta-6-pc-release-date/\" target=\"_blank\" rel=\"noopener\"><strong>GTA 6 PC 发行</strong></a>：什么时候会发布？</p>",
+      "video": "https://www.youtube-nocookie.com/embed/tJbzMqJGH4k"
+    },
+    {
+      "id": "news-97532e489741",
+      "date": "2026/09/02 09:09",
+      "title": "GTA6道德系统引发讨论",
+      "desc": "《GTA6》的道德系统可能导致玩家在造成过多混乱后变得不可救赎，引发玩家对游戏道德和选择自由的讨论。",
+      "tags": [
+        "道德系统",
+        "游戏设计"
+      ],
+      "image": "https://assets-prd.ignimgs.com/2026/08/27/exclusivelookbr-gtfm-1787873244868.png",
+      "game": "GTA 6",
+      "source": "IGN",
+      "source_url": "https://www.ign.com/articles/gta-6s-morality-meter-will-reportedly-shatter-and-make-you-irredeemable-if-you-cause-too-much-mayhem",
+      "likes": 0,
+      "content_html": "<img src=\"https://assets-prd.ignimgs.com/2026/08/27/exclusivelookbr-gtfm-1787873244868.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>《侠盗猎车手6》的道德计量表据说可以“破碎”，导致你在整个游戏过程中几乎无法挽回。</p>\n<p>YouTuber <a href=\"https://www.youtube.com/watch?v=33t4kUEBL5k\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>TGG在最近的一次预览中得以在幕后看到《侠盗猎车手6》，并提供了大量关于游戏的细节。关于游戏的“犯罪档案”系统有很多讨论，该系统在《荒野大镖客救赎》游戏中的道德系统类似。在一段新的视频中，TGG分析了游戏犯罪档案系统的不同级别，指出有四种状态：专业（计量表中最高的、最光荣的部分）、侵略、暴力和最低选项，精神错乱。</p>\n<p>还有一个未命名的状态，如果你偏离轨道太远，它将开始破裂并最终破碎。Rockstar向TGG建议，达到这种状态非常困难，它部分是为了那些明显表现出不关心这个系统的玩家，使得如果计量表破碎，游戏将不再衡量你的行为。</p>\n<p>Rockstar正在尝试找到一个平衡点，让玩家不必参与《侠盗猎车手6》中的每一个系统。如果你想杀死你看到的所有人，你可以这样做而不会感到受到惩罚。你可以关闭通知，这些通知会提醒你犯罪档案的状态，让你对游戏如何看待你的行为一无所知。</p>\n<p>The system is more to measure the kind of criminal you are. It measures if your actions are justified. If you're holding up a store and someone shoots back at you, you have the right to kill them without it impacting your criminal profile negatively. However, if you run in and shoot a helpless store clerk or escalate a situation without cause, that's when the meter will begin to slide toward the darker side.</p>\n<p>Additionally, Jason and Lucia have their own independent profiles, meaning you can play them completely differently if you want. It's unclear how much this profile will impact the story or if it can change the ending like Red Dead Redemption 2's honor system. Given Rockstar is giving players the freedom to engage with it at all, it's hard to say if it will have a significant impact on how the narrative unravels.</p>\n<p>GTA 6 also features a relationship meter, which measures how in love Jason and Lucia are based on the player's actions. This has caused some <a href=\"https://www.ign.com/articles/gta-6s-relationship-mechanic-is-cheating-on-your-real-life-partner-and-break-up-worthy-according-to-angry-spouses\" target=\"_blank\" rel=\"noopener\">discourse and controversy on social media among the spouses of players</a>, as they fear they will pay more attention to their in-game partner than their real one. Do what you will with that information.</p>\n<p>最终，GTA 6听起来像是一个非常丰富的角色扮演体验。很想知道所有这些系统会深入到什么程度，但它听起来有潜力成为<a href=\"https://www.ign.com/articles/99-details-from-the-gta-6-extended-look\" target=\"_blank\" rel=\"noopener\"></a>之一</p>\n<p>这一代最互动和细腻的游戏。</p>\n<p>Cade Onder 是 IGN 新闻团队的自由职业者。他涵盖所有娱乐内容，包括游戏、电影等。你可以在 Twitter 上找到他 @Cade_Onder。</p>"
+    },
+    {
+      "id": "news-0f45d62ab2af",
+      "date": "2026/09/02 09:09",
+      "title": "索尼支付8000万美元和解金",
+      "desc": "索尼因游戏价格问题支付近8000万美元和解金，玩家讨论数字游戏价格和消费者权益。",
+      "tags": [
+        "和解金",
+        "消费者权益"
+      ],
+      "image": "https://www.gamespot.com/wp-content/uploads/2026/09/ps-store-logo.webp?w=300",
+      "game": "",
+      "source": "GameSpot",
+      "source_url": "https://www.gamespot.com/articles/sony-to-pay-out-nearly-8-million-in-class-action-settlement-over-game-prices/",
+      "likes": 0
+    },
+    {
+      "id": "news-797997116df6",
+      "date": "2026/09/02 09:09",
+      "title": "CDPR承认Cyberpunk 2077发布错误",
+      "desc": "CDPR承认《赛博朋克2077》发布时技术状态不佳，玩家讨论游戏发布和消费者体验。",
+      "tags": [
+        "发布错误",
+        "消费者体验"
+      ],
+      "image": "https://www.gamespot.com/wp-content/uploads/2026/09/cyberpunk_20bf82.jpg?w=636",
+      "game": "Cyberpunk 2077",
+      "source": "GameSpot",
+      "source_url": "https://www.gamespot.com/articles/releasing-cyberpunk-2077-in-its-poor-state-was-for-sure-wrong-cd-projekt-admits/",
+      "likes": 0
+    },
+    {
       "id": "news-717ffbd44fac",
       "date": "2026/09/01 10:45",
       "title": "魔兽世界评分争议",
