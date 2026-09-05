@@ -26,6 +26,10 @@ import time
 import urllib.request
 import urllib.error
 
+# 分类规则（3A / 独立 / 综合）与 ai_curate 同目录，直接按脚本目录导入
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import genre
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_DIR = os.path.join(ROOT, "scripts", "out")
 CANDIDATES_PATH = os.path.join(OUT_DIR, "candidates.json")
@@ -42,8 +46,14 @@ _SSL_LOOSE = ssl.create_default_context()
 _SSL_LOOSE.check_hostname = False
 _SSL_LOOSE.verify_mode = ssl.CERT_NONE
 
-PICK_MIN = int(os.environ.get("PICK_MIN", "6"))
-PICK_MAX = int(os.environ.get("PICK_MAX", "8"))
+PICK_MIN = int(os.environ.get("PICK_MIN", "10"))
+PICK_MAX = int(os.environ.get("PICK_MAX", "15"))
+
+# 一次让模型挑 15 条，输出很容易顶到 token 上限而被截断，
+# 截断后 extract_json 解析不出来，等于白跑一次。
+# 拆成小批多次调用：每批最多 8 条，够数就停。
+BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "8"))
+MAX_BATCHES = int(os.environ.get("MAX_BATCHES", "3"))
 
 SELECT_SYSTEM = """你是资深游戏资讯主编，为一个中文游戏自媒体站点挑选每日要闻。
 
@@ -70,24 +80,32 @@ SELECT_SYSTEM = """你是资深游戏资讯主编，为一个中文游戏自媒�
 - 娱乐八卦、明星、手机数码
 - 同一事件的多家重复报道只留信息量最大的一条
 
-宁缺毋滥：凑不够 {pmin} 条就少发，绝不为了凑数降低标准。"""
+宁缺毋滥：没有够分量的就少选，绝不为了凑数降低标准。
 
-SELECT_USER = """下面是今天的候选资讯（共 {n} 条）。请挑出 {pmin}-{pmax} 条最有爆点的。
+最后，每条都要给出 genre 分类，取值只能是这三个之一：
+- "3a"：3A / 大作——大厂或高预算作品本身，或围绕它们发生的事件
+  （GTA、塞尔达、黑神话、使命召唤、艾尔登法环、原神这类）
+- "indie"：独立游戏——独立团队作品、爆火独游、像素 / 肉鸽这类小体量作品
+- "other"：都不是——行业动态、平台政策、硬件、玩家圈事件、纯行业数据"""
+
+SELECT_USER = """下面是候选资讯（共 {n} 条），已经挑过的不在里面。
+本次请挑 {need} 条最有爆点的（此前已累计挑了 {have} 条，全天目标 {pmin}-{pmax} 条）。
 
 {candidates}
 
 输出严格的 JSON 数组，不要任何解释文字、不要 markdown 代码块，格式：
 [
-  {{"i": <候选编号>, "title": "<中文标题，20-28字，爆点前置>", "desc": "<中文摘要1-2句，60-120字，说清发生了什么+为什么炸>", "tags": ["标签1","标签2"], "game": "<涉及的游戏名，没有就空字符串>"}}
+  {{"i": <候选编号>, "title": "<中文标题，20-28字，爆点前置>", "desc": "<中文摘要1-2句，60-120字，说清发生了什么+为什么炸>", "tags": ["标签1","标签2"], "game": "<涉及的游戏名，没有就空字符串>", "genre": "3a|indie|other"}}
 ]
 
 要求：
-- i 必须是上面给出的编号
+- i 必须是上面给出的编号，本次最多 {need} 条
 - 标题一律写成中文，英文原标题要翻译，不要保留英文
+- genre 只能是 3a / indie / other 三者之一，不要写别的
 - 中文源（游民星空 / 3DM / 机核 / indienova / GameLook / 游侠网）合计至少占一半，
   优先给国内玩家真正关心的话题让位
 - 独立游戏和玩家热议话题，只要真的火就值得选，不要因为「不是 3A」而漏掉
-- 如果确实没有够分量的，就少选，不要硬凑"""
+- 没有够分量的就少选，不要硬凑"""
 
 
 def load_key():
@@ -181,6 +199,14 @@ def _title_grams(title, n=3):
     return {t[i:i + n] for i in range(len(t) - n + 1)}
 
 
+# 撞题判定阈值（标题 3-gram 的 Jaccard 相似度）。
+# 原来 0.45，但每天条数从 6-8 涨到 10-15 之后，同一款游戏的两条不同新闻
+# （比如「GTA6 公布预告」和「GTA6 宣布跳票」）标题里游戏名占了大头，
+# 相似度轻易就过 0.45，好内容被误杀。真正的同一事件多源报道标题几乎一致，
+# 相似度普遍在 0.7 以上，所以这里放宽到 0.6：仍能抓住真重复，又不误伤。
+DEDUP_THRESHOLD = 0.6
+
+
 def dedupe_curated(curated):
     """同一事件的多源报道只留一条（模型的漏网之鱼在这里兜底）。
     保留优先级：国内源 > 模型排序靠前。"""
@@ -194,7 +220,7 @@ def dedupe_curated(curated):
                 continue
             inter = len(g & kg)
             union = len(g | kg)
-            if union and inter / union >= 0.45:
+            if union and inter / union >= DEDUP_THRESHOLD:
                 dup_of = k
                 break
         if dup_of is None:
@@ -211,6 +237,58 @@ def dedupe_curated(curated):
     return kept
 
 
+def _key_of(item):
+    """条目标识，用于跨批次排除已选中的候选。"""
+    return item.get("uid") or item.get("source_url") or (item.get("title") or "")
+
+
+def _entry_from(src, pick):
+    """把「候选条目 + 模型输出」拼成一条精选结果。
+
+    pick 传 {} 就是退化路径：标题/摘要用源站原始字段，分类靠规则推断。
+    两个兜底都不能省——空标题会让卡片难看，缺 genre 会让前端子页签漏掉这条。
+    """
+    title = (pick.get("title") or src.get("title", "")).strip()
+    desc = (pick.get("desc") or "").strip() or re.sub(
+        r"\s+", " ", src.get("raw_desc") or "")[:120]
+    tags = pick.get("tags") or ([src.get("source")] if src.get("source") else [])
+    game = (pick.get("game") or src.get("game") or "").strip()
+    return {
+        "uid": src.get("uid", ""),
+        "title": title,
+        "desc": desc,
+        "tags": tags,
+        "game": game,
+        "genre": genre.resolve_genre(
+            {"title": title, "desc": desc, "tags": tags, "game": game,
+             "source": src.get("source", "")},
+            pick.get("genre")),
+        "image": src.get("image", ""),
+        "source": src.get("source", ""),
+        "source_url": src.get("source_url", ""),
+        "content_encoded": src.get("content_encoded", ""),
+    }
+
+
+def _select_batch(items, need, have):
+    """让模型从 items 里挑最多 need 条，返回原始输出；彻底不可用返回 None。"""
+    messages = [
+        {"role": "system", "content": SELECT_SYSTEM.format(pmin=PICK_MIN)},
+        {"role": "user", "content": SELECT_USER.format(
+            n=len(items), need=need, have=have, pmin=PICK_MIN, pmax=PICK_MAX,
+            candidates=build_candidate_brief(items))},
+    ]
+    # 模型偶尔返回夹带解释文字、截断或非 JSON 的内容，extract_json 兜不住。
+    # 多试两轮并逐步升高 temperature 换个说法，避免一次抽风就断在半路。
+    for attempt in range(3):
+        resp = chat(messages, max_tokens=4096, temperature=0.3 + 0.2 * attempt)
+        picks = extract_json(resp)
+        if picks:
+            return picks
+        print("  ! 第 %d 次返回无法解析为 JSON，重试" % (attempt + 1), file=sys.stderr)
+    return None
+
+
 def do_select():
     with open(CANDIDATES_PATH, encoding="utf-8") as f:
         data = json.load(f)
@@ -221,82 +299,72 @@ def do_select():
             json.dump([], f, ensure_ascii=False, indent=2)
         return 0
 
-    print("候选 %d 条，交给大模型精选 ..." % len(items))
-    messages = [
-        {"role": "system", "content": SELECT_SYSTEM.format(pmin=PICK_MIN)},
-        {"role": "user", "content": SELECT_USER.format(
-            n=len(items), pmin=PICK_MIN, pmax=PICK_MAX,
-            candidates=build_candidate_brief(items))},
-    ]
+    print("候选 %d 条，目标 %d-%d 条，分批精选（每批最多 %d 条）..."
+          % (len(items), PICK_MIN, PICK_MAX, BATCH_SIZE))
 
-    # 模型偶尔会返回夹带解释文字、截断或非 JSON 的内容，extract_json 兜不住。
-    # 这里多试两轮并逐步升高 temperature 换个说法，避免一次抽风就让当天开天窗。
-    picks, resp = None, ""
-    for attempt in range(3):
-        resp = chat(messages, max_tokens=4096,
-                    temperature=0.3 + 0.2 * attempt)
-        picks = extract_json(resp)
-        if picks:
+    curated, used = [], set()
+    for b in range(MAX_BATCHES):
+        if len(curated) >= PICK_MAX:
             break
-        print("  ! 第 %d 次返回无法解析为 JSON，重试" % (attempt + 1),
-              file=sys.stderr)
+        remaining = [it for it in items if _key_of(it) not in used]
+        if not remaining:
+            break
+        need = min(BATCH_SIZE, PICK_MAX - len(curated))
+        picks = _select_batch(remaining, need, len(curated))
+        if picks is None:
+            # 模型彻底不可用：跳出后由下面的下限补足接管，绝不让流程中断
+            print("  ! 第 %d 批模型返回无法解析，停止继续选材" % (b + 1),
+                  file=sys.stderr)
+            break
+        before = len(curated)
+        # 模型偶尔给多了：只取本批需要的条数，否则会越过 PICK_MAX
+        for p in (picks[:need] if isinstance(picks, list) else []):
+            if not isinstance(p, dict):
+                continue
+            try:
+                i = int(p.get("i"))
+            except Exception:
+                continue
+            if i < 0 or i >= len(remaining):
+                continue
+            src = remaining[i]
+            key = _key_of(src)
+            if key in used:
+                continue
+            used.add(key)
+            curated.append(_entry_from(src, p))
+        print("  第 %d 批选出 %d 条（累计 %d 条）"
+              % (b + 1, len(curated) - before, len(curated)))
+        if len(curated) == before:
+            break       # 模型一条都没给，别空转
 
-    if not picks:
-        # 关键：不能 return 1。精选失败若中断整个流程，
-        # 后面的补正文/翻译/发布全部跳过，当天直接开天窗。
-        # 退化为「按来源取最新几条」，让流程继续往下走。
-        print("模型连续 3 次返回无法解析，退化为取最新 %d 条。最后一次回复片段：\n%s"
-              % (PICK_MIN, (resp or "")[:300]), file=sys.stderr)
-        picks = [{"i": i} for i in range(min(PICK_MIN, len(items)))]
-
-    curated, seen_idx = [], set()
-    for p in picks:
-        try:
-            i = int(p.get("i"))
-        except Exception:
-            continue
-        if i < 0 or i >= len(items) or i in seen_idx:
-            continue
-        src = items[i]
-        seen_idx.add(i)
-        # 退化路径（模型没给 title/desc）时用源站原始字段兜底，
-        # 否则卡片会出现空标题或空摘要。
-        fallback_desc = re.sub(r"\s+", " ", src.get("raw_desc") or "")[:120]
-        curated.append({
-            "uid": src.get("uid", ""),
-            "title": (p.get("title") or src.get("title", "")).strip(),
-            "desc": (p.get("desc") or "").strip() or fallback_desc,
-            "tags": p.get("tags") or ([src.get("source")] if src.get("source") else []),
-            "game": (p.get("game") or src.get("game") or "").strip(),
-            "image": src.get("image", ""),
-            "source": src.get("source", ""),
-            "source_url": src.get("source_url", ""),
-            "content_encoded": src.get("content_encoded", ""),
-        })
-
-    # 兜底：模型一条都没选出来时，退回按来源取前几条，保证流程不空转
-    if not curated:
-        print("模型未选出任何条目，回退：取最新的 %d 条" % PICK_MIN)
-        for src in items[:PICK_MIN]:
-            curated.append({
-                "uid": src.get("uid", ""),
-                "title": src.get("title", ""),
-                "desc": re.sub(r"\s+", " ", src.get("raw_desc", ""))[:120],
-                "tags": [src.get("source", "")],
-                "game": src.get("game", ""),
-                "image": src.get("image", ""),
-                "source": src.get("source", ""),
-                "source_url": src.get("source_url", ""),
-                "content_encoded": src.get("content_encoded", ""),
-            })
+    # 下限补足：模型选不满时按候选顺序补齐，避免当天只发出三五条
+    if len(curated) < PICK_MIN:
+        print("只选出 %d 条，不足下限 %d 条，按候选顺序补足"
+              % (len(curated), PICK_MIN))
+        for src in items:
+            if len(curated) >= PICK_MIN:
+                break
+            key = _key_of(src)
+            if key in used:
+                continue
+            used.add(key)
+            curated.append(_entry_from(src, {}))
 
     curated = dedupe_curated(curated)
 
     with open(CURATED_PATH, "w", encoding="utf-8") as f:
         json.dump(curated, f, ensure_ascii=False, indent=2)
-    print("精选完成，共 %d 条：" % len(curated))
+
+    counts = {}
     for c in curated:
-        print("  · [%s] %s" % (c["source"], c["title"][:48]))
+        counts[c["genre"]] = counts.get(c["genre"], 0) + 1
+    summary = " / ".join("%s %d 条" % (genre.GENRE_LABELS.get(k, k), v)
+                         for k, v in sorted(counts.items()))
+    print("精选完成，共 %d 条（%s）：" % (len(curated), summary or "无"))
+    for c in curated:
+        print("  · [%s｜%s] %s"
+              % (c["source"], genre.GENRE_LABELS.get(c["genre"], "?"), c["title"][:44]))
     return 0
 
 
@@ -436,17 +504,8 @@ def _degrade_select():
 
     curated = []
     for src in items[:PICK_MIN]:
-        curated.append({
-            "uid": src.get("uid", ""),
-            "title": src.get("title", ""),
-            "desc": re.sub(r"\s+", " ", src.get("raw_desc") or "")[:120],
-            "tags": [src.get("source")] if src.get("source") else [],
-            "game": src.get("game", ""),
-            "image": src.get("image", ""),
-            "source": src.get("source", ""),
-            "source_url": src.get("source_url", ""),
-            "content_encoded": src.get("content_encoded", ""),
-        })
+        # 走 _entry_from 的退化分支，顺带补上 genre，别让子页签漏内容
+        curated.append(_entry_from(src, {}))
     os.makedirs(OUT_DIR, exist_ok=True)
     with open(CURATED_PATH, "w", encoding="utf-8") as f:
         json.dump(curated, f, ensure_ascii=False, indent=2)

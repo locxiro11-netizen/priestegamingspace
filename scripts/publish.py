@@ -38,6 +38,8 @@ import urllib.error
 from datetime import datetime, timezone, timedelta
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "scripts"))
+import genre
 CONFIG_PATH = os.path.join(ROOT, "scripts", "config.json")
 DEFAULT_INPUT = os.path.join(ROOT, "scripts", "out", "curated.json")
 TOKEN_FILE = os.path.join(ROOT, ".gh_token")
@@ -314,14 +316,21 @@ def main():
             skipped.append(f"{title}（ID 重复）")
             continue
 
+        desc = (item.get("desc") or "").strip()
         entry = {
             "id": new_id,
             "date": now_str(),
             "title": title,
-            "desc": (item.get("desc") or "").strip(),
+            "desc": desc,
             "tags": item.get("tags") or [],
             "image": (item.get("image") or "").strip(),
             "game": (item.get("game") or "").strip(),
+            # 3A / 独立 / 综合：模型已经打好标，没打就用规则兜底，
+            # 前端的子页签靠这个字段过滤
+            "genre": genre.resolve_genre(
+                {"title": title, "desc": desc, "tags": item.get("tags") or [],
+                 "game": item.get("game") or "", "source": item.get("source") or ""},
+                item.get("genre")),
             "source": (item.get("source") or "").strip(),
             "source_url": url,
             "likes": 0,

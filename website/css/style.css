@@ -431,9 +431,25 @@ body{
   padding:1px 6px;border-radius:999px;background:rgba(128,128,128,.18)}
 .source-tab.active .src-count{background:rgba(0,0,0,.14);opacity:.85}
 
+/* 资讯按内容类型分的子页签（3A / 独立游戏），比下面按媒体分的那排更粗一层 */
+.genre-tabs{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 14px}
+.genre-tab{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;
+  border:1px solid var(--border);border-radius:999px;background:var(--card-bg);
+  color:var(--text-secondary);font-size:14px;font-weight:600;font-family:inherit;
+  cursor:pointer;transition:all var(--transition);white-space:nowrap}
+.genre-tab:hover{border-color:var(--accent-gold);color:var(--text);
+  transform:translateY(-1px)}
+.genre-tab.active{background:linear-gradient(135deg,var(--accent-gold),var(--accent-gold-2));
+  border-color:transparent;color:#1a1613;
+  box-shadow:0 4px 14px var(--accent-gold-glow)}
+.genre-tab.active .src-count{background:rgba(0,0,0,.16);opacity:.9}
+.genre-ico{font-size:15px;line-height:1}
+
 @media (max-width:640px){
   .source-tabs{gap:6px}
   .source-tab{padding:6px 11px;font-size:12px}
+  .genre-tabs{gap:7px;margin-bottom:12px}
+  .genre-tab{padding:8px 14px;font-size:13px}
 }
 .detail-footer{display:flex;align-items:center;justify-content:space-between;
   padding:16px 32px;border-top:1px solid var(--border)}

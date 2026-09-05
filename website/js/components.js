@@ -81,6 +81,30 @@ const Components = (() => {
     `;
   }
 
+  /**
+   * 资讯按内容类型分的子页签：全部 / 3A游戏 / 独立游戏。
+   * counts 形如 { all: 80, '3a': 45, indie: 20, other: 15 }。
+   * 「综合」不单独出页签——它装的是行业动态、平台政策这类不好归类的，
+   * 数量再多也只是兜底，占一个位置反而让三个页签都变得没重点。
+   */
+  function renderGenreTabs(counts, active) {
+    const items = [
+      { key: 'all', label: '全部', icon: '📰', count: counts.all || 0 },
+      { key: '3a', label: '3A游戏', icon: '🎮', count: counts['3a'] || 0 },
+      { key: 'indie', label: '独立游戏', icon: '🕹️', count: counts.indie || 0 },
+    ];
+    return `
+      <div class="genre-tabs">
+        ${items.map(t => `
+          <button class="genre-tab${active === t.key ? ' active' : ''}"
+            data-genre="${t.key}"
+            onclick="App.setNewsGenre(this.dataset.genre)">
+            <span class="genre-ico">${t.icon}</span>${escapeHtml(t.label)}<span class="src-count">${t.count}</span>
+          </button>`).join('')}
+      </div>
+    `;
+  }
+
   function renderSubBar(currentTab, currentDateIndex, totalDates, dates, activeFilter, lifeUnlocked, canPublish) {
     const currentDate = dates[currentDateIndex] || '—';
     const dateDisplay = formatDateDisplay(currentDate);
@@ -615,7 +639,7 @@ const Components = (() => {
     renderStatsBar, renderNavTabs, renderSubBar, renderDayTitle,
     renderSectionHeader, renderCard, renderContentByDate, renderAllContent,
     renderCalendar, renderBookmarksPanel, renderDetail, renderCreateModal,
-    renderSearchBar, renderSourceTabs, renderArchive, renderHomeHero, renderEmpty,
+    renderSearchBar, renderSourceTabs, renderGenreTabs, renderArchive, renderHomeHero, renderEmpty,
     renderPasswordGate, showToast, showConfirm, escapeHtml, truncate, formatDateDisplay
   };
 })();

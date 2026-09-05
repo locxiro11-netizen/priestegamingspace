@@ -15,6 +15,9 @@ const App = (() => {
   let _restoreSearchFocus = false;
   // 「游戏资讯」页签下按媒体筛选，'all' 表示不筛选
   let _newsSource = 'all';
+  // 按内容类型筛选：'all' | '3a' | 'indie'
+  // （'other' 综合是兜底分类，不给单独页签，只在「全部」里出现）
+  let _newsGenre = 'all';
 
   // ========== Init ==========
 
@@ -98,7 +101,7 @@ const App = (() => {
     }
     _currentTab = tab;
     _searchQuery = '';
-    if (tab !== 'news') _newsSource = 'all';
+    if (tab !== 'news') { _newsSource = 'all'; _newsGenre = 'all'; }
     const si = document.querySelector('#search-input');
     if (si) si.value = '';
     render();
@@ -111,10 +114,35 @@ const App = (() => {
     render();
   }
 
-  /** 统计资讯都来自哪些媒体，按条数从多到少排。 */
-  function newsSourceStats() {
-    const counter = new Map();
+  /** 资讯页签下按内容类型筛选（3A / 独立游戏）。 */
+  function setNewsGenre(g) {
+    _newsGenre = g || 'all';
+    // 换了类型，可选媒体和它们的条数都会变，
+    // 媒体筛选跟着重置，免得停在一家当前类型下压根没有内容的媒体上
+    _newsSource = 'all';
+    render();
+  }
+
+  /** 各内容类型的条数。'other'（综合）也要统计，只是不给它单独页签。 */
+  function newsGenreStats() {
+    const c = { all: 0, '3a': 0, indie: 0, other: 0 };
     (Storage.getAll('news') || []).forEach(i => {
+      c.all++;
+      const g = i.genre || 'other';
+      c[g] = (c[g] || 0) + 1;
+    });
+    return c;
+  }
+
+  /**
+   * 统计资讯都来自哪些媒体，按条数从多到少排。
+   * 传 pool 时只统计这批（用于「先按类型收窄，再按媒体筛」的场景），
+   * 否则统计全部。
+   */
+  function newsSourceStats(pool) {
+    const list = pool || (Storage.getAll('news') || []);
+    const counter = new Map();
+    list.forEach(i => {
       const key = (i.source || '').trim() || '其他';
       counter.set(key, (counter.get(key) || 0) + 1);
     });
@@ -273,9 +301,17 @@ const App = (() => {
         .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 
       content.innerHTML = Components.renderSearchBar();
-      content.innerHTML += Components.renderSourceTabs(newsSourceStats(), _newsSource);
+      content.innerHTML += Components.renderGenreTabs(newsGenreStats(), _newsGenre);
 
-      let items = all;
+      // 先按类型收窄，再按媒体筛选：媒体那排的计数就只反映当前类型，
+      // 否则点进「独立游戏」会看到一排点进去其实是空的媒体
+      let pool = all;
+      if (_newsGenre !== 'all') {
+        pool = pool.filter(i => (i.genre || 'other') === _newsGenre);
+      }
+      content.innerHTML += Components.renderSourceTabs(newsSourceStats(pool), _newsSource);
+
+      let items = pool;
       if (_newsSource !== 'all') {
         items = items.filter(i => ((i.source || '').trim() || '其他') === _newsSource);
       }
@@ -283,13 +319,16 @@ const App = (() => {
         items = items.filter(i => matchesQuery(i, _searchQuery));
       }
 
+      const genreLabel = _newsGenre === '3a' ? ' · 3A游戏'
+        : _newsGenre === 'indie' ? ' · 独立游戏' : '';
+
       if (_searchQuery) {
         content.innerHTML += renderSearchResults(items, _searchQuery);
       } else if (!items.length) {
         content.innerHTML += Components.renderEmpty();
       } else {
         content.innerHTML +=
-          `<div class="search-summary">共 ${items.length} 条${_newsSource === 'all' ? '' : '来自 ' + Components.escapeHtml(_newsSource)}</div>` +
+          `<div class="search-summary">共 ${items.length} 条${genreLabel}${_newsSource === 'all' ? '' : ' · 来自 ' + Components.escapeHtml(_newsSource)}</div>` +
           `<div class="card-grid">${items.map((item, i) => Components.renderCard(item, i, true)).join('')}</div>`;
       }
     } else if (_currentTab === 'life') {
@@ -708,7 +747,7 @@ const App = (() => {
 
   // ========== Public API ==========
   return {
-    init, navigate, refresh, setFilter, setNewsSource,
+    init, navigate, refresh, setFilter, setNewsSource, setNewsGenre,
     prevDate, nextDate, selectDate,
     openCalendar, closeCalendar, calPrevMonth, calNextMonth,
     openBookmarks, closeBookmarks, removeBookmark,
