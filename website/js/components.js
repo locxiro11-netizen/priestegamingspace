@@ -137,17 +137,44 @@ const Components = (() => {
 
   // ========== Cover Image ==========
 
-  // 卡片封面区最宽 1036 CSS px。原图不到这个宽度的 1/1.5 就别硬撑满，
-  // 否则浏览器插值放大出来就是一团糊——交给 fitCover() 降级处理。
+  // 卡片封面区最宽 1036 CSS px（1100 容器 - 两侧 32 padding）。
+  // 原图宽度 × 1.25 都够不到这个数就别硬撑满，否则浏览器插值放大出来就是一团糊。
+  const CARD_W = 1036;
+  const DETAIL_W = 660;   // 720 弹窗减去左右 padding
   const COVER_MAX_UPSCALE = 1.25;
 
-  function coverAttrs(item, extraClass) {
+  function coverAttrs(item) {
     // 已知尺寸就写上 width/height，浏览器能提前按原比例占好位，
     // 图片加载完不会把下面的文字顶下去
     const w = Number(item.image_w) || 0;
     const h = Number(item.image_h) || 0;
     const dim = (w && h) ? ` width="${w}" height="${h}"` : '';
     return `${dim} loading="lazy" decoding="async" referrerpolicy="no-referrer"`;
+  }
+
+  // 图片地址要塞进 style 属性里做模糊底，先把引号和反斜杠去掉，
+  // 免得拼出畸形属性把整段 HTML 带崩
+  function escapeUrlAttr(url) {
+    return String(url || '').replace(/["'\\<>]/g, '');
+  }
+
+  /**
+   * 已知原图撑不满卡片时，渲染阶段就把降级样式写死。
+   * 不然图片会先按 100% 宽糊一下，等 onload 才被纠正，看着像闪了一下。
+   */
+  function coverBox(item, baseClass) {
+    // 详情页弹窗窄得多（720px），用卡片那套 1036 的门槛会过度降级
+    const boxW = baseClass === 'detail-image' ? DETAIL_W : CARD_W;
+    const w = Number(item.image_w) || 0;
+    if (w && w * COVER_MAX_UPSCALE < boxW) {
+      const maxw = Math.round(w * COVER_MAX_UPSCALE);
+      return {
+        cls: baseClass + ' is-lowres',
+        style: ` style="--cover-src:url('${escapeUrlAttr(item.image)}');`
+               + `--cover-maxw:${maxw}px"`
+      };
+    }
+    return { cls: baseClass, style: '' };
   }
 
   /**
@@ -211,11 +238,12 @@ const Components = (() => {
       `<span class="card-tag">${escapeHtml(t)}</span>`
     ).join('') || '';
     const isBm = showBookmark && Storage.isBookmarked(item.id);
+    const box = coverBox(item, 'card-image');
 
     return `
       <div class="card fade-in" data-id="${item.id}">
         ${item.image ? `
-          <div class="card-image">
+          <div class="${box.cls}"${box.style}>
             <img src="${item.image}" alt="${escapeHtml(item.title)}"${coverAttrs(item)}
               onload="Components.fitCover(this)" onerror="Components.coverFailed(this)"
               onclick="App.openDetail('${item.category}', '${item.id}')">
@@ -457,7 +485,7 @@ const Components = (() => {
               </div>
             ` : ''}
           ` : (item.image ? `
-            <div class="detail-image">
+            <div class="${coverBox(item, 'detail-image').cls}"${coverBox(item, 'detail-image').style}>
               <img src="${item.image}" alt="${escapeHtml(item.title)}"${coverAttrs(item)}
                 onload="Components.fitCover(this)" onerror="Components.coverFailed(this)">
             </div>
@@ -472,7 +500,7 @@ const Components = (() => {
             ${item.game ? `<span style="color:var(--text-muted);font-size:14px">🎯 ${escapeHtml(item.game)}</span>` : ''}
             ${item.content_html ? `
               ${item.video && item.image ? `
-                <div class="detail-image">
+                <div class="${coverBox(item, 'detail-image').cls}"${coverBox(item, 'detail-image').style}>
                   <img src="${item.image}" alt=""${coverAttrs(item)}
                     onload="Components.fitCover(this)" onerror="Components.coverFailed(this)">
                 </div>` : ''}
