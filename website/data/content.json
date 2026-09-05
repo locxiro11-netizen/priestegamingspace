@@ -1,6 +1,275 @@
 {
   "news": [
     {
+      "id": "news-df173e3d01f4",
+      "date": "2026/09/05 11:42",
+      "title": "《塞尔达传说：时之笛 重制版》画面升级",
+      "desc": "经典游戏重制，画面升级对标《恶魔之魂：重制版》，玩家期待值高。",
+      "tags": [
+        "3A",
+        "重制版",
+        "画面升级"
+      ],
+      "image": "https://imgs.gamersky.com/upimg/new_preview/2026/09/05/origin_b_202609051031532925.jpg",
+      "game": "塞尔达传说：时之笛 重制版",
+      "genre": "3a",
+      "source": "游民星空",
+      "source_url": "https://www.gamersky.com/news/202609/2203766.shtml",
+      "likes": 0,
+      "content_html": "<p>据Nintenderos报道，知名爆料人Nate the Hate透露了《塞尔达传说：时之笛 重制版》的部分细节。</p>\n<img src=\"https://img1.gamersky.com/upimg/pic/2026/09/05/small_202609051032317301.jpg\" alt=\"游民星空\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>Nate the Hate认为，《塞尔达传说：时之笛 重制版》将包含重要的便利性改进，优化玩家的整体体验；画面则进行全面翻新，投入程度可对标《恶魔之魂:重制版》，但最终视觉效果未必一致；游戏原有结构预计不会有太大改动，在他看来，最终成品可能\"令人印象深刻\"。</p>\n<img src=\"https://img1.gamersky.com/upimg/pic/2026/09/05/small_202609051032387467.jpg\" alt=\"游民星空\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>《塞尔达传说：时之笛 重制版》重制版预计2026年发售。作为游戏史上最受赞誉的作品之一，它曾在2013年以《塞尔达传说：时之笛 3D》的形式登陆3DS。</p>\n<img src=\"https://img1.gamersky.com/upimg/pic/2026/09/05/small_202609051032504358.png\" alt=\"游民星空\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>此外，NateTheHate在最新一期节目中谈到了《塞尔达传说：时之笛 重制版》的发售窗口。他表示，预计该作将在11月推出，具体时间可能是11月第一周，或者《GTA6》发售的那一周 —— 也就是11月第三周。</p>"
+    },
+    {
+      "id": "news-9d32085f7254",
+      "date": "2026/09/05 11:42",
+      "title": "《塞尔达传说：时之笛 重制版》11月发售",
+      "desc": "经典游戏重制版即将发售，与《GTA6》正面竞争，引发玩家关注。",
+      "tags": [
+        "发售",
+        "竞争",
+        "经典重制"
+      ],
+      "image": "https://imgs.gamersky.com/upimg/new_preview/2026/09/05/origin_b_202609050934029476.jpg",
+      "game": "塞尔达传说：时之笛 重制版",
+      "genre": "3a",
+      "source": "游民星空",
+      "source_url": "https://www.gamersky.com/news/202609/2203751.shtml",
+      "likes": 0,
+      "content_html": "<p>近日，知名爆料人NateTheHate在最新一期节目中谈到了《塞尔达传说：时之笛 重制版》的发售窗口。他表示，预计该作将在11月推出，具体时间可能是11月第一周，或者《GTA6》发售的那一周 —— 也就是11月第三周。</p>\n<img src=\"https://img1.gamersky.com/upimg/pic/2026/09/05/small_202609050934348636.jpg\" alt=\"游民星空\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<img src=\"https://img1.gamersky.com/upimg/pic/2026/09/05/small_202609050934397692.jpg\" alt=\"游民星空\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>NateTheHate进一步分析称，任天堂可能会选择在《GTA6》当周、提前两周甚至延后一周入场，他个人认为任天堂大概率会选择正面硬刚。</p>"
+    },
+    {
+      "id": "news-b261177eec8c",
+      "date": "2026/09/05 11:42",
+      "title": "《GTA6》或将提前登陆PC",
+      "desc": "因主机缺货，《GTA6》可能提前登陆PC平台，玩家期待。",
+      "tags": [
+        "GTA6",
+        "PC",
+        "提前发售"
+      ],
+      "image": "https://img1b.gamersky.com/users/recommend/2026/09/04/origin_11132880_4773846.jpg",
+      "game": "GTA6",
+      "genre": "3a",
+      "source": "游民星空",
+      "source_url": "https://www.gamersky.com/news/202609/2203715.shtml",
+      "likes": 0
+    },
+    {
+      "id": "news-e0fc03a3b2aa",
+      "date": "2026/09/05 11:42",
+      "title": "《黎明行者之血》Mod爆火",
+      "desc": "Mod版本抛弃游戏核心设计，引发玩家讨论。",
+      "tags": [
+        "Mod",
+        "争议",
+        "核心设计"
+      ],
+      "image": "https://imgs.gamersky.com/upimg/new_preview/2026/09/05/origin_b_202609050935486315.jpg",
+      "game": "黎明行者之血",
+      "genre": "indie",
+      "source": "游民星空",
+      "source_url": "https://www.gamersky.com/news/202609/2203753.shtml",
+      "likes": 0,
+      "content_html": "<p>《黎明行者之血》发售仅两天，Nexus Mods上最受欢迎的MOD却是一个直接对抗游戏核心设计的存在——Better Story Timer以超过4.5万次的下载量遥遥领先，几乎是第二名（解锁过场动画帧率限制，1.6万次）的三倍。这款MOD的主题简单直接：让玩家不用再急着救家人。</p>\n<p>在原版游戏中，玩家需要在30天内完成拯救家人的主线任务，每一天被划分为8个时段（白天8段、夜晚8段），总计约480个时间单位。几乎所有行动都会消耗时间——从推进支线任务到解锁技能树的每个节点，都需要消耗时段。这种设计旨在营造紧迫感，但显然并非所有玩家都享受这种压力。</p>\n<img src=\"https://img1.gamersky.com/upimg/pic/2026/09/05/small_202609050936224324.png\" alt=\"游民星空\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>Better Story Timer将时限从30天延长至90天，允许玩家将每天时段从8个增至最多32个，并可移除升级天赋时的时间消耗。这意味着玩家可以腾出更多时间探索世界而非盯着倒计时，但也在本质上削弱了游戏最核心的张力来源——当时间不再是稀缺资源时，原本以紧迫感驱动的体验便失去了重要支撑。</p>\n<p>发售当天即出现这样的MOD，并且以如此悬殊的下载量领先，也说明相当一部分玩家对“时间压力”本身并不买账。如果游戏的设计师希望玩家感受到“来不及”，而玩家第一时间就想摆脱这种感觉，那么“30天倒计时”究竟是成功的机制，还是绕了弯路的设计，可能要到游戏上市一段时间后才有更清晰的答案。</p>\n<img src=\"https://img1.gamersky.com/upimg/pic/2026/09/05/small_202609050936326444.png\" alt=\"游民星空\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<img src=\"https://img1.gamersky.com/upimg/pic/2026/09/05/small_202609050936336134.png\" alt=\"游民星空\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>你会为了更自由地探索世界而安装这款MOD，还是愿意在30天的限制下体验原汁原味的紧迫感？欢迎在评论区聊聊你的选择。</p>"
+    },
+    {
+      "id": "news-c33ef802ef75",
+      "date": "2026/09/05 11:42",
+      "title": "《暗影蜘蛛侠》口碑爆棚无续集",
+      "desc": "口碑极佳的游戏确认没有续集，引发玩家遗憾。",
+      "tags": [
+        "口碑",
+        "无续集",
+        "蜘蛛侠"
+      ],
+      "image": "https://imgs.gamersky.com/upimg/new_preview/2026/09/05/origin_b_202609050935169783.jpg",
+      "game": "暗影蜘蛛侠",
+      "genre": "3a",
+      "source": "游民星空",
+      "source_url": "https://www.gamersky.com/news/202609/2203754.shtml",
+      "likes": 0,
+      "content_html": "<p>据variety报道，Prime Video与MGM+联合推出的漫威剧集《暗影蜘蛛侠》（Spider-Noir）在播出第一季、共8集后正式被取消，后续将不会推出第二季。该剧由尼古拉斯·凯奇主演。</p>\n<p>值得一提的是，《暗影蜘蛛侠》虽然口碑表现不俗，却依然没能获得续订。该剧目前在烂番茄拥有92%的新鲜度，观众评分也达到90%。豆瓣评分为7.2。</p>\n<img src=\"https://img1.gamersky.com/upimg/pic/2026/09/05/small_202609050934578204.png\" alt=\"游民星空\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<img src=\"https://img1.gamersky.com/upimg/pic/2026/09/05/small_202609050934584196.png\" alt=\"游民星空\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>《暗影蜘蛛侠》今年获得了11项艾美奖提名，是Prime Video今年获得提名最多的剧集之一，涵盖摄影、音效、特效、特技、服装与化妆等多个技术奖项。</p>\n<p>《暗影蜘蛛侠》故事背景设定于美国大萧条时期。尼古拉斯·凯奇饰演本·莱利，一名生活潦倒的纽约私家侦探，在经历个人悲剧后被迫面对自己的过去，并成为这座城市唯一的超级英雄。</p>\n<p>该剧也是亚马逊与索尼影视娱乐合作开发“索尼影视漫威角色宇宙”后推出的首部漫威相关剧集。据称双方合作的另一部作品目前已经进入开发阶段，预计很快公布更多消息。</p>"
+    },
+    {
+      "id": "news-1710fb035f95",
+      "date": "2026/09/05 11:42",
+      "title": "《刺客信条：影》DLSS 5细节提升",
+      "desc": "游戏使用DLSS 5技术，细节提升明显，但女主出现黑眼圈问题。",
+      "tags": [
+        "DLSS 5",
+        "细节提升",
+        "黑眼圈"
+      ],
+      "image": "https://imgs.gamersky.com/upimg/new_preview/2026/09/05/origin_b_202609051043336955.jpg",
+      "game": "刺客信条：影",
+      "genre": "3a",
+      "source": "游民星空",
+      "source_url": "https://www.gamersky.com/news/202609/2203770.shtml",
+      "likes": 0,
+      "content_html": "<p>油管知名游戏博主hodilton晒出《刺客信条：影》运行偷跑版DLSS5技术的实机对比视频。</p>\n<p>DLSS 5在重构复杂场景，如远处的树木叶片、建筑屋顶瓦片、植被和光影渐变时，展现出了超越或持平原生4K的清晰度。女主角奈绪江面部轮廓与阴影更立体；游戏原版则相对平滑、细节较少。</p>\n<p>相比原生画质可能出现的边缘锯齿或细小线条闪烁，DLSS 5依靠更高级的AI训练模型，将边缘处理得更加平滑自然。</p>\n<p>不过，4K画质下DLSS 5的性能表现对硬件压力极大；开启DLSS 5后，帧率获得了非常显著的提升，大大改善了游戏的流畅度与操作响应。</p>\n<p>需要注意的是，本次演示所使用的 DLSS 5 并非 NVIDIA 正式发布的完整版本，而是通过泄露文件提前启用的实验性功能。因此，目前展示出的画质效果和性能表现均不能代表 DLSS 5 正式版本的最终水平。对于现阶段网络上出现的各种 DLSS 5 演示，玩家也应理性看待。<br></p>"
+    },
+    {
+      "id": "news-81e3dffe14c3",
+      "date": "2026/09/05 11:42",
+      "title": "索尼游戏售价高，破解兴起",
+      "desc": "索尼游戏售价高，海外破解生意兴起，外置硬盘即插即用。",
+      "tags": [
+        "索尼",
+        "破解",
+        "外置硬盘"
+      ],
+      "image": "https://imgs.gamersky.com/upimg/new_preview/2026/09/05/origin_b_202609050919209207.jpg",
+      "game": "",
+      "genre": "other",
+      "source": "游民星空",
+      "source_url": "https://www.gamersky.com/news/202609/2203746.shtml",
+      "likes": 0,
+      "content_html": "<p>据外媒报道，拉丁美洲部分地区的主机破解产业正在逐渐商业化。在秘鲁首都利马，知名商业中心Polvos Azules长期存在主机改机及相关服务，如今当地商家甚至推出了“破解主机+外置硬盘”的现成解决方案。</p>\n<p>当地玩家选择破解的重要原因之一，是正版游戏价格相对高昂。索尼的新作通常按照国际美元价格销售，对于收入水平较低的玩家而言，一款正版游戏可能就相当于不小的生活开支，因此破解服务一直存在市场。</p>\n<img src=\"https://img1.gamersky.com/upimg/pic/2026/09/05/small_202609050918465828.png\" alt=\"游民星空\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>过去，向破解后的PS4安装大量游戏通常需要在店内等待数小时。如今，当地商家开始使用预先配置好的500GB或1TB外置硬盘。玩家只需通过USB连接主机，启动相应程序后即可直接读取硬盘中的游戏内容，整个准备过程大约只需5分钟。</p>\n<p>据当地一家名为Yorbi Games的店主介绍，这类硬盘还可以预装大量游戏以及Linux系统和模拟器等工具，进一步拓展主机的使用方式。</p>\n<p>价格也是这类服务最大的吸引力之一。一块1TB、已经配置好游戏的外置硬盘售价约300秘鲁索尔，基本相当于一款正版新游戏的价格。</p>\n<p>目前，这套方案要求PS4系统版本不高于13.00。当地改机商还会通过修改系统设置阻止主机自动更新，以避免破解环境因系统升级而失效。</p>"
+    },
+    {
+      "id": "news-f8b3f242ea96",
+      "date": "2026/09/05 11:42",
+      "title": "《奥日》工作室CEO对抗M站",
+      "desc": "《奥日》工作室CEO成立全新评价网站对抗M站评分，引发行业关注。",
+      "tags": [
+        "奥日",
+        "M站",
+        "评价网站"
+      ],
+      "image": "https://img.3dmgame.com/uploads/images/thumbnews/2026/0905/1788572695344.webp",
+      "game": "奥日",
+      "genre": "indie",
+      "source": "3DM",
+      "source_url": "https://www.3dmgame.com/news/202609/3952462.html",
+      "likes": 0,
+      "content_html": "<p>一家独大更容易XX正确或者垄断主观？或许不少当事者是这么想的，目前游戏圈最大级别的游戏评论站M也引发了不少业者的不满，日前开发过《奥日与黑暗森林》的Moon Studios工作室CEO·Thomas Mahler宣布成立全新评价网站“VideoGamesCritic”，主旨就是“比起媒体更重视玩家的意见！”。</p>\n<p>·Moon Studios工作室的新作《No Rest for the Wicked》正在抢先体验中，让工作室CEO暴怒怒怼M站的原因也正是这部游戏，游戏刚刚推出时差评不断，但工作室认为正在积极修正，现在风评已经恢复。</p>\n<p>·问题来了，其他平台的即时评论形势正在好转，但是M站的评论依旧停留在当初的差评低分阶段，Thomas Mahler认为M站的最大问题就是评价更新不及时以及更侧重媒体的评分而忽视玩家的意见。</p>\n<p>·Thomas Mahler指出同样深受M站其害的还有《无人深空》，这款业界和玩家都公认的励志神作如今已经好评爆表但是M站评分几乎没变过还是初期的惨不忍睹，这对于那些肯不断修正游戏问题的工作室极不公平，而且那些喜欢盯着M站评分找游戏玩的玩家也会被误导。</p>\n<p>所以Thomas Mahler宣布成立全新评价网站“VideoGamesCritic”主打两大核心评价标准，<strong></strong></p>"
+    },
+    {
+      "id": "news-a5ae9a31e27f",
+      "date": "2026/09/05 11:42",
+      "title": "GTA6 PC版提前",
+      "desc": "《GTA6》PC版可能因主机缺货提前登陆，引发玩家讨论和期待。",
+      "tags": [
+        "GTA6",
+        "PC版",
+        "提前发售"
+      ],
+      "image": "https://imgs.gamersky.com/upimg/new_preview/2026/09/05/origin_b_202609050856497666.jpg",
+      "game": "GTA6",
+      "genre": "3a",
+      "source": "游民星空",
+      "source_url": "https://www.gamersky.com/news/202609/2203742.shtml",
+      "likes": 0,
+      "content_html": "<p>根据外媒Tech4Gamers的报道，尽管《GTA6》已确认在首发时为主机独占，但其PC版本的发售时间可能比外界预想的要快得多。</p>\n<p>Video Games Chronicle（VGC）的记者安迪·罗宾逊（Andy Robinson）在近日的播客中表示，行业内已有“一些声音”指向《GTA6》的PC版会“出乎意料地快”到来。</p>\n<img src=\"https://img1.gamersky.com/upimg/pic/2026/09/05/small_202609050857226667.png\" alt=\"游民星空\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>罗宾逊认为，PS5及PS5 Pro主机在游戏发售时可能因需求过大而出现供货短缺，这或许会促使Rockstar Games加速PC版的推出进程。此外，现代主机的硬件架构与PC已高度相似，这将为《GTA6》PC版的移植工作带来便利，也是推动其更快上市的重要因素。</p>\n<img src=\"https://img1.gamersky.com/upimg/pic/2026/09/05/small_202609050857526763.png\" alt=\"游民星空\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<img src=\"https://img1.gamersky.com/upimg/pic/2026/09/05/small_202609050857541571.png\" alt=\"游民星空\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>相比之下，前作在主机版发售长达19个月后才登陆PC平台。如果本次关于PC版加速的传闻属实，对无数PC玩家而言无疑是一个巨大的惊喜。</p>"
+    },
+    {
+      "id": "news-4ee85813f88e",
+      "date": "2026/09/05 11:42",
+      "title": "《全小将》2027年发售",
+      "desc": "《全小将》宣布最晚2027年发售，玩家期待这款独立游戏。",
+      "tags": [
+        "全小将",
+        "发售时间",
+        "独立游戏"
+      ],
+      "image": "https://imgs.gamersky.com/upimg/new_preview/2026/09/05/origin_b_202609050959289502.jpg",
+      "game": "全小将",
+      "genre": "indie",
+      "source": "游民星空",
+      "source_url": "https://www.gamersky.com/news/202609/2203759.shtml",
+      "likes": 0,
+      "content_html": "<p>近日，本作公开了首个先导PV，官方同时作出说明：本作所有人名、地名均为虚构，与真实历史人物无对应关系。</p>\n<p>游戏介绍：从贫农之子，到风云人物，再到大统领——最终站上审判席。《全小将》是一款养成视觉小说：以回合规划主角的一生，读书、锻炼、钻营、博弈，在每一个关键节点接受时代无情的考验。一步踏错，便是另一种人生。</p>"
+    },
+    {
+      "id": "news-3bd6f52f3675",
+      "date": "2026/09/05 11:42",
+      "title": "暴雪疑似预热新作",
+      "desc": "暴雪疑似为星际争霸射击游戏预热，玩家猜测新作品。",
+      "tags": [
+        "暴雪",
+        "新作",
+        "星际争霸"
+      ],
+      "image": "https://img.3dmgame.com/uploads/images/thumbnews/2026/0905/1788573750662.jpg",
+      "game": "",
+      "genre": "3a",
+      "source": "3DM",
+      "source_url": "https://www.3dmgame.com/news/202609/3952467.html",
+      "likes": 0,
+      "content_html": "<p>《星际争霸》官方网站多年来始终展示着《星际争霸：重制版》的相关内容，如今页面却突然开始出现异常故障。</p>\n<p>网站背景画面与战网标识均出现闪烁效果，仿佛有外部信号正在干扰突破。</p>\n<p>考虑到暴雪嘉年华将于下周9月12日至13日举办，种种迹象表明暴雪可能是在暗示，将在本届展会上公布《星际争霸》新作消息。</p>\n<p>今年年初就有报道称，暴雪正在开发一款《星际争霸》世界观下的第一人称射击衍生作品，且大概率会在暴雪嘉年华期间正式揭晓。</p>\n<p>这款开发中的《星际争霸》射击游戏最早于去年曝光，出自彭博社记者杰森·施赖尔的著作《好好玩：暴雪娱乐的兴衰与未来》。</p>\n<p>书中披露，该项目由前《孤岛惊魂》系列负责人丹·海领衔开发。他在育碧蒙特利尔工作室任职十年，于2021年离职，任职期间正是《孤岛惊魂》系列发展最鼎盛的阶段，他在其中居功至伟。</p>\n<p>今年2月另有报道称，第二款《星际争霸》射击游戏也已提上开发日程，本作由《Arc Raiders》的开发商纳克森联合开发。</p>\n<p>一份来自韩国的报道显示，纳克森旗下的射击游戏部门已启动一款采用《星际争霸》IP新作的“全面开发”工作。</p>\n<p>施赖尔随后表示，纳克森的这个项目与他书中提及的那款《星际争霸》射击游戏大概率并无关联，这意味着暴雪至少规划了两款同类型项目。</p>\n<p>暴雪过去曾两次尝试打造《星际争霸》题材射击游戏，项目代号分别为“幽灵”和“阿瑞斯”，但两款项目最终都惨遭取消。</p>"
+    },
+    {
+      "id": "news-a6c832c3deb6",
+      "date": "2026/09/05 11:42",
+      "title": "《最终幻想7》需额外下载",
+      "desc": "《最终幻想7：重制版》实体版需额外下载游戏数据，引发玩家不满。",
+      "tags": [
+        "最终幻想7",
+        "实体版",
+        "下载"
+      ],
+      "image": "https://img.3dmgame.com/uploads/images/thumbnews/2026/0905/1788574230953.jpg",
+      "game": "最终幻想7：重制版",
+      "genre": "3a",
+      "source": "3DM",
+      "source_url": "https://www.3dmgame.com/news/202609/3952470.html",
+      "likes": 0,
+      "content_html": "<p>《最终幻想7：重制版》与《最终幻想7：重生》的PlayStation实体版均采用双光盘设计，包含了游戏发售时的全部初始数据（更新前的版本内容）。</p>\n<p>而作为系列第三部作品，《最终幻想7：启示》全平台的实体版都将改为单光盘或单卡带形式，玩家在游玩前需额外下载数据。</p>\n<p>针对PS5与Xbox Series X版本，史克威尔艾尼克斯的免责声明写道：“游玩本作实体版需连接互联网，以下载额外的游戏数据。”</p>\n<p>目前尚不清楚具体方案：是光盘内置部分游戏内容、仅需联网下载剩余部分，还是光盘仅包含“解锁授权”、完整游戏都需全程下载。</p>\n<p>至于任天堂Switch 2版本，将和前两作一样采用游戏密钥卡形式，这意味着玩家需在任天堂主机上下载整个游戏。</p>\n<p>史克威尔艾尼克斯提示，Switch 2版本需要130GB的存储空间，PS5与Xbox Series X/S版本的容量尚未得到确认。</p>\n<p>由于PS5光盘最大容量为100GB，这意味着如果史克威尔艾尼克斯仍像此前那样将全量游戏数据都装在光盘中，《启示》至少需要两张光盘（与前作保持一致）。但本次实体版仅配备单张光盘。</p>\n<p>该消息传出之际，PlayStation正持续推进无光盘的未来布局，官方此前已宣布，自2028年1月起，所有新款PlayStation游戏将不再生产实体光盘。</p>\n<p>《最终幻想7：启示》将于2027年4月8日登陆PS5、Xbox Series X/S、Switch 2与PC平台，为《最终幻想7》重制三部曲正式画上句号。</p>"
+    },
+    {
+      "id": "news-74fe4ee62363",
+      "date": "2026/09/05 11:42",
+      "title": "DLSS5显卡功耗增加",
+      "desc": "DLSS5技术增加显卡功耗，RTX 5090显卡影响最明显。",
+      "tags": [
+        "DLSS5",
+        "显卡功耗",
+        "RTX 5090"
+      ],
+      "image": "https://img.3dmgame.com/uploads/images/thumbnews/2026/0905/1788573106559.png",
+      "game": "",
+      "genre": "other",
+      "source": "3DM",
+      "source_url": "https://www.3dmgame.com/news/202609/3952463.html",
+      "likes": 0,
+      "content_html": "<p>NVIDIA的DLSS5技术如今已经随着NBA2K27正式上线了，目前主要支持RTX 50系列显卡，游戏数量也有待扩展，这是后续要解决的问题。</p>\n<p>从年初发布以来，DLSS5的争议声就很大，有担心画质变形的，有担心游戏开发商会因此偷懒的，这方面的讨论很多，这两天有大量的国内外评测发布，大家可以参考本站的首发评测——第一款支持DLSS 5的游戏！《NBA 2K27》首发硬件测试。</p>\n<p>除了大家关心的性能与画质问题之外，还有个问题需要提及，那就是DLSS5技术也会增加显卡的功耗，德国Computerbase网站的评测有着详细的结果，如下所示：</p>\n<p>他们对比了RTX 5060到RTX 5090在内的多款显卡在2K及4K分辨率下开启与关闭DLSS5的功耗情况，结果一目了然。</p>\n<p>先说结论，DLSS5是会提升显卡功耗的，毕竟DLSS5的负载不低，相当于显卡在额外跑一个本地大模型，负载提升了，理论上功耗自然会增加。</p>\n<p>但具体增加多少功耗要看显卡情况，RTX 5060显卡的功耗增加几乎是可以忽略不计的，RTX 5060 Ti、RTX 5070大约增加了10%的功耗，但绝对值还算可以接受。</p>\n<p>RTX 5070 Ti的功耗差距在2K下就比较明显，4K下差距缩小到10%左右。</p>\n<p>但RTX 5080及RTX 5090两款高端显卡就有非常明显的功耗增加了，提升幅度大约在60%，4K下涨幅明显降低，RTX 5090也就增加了40%的功耗，RTX 5080增加了大约25%的功耗。</p>\n<p>综合来看的话，DLSS5对性能越强的显卡有着更明显的功耗增加，2K下比4K下涨幅更多。</p>\n<p>至于功耗大涨的原因，原文也没解释出来，按理说DLSS5应该是用的显卡的张量核心，以往的DLSS倒也没有大幅提升功耗，不过它们在超分及光追重建上的要求也低于DLSS5。</p>"
+    },
+    {
+      "id": "news-c6472eff2bbc",
+      "date": "2026/09/05 11:42",
+      "title": "《绝对火箭防卫主义》推出",
+      "desc": "《绝对火箭防卫主义》正式推出，革命性基地建设战略防御游戏。",
+      "tags": [
+        "绝对火箭防卫主义",
+        "基地建设",
+        "战略防御"
+      ],
+      "image": "https://img.3dmgame.com/uploads/images/thumbnews/2026/0905/1788573812149.png",
+      "game": "绝对火箭防卫主义",
+      "genre": "indie",
+      "source": "3DM",
+      "source_url": "https://www.3dmgame.com/news/202609/3952466.html",
+      "likes": 0,
+      "content_html": "<p>tiny cactus studio工作室制作并发行，一款号称革命性基地建设战略防御游戏《绝对火箭防卫主义》登陆Steam正式推出，本作支持中文。</p>\n<p><a href=\"https://store.steampowered.com/app/2854440/Red_Rocket_Defencism/\" target=\"_blank\" rel=\"noopener\">《绝对火箭防卫主义》：Steam地址</a></p>\n<p>《绝对火箭防卫主义》这款「革命式基地建设战略游戏」当中，你将成为独裁国家的将校，保护建设中的火箭，免遭邪恶的资本主义魔爪威胁。 贿赂、监视、整肃、饮酒……无论动用何种手段，都必须为伟大的祖国守住火箭！</p>"
+    },
+    {
+      "id": "news-34266db64fdf",
+      "date": "2026/09/05 11:42",
+      "title": "《Project ZETA》全球测试开启",
+      "desc": "《Project ZETA》第二次全球测试开启，KRAFTON新MOBA游戏。",
+      "tags": [
+        "Project ZETA",
+        "全球测试",
+        "MOBA"
+      ],
+      "image": "https://img.3dmgame.com/uploads/images/thumbnews/2026/0905/1788573429885.webp",
+      "game": "Project ZETA",
+      "genre": "indie",
+      "source": "3DM",
+      "source_url": "https://www.3dmgame.com/news/202609/3952464.html",
+      "likes": 0,
+      "content_html": "<p>9月4日晚间，KRAFTON宣布，由Nirvanana开发的新MOBA游戏《Project ZETA》开启第二次全球测试，感兴趣的玩家可以关注下了。</p>\n<p><a href=\"https://store.steampowered.com/app/2778110/Project_ZETA/\" target=\"_blank\" rel=\"noopener\">《Project ZETA》：Steam地址</a></p>\n<p>预判，行动，致胜。 四支队伍同场交锋，战术博弈与英雄能力缺一不可。兼顾键鼠与手柄体验，精准操作让胜负回归技巧与决策。 不同于传统英雄射击、大逃杀与 MOBA。 这里是 Project ZETA，一款全新的多团队战术竞技游戏。</p>"
+    },
+    {
       "id": "news-5dec88842fae",
       "date": "2026/09/05 09:15",
       "title": "GTA6审查",
