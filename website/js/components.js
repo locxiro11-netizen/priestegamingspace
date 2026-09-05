@@ -135,6 +135,49 @@ const Components = (() => {
     `;
   }
 
+  // ========== Cover Image ==========
+
+  // 卡片封面区最宽 1036 CSS px。原图不到这个宽度的 1/1.5 就别硬撑满，
+  // 否则浏览器插值放大出来就是一团糊——交给 fitCover() 降级处理。
+  const COVER_MAX_UPSCALE = 1.25;
+
+  function coverAttrs(item, extraClass) {
+    // 已知尺寸就写上 width/height，浏览器能提前按原比例占好位，
+    // 图片加载完不会把下面的文字顶下去
+    const w = Number(item.image_w) || 0;
+    const h = Number(item.image_h) || 0;
+    const dim = (w && h) ? ` width="${w}" height="${h}"` : '';
+    return `${dim} loading="lazy" decoding="async" referrerpolicy="no-referrer"`;
+  }
+
+  /**
+   * 图片加载/失败后的兜底：
+   *  - 源站只给得到小图 → 加 is-lowres，改成「模糊底 + 原尺寸居中」，不拉伸
+   *  - 图挂了（防盗链、证书不匹配、404）→ 整块藏掉，别留个破图图标
+   */
+  function fitCover(img) {
+    if (!img || img.dataset.fitted) return;
+    img.dataset.fitted = '1';
+    const box = img.parentElement;
+    if (!box) return;
+    const nat = img.naturalWidth;
+    if (!nat) return;                       // 加载失败，交给 onerror
+    const disp = img.clientWidth || box.clientWidth;
+    if (disp && nat * COVER_MAX_UPSCALE < disp) {
+      box.style.setProperty('--cover-src', `url("${img.currentSrc || img.src}")`);
+      box.style.setProperty('--cover-maxw',
+        Math.round(Math.min(disp, nat * COVER_MAX_UPSCALE)) + 'px');
+      box.classList.add('is-lowres');
+    }
+  }
+
+  function coverFailed(img) {
+    const box = img && img.parentElement;
+    if (!box) return;
+    // 直接把整块收掉，卡片退化成纯文字卡片，比留一个破图图标干净
+    box.style.display = 'none';
+  }
+
   // ========== Day Title ==========
 
   function renderDayTitle(dateIndex, totalDates, currentDate) {
@@ -173,8 +216,8 @@ const Components = (() => {
       <div class="card fade-in" data-id="${item.id}">
         ${item.image ? `
           <div class="card-image">
-            <img src="${item.image}" alt="${escapeHtml(item.title)}" loading="lazy"
-              referrerpolicy="no-referrer"
+            <img src="${item.image}" alt="${escapeHtml(item.title)}"${coverAttrs(item)}
+              onload="Components.fitCover(this)" onerror="Components.coverFailed(this)"
               onclick="App.openDetail('${item.category}', '${item.id}')">
           </div>
         ` : ''}
@@ -414,7 +457,10 @@ const Components = (() => {
               </div>
             ` : ''}
           ` : (item.image ? `
-            <div class="detail-image"><img src="${item.image}" alt="${escapeHtml(item.title)}" referrerpolicy="no-referrer"></div>
+            <div class="detail-image">
+              <img src="${item.image}" alt="${escapeHtml(item.title)}"${coverAttrs(item)}
+                onload="Components.fitCover(this)" onerror="Components.coverFailed(this)">
+            </div>
           ` : '')}
           <div class="detail-body">
             <div class="detail-meta">
@@ -425,7 +471,11 @@ const Components = (() => {
             <h2 class="detail-title">${escapeHtml(item.title)}</h2>
             ${item.game ? `<span style="color:var(--text-muted);font-size:14px">🎯 ${escapeHtml(item.game)}</span>` : ''}
             ${item.content_html ? `
-              ${item.video && item.image ? `<div class="detail-image"><img src="${item.image}" alt="" referrerpolicy="no-referrer"></div>` : ''}
+              ${item.video && item.image ? `
+                <div class="detail-image">
+                  <img src="${item.image}" alt=""${coverAttrs(item)}
+                    onload="Components.fitCover(this)" onerror="Components.coverFailed(this)">
+                </div>` : ''}
               <div class="detail-content article-body">${sanitizeContentHtml(item.content_html)}</div>
             ` : `
               <div class="detail-content">${(item.content || item.desc || '').replace(/\n/g, '<br>')}</div>
@@ -640,6 +690,7 @@ const Components = (() => {
     renderSectionHeader, renderCard, renderContentByDate, renderAllContent,
     renderCalendar, renderBookmarksPanel, renderDetail, renderCreateModal,
     renderSearchBar, renderSourceTabs, renderGenreTabs, renderArchive, renderHomeHero, renderEmpty,
-    renderPasswordGate, showToast, showConfirm, escapeHtml, truncate, formatDateDisplay
+    renderPasswordGate, showToast, showConfirm, escapeHtml, truncate, formatDateDisplay,
+    fitCover, coverFailed
   };
 })();

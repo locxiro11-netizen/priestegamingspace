@@ -39,6 +39,7 @@ from datetime import datetime, timezone, timedelta
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
+import cover
 import genre
 CONFIG_PATH = os.path.join(ROOT, "scripts", "config.json")
 DEFAULT_INPUT = os.path.join(ROOT, "scripts", "out", "curated.json")
@@ -91,6 +92,11 @@ def load_token():
 def now_str():
     # 统一用北京时间打戳（本地跑和 GitHub Actions UTC 跑都一致）
     return datetime.now(timezone(timedelta(hours=8))).strftime("%Y/%m/%d %H:%M")
+
+
+def _with_size(url):
+    """把封面图 URL 升到最高清版本（缩略图参数换成大图档位）。"""
+    return cover.cover_fields((url or "").strip())[0]
 
 
 def push_content(api, token, sha, content, message, branch, dry_run):
@@ -216,10 +222,10 @@ def main():
         filled = 0
         for it in targets:
             try:
-                blocks, cover = enrich.blocks_for(it)
+                blocks, page_cover = enrich.blocks_for(it)
             except Exception as e:
                 print(f"  ! {(it.get('title') or '')[:30]} 提取异常: {e}", file=sys.stderr)
-                blocks, cover = [], ""
+                blocks, page_cover = [], ""
             if not blocks:
                 print(f"  ✗ {(it.get('title') or '')[:30]} 未取到正文")
                 continue
@@ -227,8 +233,13 @@ def main():
             v = enrich.first_video(blocks)
             if v:
                 it["video"] = v
-            if not (it.get("image") or "").strip():
-                it["image"] = enrich.first_image(blocks) or cover
+            cur_img = (it.get("image") or "").strip()
+            # 没有封面、是广告图、或是列表页小缩略图，都要换掉
+            if not cur_img or enrich._AD_IMAGE.search(cur_img):
+                it["image"] = _with_size(enrich.first_image(blocks) or page_cover)
+            else:
+                it["image"], _ = cover.pick_bigger(
+                    cur_img, [enrich.first_image(blocks), page_cover])
             print(f"  ✓ {(it.get('title') or '')[:30]} "
                   f"{len(it['content_html'])}字{' 含视频' if v else ''}")
             filled += 1
@@ -266,7 +277,7 @@ def main():
         fixed = 0
         for it in targets:
             try:
-                blocks, cover = enrich.blocks_for(it)
+                blocks, page_cover = enrich.blocks_for(it)
             except Exception as e:
                 print(f"  ! {(it.get('title') or '')[:30]} 提取异常: {e}",
                       file=sys.stderr)
@@ -278,10 +289,13 @@ def main():
             v = enrich.first_video(blocks)
             if v:
                 it["video"] = v
-            # 封面若是广告图，换成正文首图或页头 meta 封面
+            # 封面若是广告图或小缩略图，换成正文首图或页头 meta 封面
             cur_img = (it.get("image") or "").strip()
             if not cur_img or enrich._AD_IMAGE.search(cur_img):
-                it["image"] = enrich.first_image(blocks) or cover
+                it["image"] = _with_size(enrich.first_image(blocks) or page_cover)
+            else:
+                it["image"], _ = cover.pick_bigger(
+                    cur_img, [enrich.first_image(blocks), page_cover])
             print(f"  ✓ {(it.get('title') or '')[:30]} "
                   f"{len(it['content_html'])}字 图：{(it.get('image') or '无')[:52]}")
             fixed += 1
@@ -317,13 +331,16 @@ def main():
             continue
 
         desc = (item.get("desc") or "").strip()
+        # 封面图统一在这里升到最高清版本：URL 里能推断出原图尺寸的一并记录，
+        # 前端拿它提前占位，避免图片加载完把文字顶下去
+        img_url, img_w, img_h = cover.cover_fields((item.get("image") or "").strip())
         entry = {
             "id": new_id,
             "date": now_str(),
             "title": title,
             "desc": desc,
             "tags": item.get("tags") or [],
-            "image": (item.get("image") or "").strip(),
+            "image": img_url,
             "game": (item.get("game") or "").strip(),
             # 3A / 独立 / 综合：模型已经打好标，没打就用规则兜底，
             # 前端的子页签靠这个字段过滤
@@ -335,6 +352,8 @@ def main():
             "source_url": url,
             "likes": 0,
         }
+        if img_w:
+            entry["image_w"], entry["image_h"] = img_w, img_h
         # 正文全文与视频由 enrich.py 补齐，供详情页展示
         if item.get("content_html"):
             entry["content_html"] = item["content_html"]

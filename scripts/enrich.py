@@ -26,6 +26,9 @@ import sys
 import time
 import urllib.request
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import cover
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_INPUT = os.path.join(ROOT, "scripts", "out", "curated.json")
 
@@ -244,14 +247,19 @@ def html_to_blocks(fragment):
         inline = ""
         tag = None
 
-        m_img = re.match(r"<img\b([^>]*)>", part.strip(), re.I | re.S)
-        if m_img:
-            src = _attr("<img " + m_img.group(1) + ">", "src")
+        # 图片常被包在 <p align="center"> 里，切出来的块是以 <p> 开头的，
+        # 用 re.match("<img") 去认就全漏了——3DM、游民星空的配图都是这种写法。
+        # 判据改成「这段除了 img 标签没有别的文字」：既能认出包在 p 里的图，
+        # 又不会把「图+说明文字」这类混排段误判成纯图片块。
+        m_img = re.search(r"<img\b([^>]*)>", part, re.I | re.S)
+        if m_img and not re.sub(r"<[^>]+>", "", part).strip():
+            attrs = "<img " + m_img.group(1) + ">"
+            src = _attr(attrs, "src")
             if src.startswith("http"):
                 blocks.append({"type": "image", "src": src,
-                               "alt": _attr("<img " + m_img.group(1) + ">", "alt")})
+                               "alt": _attr(attrs, "alt")})
                 total += 60
-            continue
+                continue
 
         m_if = re.match(r"<iframe\b([^>]*)>", part.strip(), re.I | re.S)
         if m_if:
@@ -720,9 +728,10 @@ def main():
     ok = failed = 0
     for it in items:
         title = (it.get("title") or "")[:34]
-        cover = ""
+        # 变量名不能叫 cover —— 会盖掉同名的 cover 模块
+        page_cover = ""
         try:
-            blocks, cover = blocks_for(it)
+            blocks, page_cover = blocks_for(it)
         except Exception as e:
             print("  ! %s 提取异常: %s" % (title, e), file=sys.stderr)
             blocks = []
@@ -738,19 +747,36 @@ def main():
         video = first_video(blocks)
         if video:
             it["video"] = video
-        # 列表页源（3DM/游民星空）常拿不到缩略图，卡片会开天窗；
-        # 有时又会把文末的商城推广横幅当成封面（3DM 那张 785×92 的细长广告图）。
-        # 两种情况都走同一套兜底：优先正文首图，其次页头 meta 里的封面图。
+        # 封面图三件事，按优先级处理：
+        #   1. 列表页源（3DM/游民星空）常拿不到缩略图，卡片会开天窗；
+        #   2. 有时又把文末的商城推广横幅当成封面（3DM 那张 785×92 的细长广告图）；
+        #   3. 拿到了但是 196×118 的列表缩略图——铺满卡片会糊成一团。
+        # 第 3 种要挑一下：正文首图和 og:image 哪个够大用哪个。3DM 的
+        # og:image 就是列表缩略图本体（196×118），但正文首图是 1080×602；
+        # 反过来有些站的正文首图是图标，得靠 og:image 兜底。
         filled_cover = False
         cur_img = (it.get("image") or "").strip()
         if not cur_img or _AD_IMAGE.search(cur_img):
-            fallback = first_image(blocks) or cover
+            fallback = first_image(blocks) or page_cover
             if fallback:
                 it["image"] = fallback
                 filled_cover = True
             elif _AD_IMAGE.search(cur_img):
                 # 拿不到替代图时宁可留空，也别把广告横幅挂到卡片上
                 it["image"] = ""
+        else:
+            it["image"], filled_cover = cover.pick_bigger(
+                cur_img, [first_image(blocks), page_cover])
+
+        # 最后统一把缩略图参数换成大图档位，并把能推断出的原图尺寸记下来，
+        # 前端靠它提前占位、避免图片加载完再跳版
+        if (it.get("image") or "").strip():
+            it["image"], w, h = cover.cover_fields(it["image"].strip())
+            if w:
+                it["image_w"], it["image_h"] = w, h
+            if cover.is_lowres(it["image"]):
+                print("    (封面图仍是缩略图，前端会降级显示)")
+
         n_img = sum(1 for b in blocks if b["type"] == "image")
         chars = len(it["content_html"])
         print("  ✓ %-36s %5d字 %2d图 %s%s"

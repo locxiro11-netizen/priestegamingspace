@@ -238,10 +238,33 @@ body{
 }
 .card:hover{border-color:var(--border-2);transform:translateY(-2px);box-shadow:var(--sh-3)}
 
-.card-image{width:100%;max-height:420px;overflow:hidden;background:#0f0d0c}
-.card-image img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer;
-  transition:transform 0.4s ease}
+.card-image{width:100%;max-height:420px;overflow:hidden;background:#0f0d0c;position:relative}
+/* height:auto 是重点：按原图比例走，绝不把 4:3 的图拉成 16:9。
+   超高或超宽的图由 max-height 收口，object-fit:cover 居中裁掉溢出部分。 */
+.card-image img{width:100%;height:auto;max-height:420px;object-fit:cover;display:block;
+  cursor:pointer;transition:transform 0.4s ease}
 .card:hover .card-image img{transform:scale(1.03)}
+/* 小图已经在按原尺寸显示了，再放大只会更糊，hover 时别动它 */
+.card:hover .card-image.is-lowres img{transform:none}
+
+/* 源站只给得到小图时（游民星空 550px、机核 555px 这类），
+   把它插值到 1036px 宽的卡片上就是一团糊。
+   降级方案：原图居中按自己的尺寸显示，底下铺一张放大的模糊版填满，
+   看起来像设计，不像没加载好。--cover-src / --cover-maxw 由 fitCover() 写入。 */
+.card-image.is-lowres,.detail-image.is-lowres{
+  display:flex;align-items:center;justify-content:center;
+}
+.card-image.is-lowres{min-height:200px}
+.card-image.is-lowres::before,.detail-image.is-lowres::before{
+  content:'';position:absolute;inset:-28px;z-index:0;
+  background-image:var(--cover-src);background-size:cover;background-position:center;
+  filter:blur(26px) saturate(1.15);opacity:.5;
+}
+.card-image.is-lowres img,.detail-image.is-lowres img{
+  position:relative;z-index:1;
+  width:auto;height:auto;object-fit:contain;
+  max-width:min(100%, var(--cover-maxw, 100%));margin:0 auto;
+}
 
 .card-body{padding:32px 36px 8px}
 .card-title{font-family:var(--sans);font-size:24px;font-weight:500;color:var(--text);
@@ -366,8 +389,8 @@ body{
   display:flex;align-items:center;justify-content:center;
   color:var(--text-muted);transition:all var(--transition)}
 .modal-close:hover{background:var(--accent-gold);color:#1a0f04;border-color:var(--accent-gold)}
-.detail-image{width:100%;max-height:450px;overflow:hidden;background:#0f0d0c}
-.detail-image img{width:100%;height:100%;object-fit:contain;display:block}
+.detail-image{width:100%;max-height:450px;overflow:hidden;background:#0f0d0c;position:relative}
+.detail-image img{width:100%;height:auto;max-height:450px;object-fit:contain;display:block}
 .detail-body{padding:28px 32px}
 .detail-meta{display:flex;align-items:center;gap:10px;margin-bottom:10px;
   font-family:var(--mono);font-size:11px;color:var(--text-faint);letter-spacing:0.05em}

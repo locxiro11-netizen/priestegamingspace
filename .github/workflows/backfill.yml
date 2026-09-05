@@ -1,0 +1,62 @@
+name: 回填历史资讯
+
+# 存量资讯缺字段时的一次性补救，两个任务各自独立，按需手跑：
+#   backfill-genre  给旧条目补 3A / 独立游戏 分类
+#   backfill-cover  把旧条目的缩略图封面换成大图
+# 新发布的条目在 ai_curate / enrich / publish 里就带着这些字段，
+# 正常情况下不用再跑第二次。
+on:
+  workflow_dispatch:
+    inputs:
+      refetch_cover:
+        description: '回源重抓那些改参数救不回来的小图（慢，要联网）'
+        type: boolean
+        default: false
+
+jobs:
+  backfill-genre:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: 准备 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 回填缺失的分类
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        run: python scripts/backfill_genre.py
+
+  backfill-cover:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: 准备 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 封面图换大图
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          if [ "${{ inputs.refetch_cover }}" = "true" ]; then
+            python scripts/backfill_cover.py --refetch
+          else
+            python scripts/backfill_cover.py
+          fi
