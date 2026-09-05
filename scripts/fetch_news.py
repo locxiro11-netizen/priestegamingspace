@@ -37,6 +37,9 @@ from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 import xml.etree.ElementTree as ET
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import stub          # 跳转壳页面识别（游民星空那类空壳，没有正文）
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_PATH = os.path.join(ROOT, "scripts", "config.json")
 OUT_DIR = os.path.join(ROOT, "scripts", "out")
@@ -295,12 +298,83 @@ def parse_steam(appid, game_name, limit, max_len=700):
     return out
 
 
+def _attr_title(tag):
+    """从一段标签文本里取 title 属性的值。
+
+    游民星空这类站点的 title 里会直接内嵌英文双引号而且不转义：
+        title="宋雨琦瘦成"纸片人"引关注 标志性酒杯腿瘦没了"
+    用 title="([^"]+)" 会在第一个内嵌引号处就截断成「宋雨琦瘦成」。
+    判据改成「一直吃到下一个属性开头或标签收尾为止」，内嵌引号就穿过去了。
+    """
+    m = re.search(r'title="(.*?)"\s*(?=[a-zA-Z-]+\s*=|[/>])', tag, re.S)
+    if not m:                       # 兜底：吃到本行最后一个引号
+        m = re.search(r'title="(.*)"', tag, re.S)
+    return html.unescape(m.group(1)).strip() if m else ""
+
+
+def link_meta(page_html, link):
+    """取某个链接自己的标题和封面图。返回 (title, image)。
+
+    只在「包含这个链接的那个 <a> 标签」以及它内部/紧跟的 <img> 里找。
+    绝不扩大到相邻条目的 HTML 里去借——那正是标题和链接错位的根源：
+    早先是取 link 位置前后 2000 字符的窗口再找第一个 title="..."，
+    自身标题一旦匹配不上（内嵌引号），就会静默拿到上一条/下一条的标题。
+    宁可拿不到标题走后面的回源，也不能拿一个错的。
+    """
+    title, image = "", ""
+    for m in re.finditer(r"<a\b[^>]*>", page_html):
+        tag = m.group(0)
+        if link not in tag:
+            continue
+
+        if not title:
+            title = _attr_title(tag)
+        if not title:                       # 没有 title 属性就取链接文字
+            end = page_html.find("</a>", m.end())
+            if end > 0:
+                txt = re.sub(r"<[^>]+>", "", page_html[m.end():end])
+                txt = re.sub(r"\s+", " ", html.unescape(txt)).strip()
+                if len(txt) >= 6:
+                    title = txt
+
+        if not image:
+            # 封面 <img> 就在这个 <a> 里面（列表页常见的 <a><img></a> 结构）
+            seg = page_html[m.end(): m.end() + 800]
+            cut = seg.find("</a>")
+            if cut > 0:
+                seg = seg[:cut]
+            mi = re.search(r'<img[^>]+src="(https?://[^"]+\.(?:jpg|jpeg|png|webp)[^"]*)"',
+                           seg, re.I)
+            if mi:
+                image = mi.group(1)
+
+        if title and image:
+            break
+    return title, image
+
+
+def page_desc(page):
+    """从文章页取一段站方自己写的摘要。
+
+    各家字段不统一：外媒普遍用 og:description，游民星空只有 <meta name=
+    "description">。两者都没有就返回空——别硬凑正文首段，导航/推荐位文字
+    很容易被误当成正文。
+    """
+    for pat in (r'property="og:description"\s+content="([^"]*)"',
+                r"<meta[^>]+name=[\"']description[\"'][^>]+content=\"([^\"]*)\"",
+                r"<meta[^>]+content=\"([^\"]*)\"[^>]+name=[\"']description[\"']"):
+        m = re.search(pat, page, re.I)
+        if m:
+            return re.sub(r"\s+", " ", html.unescape(m.group(1))).strip()
+    return ""
+
+
 def parse_list_page(page_html, base, link_pattern, source_name, limit,
                     fetch_meta=True, exclude_pattern=None):
     """国内不少站点（游民星空、3DM）已经关掉 RSS，只能抓列表页。
 
-    做法：用正则捞出文章链接，再在链接附近的一小段 HTML 里找标题/配图；
-    标题找不到时，退一步去抓文章页的 og:title / og:description。
+    做法：用正则捞出文章链接，再从「包含该链接的 <a> 标签」里取标题/配图；
+    标题拿不到时，退一步去抓文章页的 og:title / og:description。
     """
     links = []
     for m in re.finditer(link_pattern, page_html):
@@ -317,32 +391,35 @@ def parse_list_page(page_html, base, link_pattern, source_name, limit,
 
     out = []
     for link in links[:limit]:
-        idx = page_html.find(link)
-        window = page_html[max(0, idx - 400): idx + 1600] if idx >= 0 else ""
+        # 只在「包含这个链接的 <a> 」里找，绝不向相邻条目借
+        title, image = link_meta(page_html, link)
 
-        title = ""
-        m = re.search(r'title="([^"]{6,90})"', window)
-        if m:
-            title = html.unescape(m.group(1)).strip()
-
-        image = ""
-        m = re.search(r'<img[^>]+src="(https?://[^"]+\.(?:jpg|jpeg|png|webp)[^"]*)"',
-                      window, re.I)
-        if m:
-            image = m.group(1)
+        # 保险：_attr_title 万一没找到下一个属性/收尾，会一路吃到行尾，
+        # 那就宁可当作没拿到，走下面的回源，别拿一个超长的脏标题。
+        if len(title) > 120:
+            title = ""
 
         desc = ""
-        if not title and fetch_meta:
+        if fetch_meta:
+            # 列表页源没有 RSS，raw_desc 一直是空的。策展模型只看得到标题，
+            # 写摘要就只能照标题复述再接一句套话（「玩家期待值高」「引发
+            # 关注」）；真遇上只借到别人标题的条目，更是会凭空编出整段剧情。
+            # 所以这里对每个候选都抓一次文章页，拿 og:description 当真实摘要，
+            # 顺手把「只有跳转逻辑、没有正文」的空壳页面在候选阶段就剔掉，
+            # 免得它被选中、白花一次模型调用。
             page = http_get(link, timeout=20, retries=1)
             if page:
-                mt = re.search(r'property="og:title"\s+content="([^"]*)"', page) \
-                    or re.search(r"<title>(.*?)</title>", page, re.S)
-                if mt:
-                    title = re.sub(r"\s+", " ", html.unescape(mt.group(1))).strip()
-                    title = re.sub(r"[-_|]\s*(游民星空|3DM|3DMGAME).*$", "", title).strip()
-                md = re.search(r'property="og:description"\s+content="([^"]*)"', page)
-                if md:
-                    desc = re.sub(r"\s+", " ", html.unescape(md.group(1))).strip()
+                if stub.is_stub_page(page):
+                    continue
+                if not title:
+                    mt = re.search(r'property="og:title"\s+content="([^"]*)"', page) \
+                        or re.search(r"<title>(.*?)</title>", page, re.S)
+                    if mt:
+                        title = re.sub(r"\s+", " ", html.unescape(mt.group(1))).strip()
+                        title = re.sub(r"[-_|]\s*(游民星空|3DM|3DMGAME|游侠网|3DMGame).*$",
+                                       "", title).strip()
+                desc = page_desc(page)
+                time.sleep(0.4)      # 每个源多打十几次请求，对源站友好一点
 
         if not title:
             continue

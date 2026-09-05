@@ -330,6 +330,15 @@ def main():
             skipped.append(f"{title}（ID 重复）")
             continue
 
+        # 最后一道闸：正文和摘要都没有的条目就是个空壳（典型的如游民星空
+        # 跳往社区活动页的 redirect 页，正文全靠 JS 跳转），发出去只会是
+        # 一张标题 + 一张图，点进去啥也没有。直接丢掉。
+        body = (item.get("content_html") or "").strip()
+        if not body and not (item.get("desc") or "").strip() \
+                and not (item.get("raw_desc") or "").strip():
+            skipped.append(f"{title}（正文与摘要均为空，已剔除）")
+            continue
+
         desc = (item.get("desc") or "").strip()
         # 封面图统一在这里升到最高清版本：URL 里能推断出原图尺寸的一并记录，
         # 前端拿它提前占位，避免图片加载完把文字顶下去

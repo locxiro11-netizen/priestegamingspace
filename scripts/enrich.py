@@ -28,6 +28,7 @@ import urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import cover
+import stub
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_INPUT = os.path.join(ROOT, "scripts", "out", "curated.json")
@@ -761,8 +762,21 @@ def main():
         return 0
 
     ok = failed = 0
+    stubs = []
     for it in items:
         title = (it.get("title") or "")[:34]
+        src_url = (it.get("source_url") or "").strip()
+
+        # 跳转壳页面（游民星空那类跳往社区活动页的空壳）根本没有正文。
+        # 早先它会一路走到发布，变成一条「只有标题+封面」的空心条目。
+        # 这里直接剔除。fetch 有页缓存，不会多打一次请求。
+        if src_url and stub.is_stub_page(fetch(src_url)):
+            target = stub.stub_target(_PAGE_CACHE.get(src_url) or "")
+            print("  ⊗ %-36s 跳转壳页面，剔除%s"
+                  % (title, (" -> " + target[:60]) if target else ""))
+            stubs.append(it)
+            continue
+
         # 变量名不能叫 cover —— 会盖掉同名的 cover 模块
         page_cover = ""
         try:
@@ -821,10 +835,14 @@ def main():
         ok += 1
         time.sleep(0.6)  # 对源站友好一点
 
+    if stubs:
+        items = [i for i in items if i not in stubs]
+
     with open(path, "w", encoding="utf-8") as f:
         json.dump(items, f, ensure_ascii=False, indent=2)
 
-    print("\n补全正文 %d 条，失败 %d 条 -> %s" % (ok, failed, path))
+    print("\n补全正文 %d 条，失败 %d 条，剔除空壳 %d 条 -> %s"
+          % (ok, failed, len(stubs), path))
     write_translate_task(items, path)
     return 0
 
