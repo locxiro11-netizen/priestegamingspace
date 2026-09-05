@@ -408,6 +408,8 @@ def parse_list_page(page_html, base, link_pattern, source_name, limit,
             # 顺手把「只有跳转逻辑、没有正文」的空壳页面在候选阶段就剔掉，
             # 免得它被选中、白花一次模型调用。
             page = http_get(link, timeout=20, retries=1)
+            # 每个源要多打十几次请求，失败也要间隔，别把人家打毛了
+            time.sleep(0.4)
             if page:
                 if stub.is_stub_page(page):
                     continue
@@ -419,7 +421,6 @@ def parse_list_page(page_html, base, link_pattern, source_name, limit,
                         title = re.sub(r"[-_|]\s*(游民星空|3DM|3DMGAME|游侠网|3DMGame).*$",
                                        "", title).strip()
                 desc = page_desc(page)
-                time.sleep(0.4)      # 每个源多打十几次请求，对源站友好一点
 
         if not title:
             continue
