@@ -44,19 +44,18 @@ def refetch_cover(item):
     if not url:
         return ""
     try:
-        _, page_cover = enrich.blocks_for(item)
+        # 只要页头的 og:image，不用跑整篇正文的提取
+        page_cover = enrich.extract_cover(enrich.fetch(url) or "")
     except Exception as e:
         print(f"    ! 回源异常: {type(e).__name__}: {e}", file=sys.stderr)
         return ""
-    try:
-        blocks = enrich.blocks_for(item)[0]
-    except Exception:
-        blocks = []
     # 正文首图和 og:image 都试，谁大用谁：3DM 的 og:image 本身就是
-    # 缩略图，只有正文首图是 1080 宽的大图
+    # 缩略图，只有正文首图是 1080 宽的大图。
+    # page_images 是清洗前的原始候选，游民星空那种图多字少的文章
+    # 只有它能拿到图（正文块会被尾部清洗清成 0 张）
     picked, _ = cover.pick_bigger(
         item.get("image") or "",
-        [enrich.first_image(blocks), page_cover])
+        enrich.page_images(url) + [page_cover])
     if not picked:
         return ""
     big, w, h = cover.cover_fields(picked)

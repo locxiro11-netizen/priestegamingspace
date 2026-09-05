@@ -52,7 +52,23 @@ VIDEO_HOSTS = (
 MAX_CHARS = 12000
 
 
+# 同一次运行里同一篇文章会被取好几次（挑封面图时要单独再看一遍正文容器）。
+# 加个极简缓存，别把请求量翻倍——对源站也不友好。
+_PAGE_CACHE = {}
+_PAGE_CACHE_MAX = 200
+
+
 def fetch(url, accept=None, timeout=25):
+    if url in _PAGE_CACHE:
+        return _PAGE_CACHE[url]
+    page = _fetch_uncached(url, accept, timeout)
+    if len(_PAGE_CACHE) >= _PAGE_CACHE_MAX:
+        _PAGE_CACHE.pop(next(iter(_PAGE_CACHE)))
+    _PAGE_CACHE[url] = page
+    return page
+
+
+def _fetch_uncached(url, accept=None, timeout=25):
     headers = {"User-Agent": UA}
     if accept:
         headers["Accept"] = accept
@@ -587,6 +603,25 @@ def content_is_dirty(item):
     return bool(plain) and bool(_TAIL_HINT.search(plain[-300:]))
 
 
+def page_images(url, limit=6):
+    """取文章正文容器里的图片地址，用于挑封面图。
+
+    为什么不能直接用 blocks_for() 的结果：from_generic_page 为了去掉侧边栏
+    推荐位缩略图，会把末尾的图片块全部丢掉。游民星空那种「图多字少」的文章
+    丢完就一张不剩了（实测 7 张图被清成 0 张），封面因此只能退回 200px 的
+    列表缩略图。挑封面要的是清洗前的原始候选。
+    """
+    page = fetch(url)
+    if not page:
+        return []
+    container = pick_container(page, url)
+    if not container:
+        return []
+    srcs = [b["src"] for b in html_to_blocks(strip_noise(container))
+            if b["type"] == "image" and b.get("src")]
+    return srcs[:limit]
+
+
 def blocks_for(item):
     """返回 (blocks, cover)。各源处理器失败时自动降级到下一个。"""
     source = (item.get("source") or "").lower()
@@ -766,7 +801,8 @@ def main():
                 it["image"] = ""
         else:
             it["image"], filled_cover = cover.pick_bigger(
-                cur_img, [first_image(blocks), page_cover])
+                cur_img, [first_image(blocks)] + page_images(it.get("source_url"))
+                + [page_cover])
 
         # 最后统一把缩略图参数换成大图档位，并把能推断出的原图尺寸记下来，
         # 前端靠它提前占位、避免图片加载完再跳版
