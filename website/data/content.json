@@ -1,6 +1,86 @@
 {
   "news": [
     {
+      "id": "news-5dec88842fae",
+      "date": "2026/09/05 09:15",
+      "title": "GTA6审查",
+      "desc": "Rockstar对GTA6预告片进行审查，为适应中国市场，引发玩家关注",
+      "tags": [
+        "GTA6",
+        "审查"
+      ],
+      "image": "https://assets-prd.ignimgs.com/2026/08/27/gta-6-gameplay-blog-1787861652027.jpg",
+      "game": "GTA6",
+      "source": "IGN",
+      "source_url": "https://www.ign.com/articles/rockstar-censors-gta-6-extended-look-trailer-for-china",
+      "likes": 0,
+      "content_html": "<img src=\"https://assets-prd.ignimgs.com/2026/08/27/gta-6-gameplay-blog-1787861652027.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>Rockstar Games 发布了经过大量审查的版本 <a href=\"https://www.ign.com/games/grand-theft-auto-vi\" target=\"_blank\" rel=\"noopener\"></a>《侠盗猎车手6》</p>\n<p>《侠盗猎车手6》在中国地区的扩展预览公布。</p>\n<p>如<a href=\"https://x.com/videotech/status/2095301812773326985?s=20\" target=\"_blank\" rel=\"noopener\"></a>分享的那样</p>\n<p>在X/Twitter上的@videotech，这家游戏背后的工作室<a href=\"https://www.ign.com/articles/only-2-games-are-brave-enough-to-go-up-against-the-might-of-gta-6-this-november\" target=\"_blank\" rel=\"noopener\">说服发行商避开11月</a>，上周在中国社交媒体平台<a href=\"https://www.bilibili.com/video/BV1vm4f6bETN/?spm_id_from=333.1387.list.card_archive.click\" target=\"_blank\" rel=\"noopener\">Bilibili</a>发布了27分钟的游戏演示视频——但有些内容与其他上传的视频有些不同（via <a href=\"https://kotaku.com/rockstar-censors-smoking-dancing-and-boobs-in-gta-6-trailer-for-china-2000731331\" target=\"_blank\" rel=\"noopener\">Kotaku</a>）。很快就能意识到，GTA 6预告片中很大一部分内容都被模糊处理了，包括跳舞、与毒品相关的内容和性内容。</p>\n<p>考虑到这是一款《侠盗猎车手》游戏，有很多内容你无法看到。例如，主角贾森和露西亚在夜总会里的画面，几乎将屏幕变成了巨大的紫色模糊。后来的一幕模糊处理了贾森吸烟时的手，而海滩上的短暂镜头则对一些人群进行了审查。虽然大多数尸体看起来没有被模糊处理，但显示血迹斑斑的尸体特写镜头也被完全审查了。</p>\n<p>这是对GTA 6的另一种不同看法，但视频最初并不是我们看到的这种模糊混乱的样子。正如GTAForums用户<a href=\"https://gtaforums.com/topic/1007121-grand-theft-auto-vi-an-extended-look/?do=findComment&amp;comment=1072798687\" target=\"_blank\" rel=\"noopener\"></a>所发现的。</p>\n<p>BDF，据报道，这不是Rockstar在GTA 6：扩展观看在Netflix首映后最初上传的视频。</p>\n<p>The first upload supposedly didn't have the same censoring it does now. Rockstar is said to have altered the video around August 31. The reasoning behind the delayed adjustments is unclear.</p>\n<p>BDF noted that the changes have split users on China's Reddit-like platform, Tieba, and other online communities. While some suspect Rockstar censored GTA 6 to keep younger users from viewing the trailer's contents, others believe the move reflects prejudice from Rockstar and parent company Take-Two Interactive. BDF also reported that Rockstar and Take-Two have issued DMCA takedowns for those reposting unblurred content on Bilibili.</p>\n<p>Censored or not, the floodgates for GTA 6 seem to officially be open ahead of its November 19 launch for PlayStation 5 and Xbox Series X | S. New <a href=\"https://www.ign.com/articles/grand-theft-auto-6-is-getting-a-pair-of-limited-edition-ps5-controllers\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>昨天刚刚公布了以《 Vice City》为主题的PS5手柄，本周早些时候，Rockstar的网站上发布了<a href=\"https://www.ign.com/articles/gta-6-gets-even-more-new-screenshots-as-rockstar-locks-in-for-november-launch\" target=\"_blank\" rel=\"noopener\">更多截图</a>，粉丝们仍在<a href=\"https://www.ign.com/articles/gta-6s-morality-meter-will-reportedly-shatter-and-make-you-irredeemable-if-you-cause-too-much-mayhem\" target=\"_blank\" rel=\"noopener\">仔细研究上周大型游戏展示会上的每一个细节</a>。</p>\n<p>在那最终发布日期到来之前，肯定还有更多内容要展示。在此之前，你可以查看IGN的报道，包括我们的<a href=\"https://www.ign.com/articles/gta-6-exclusive-preview\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>预览和与Rockstar团队<a href=\"https://www.ign.com/articles/gta-6-rob-nelson-interview-rockstar-north\" target=\"_blank\" rel=\"noopener\">访谈</a>。</p>\n<p>Michael Cripe是IGN的自由撰稿人。他最著名的作品包括The Pitch、The Escapist和OnlySP等网站。请务必在Bluesky（@mikecripe.bsky.social）和Twitter（@MikeCripe）上关注他。</p>"
+    },
+    {
+      "id": "news-15577c1ef08f",
+      "date": "2026/09/05 09:15",
+      "title": "GTA6销量",
+      "desc": "GTA6的期待度推动PS5和Xbox销量上涨30%，成为英国市场一大亮点",
+      "tags": [
+        "GTA6",
+        "销量"
+      ],
+      "image": "https://assetsio.gnwcdn.com/VINTAGE_VICE_CITY_PACK_EXCLUSIVE_LOOKS_04.jpg?width=690&quality=85&format=jpg&auto=webp",
+      "game": "GTA6",
+      "source": "Eurogamer",
+      "source_url": "https://www.eurogamer.net/gta-6-hype-giving-ps5-xbox-series-sales-boost",
+      "likes": 0,
+      "content_html": "<p>GTA 6 已经为 PlayStation 和 Xbox 游戏机带来了急需的销售增长，至少在英国是这样，尽管 <a href=\"https://www.eurogamer.net/companies/rockstar-games\" target=\"_blank\" rel=\"noopener\">Rockstar Games</a> 那不可避免的大笔现金还要再过几个月才会到账。</p>\n<p>GTA 6：深度解析本身就是一个很大的新闻。几乎 <a href=\"https://www.eurogamer.net/gta-6-gameplay-reveal-streaming-viewership-record-twitch-netflix\" target=\"_blank\" rel=\"noopener\"></a>。</p>\n<p>400万人通过直播平台观看了 Lucía 和 Jason 进行犯罪活动以及 <a href=\"https://www.eurogamer.net/gta-6-romance-relationship-system-jason-lucia\" target=\"_blank\" rel=\"noopener\">可能陷入或退出爱情</a>的首次亮相，这极大地压倒了 <a href=\"https://www.eurogamer.net/companies/twitch\" target=\"_blank\" rel=\"noopener\">Twitch</a>。超过3100万人直接在 Netflix 上观看了深度解析，还有2200万人通过 YouTube（不计重新上传）观看了。</p>\n<p>如 <a href=\"https://www.thegamebusiness.com/p/gta-6-reveal-causes-xbox-and-playstation\" target=\"_blank\" rel=\"noopener\"></a>《游戏商业》报道的那样，</p>\n<p>所有这些兴奋的情绪为 PS5 和 Xbox Series X/S 游戏机带来了一周的销售高潮。根据市场研究公司 NielsonIQ 的数据，在英国，PS5 的销量增长了33%，而 Xbox Series 的销量增长了34%。</p>\n<p>游戏机制造商可能正在长舒一口气——当然，还有为 GTA 6 11月的发布日期预留的几台。不断上升的成本和持续的组件危机使得最近销售游戏机变得有些困难。 <a href=\"https://www.eurogamer.net/playstation-5-uk-sales-may-2026-big-drop\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>PS5 在英国的销量在今年夏天急剧下降，<a href=\"https://www.eurogamer.net/xbox-suffers-worst-year-on-record-for-console-sales-in-the-uk\" target=\"_blank\" rel=\"noopener\">Xbox 在该国的2025年创下了有史以来最糟糕的销量记录</a>。</p>\n<p>Newzoo 的 Ronan Patrick 告诉《游戏商业》，PS5 的价格比发布时“高出67%”，考虑到通货膨胀，而 Xbox 游戏机的价格翻了一番，所以 GTA 6 可能不会像在没有 AI 驱动的 RAMageddon 的情况下那样产生巨大的影响。</p>\n<p>‘我们预计，由于 [GTA] 和 Call of Duty，我们将看到安装基础的提升，’ Patrick 说。‘不如预期那么高...没有什么特别巨大的。’</p>\n<p>有趣的是，尽管没有 GTA 6 即将到来，<a href=\"https://www.eurogamer.net/platforms/switch-2\" target=\"_blank\" rel=\"noopener\"></a>，</p>\n<p>Nintendo Switch 2 的销量在同一周也增长了三分之一。也许潜在的买家正在为 <a href=\"https://www.eurogamer.net/nintendo-switch-2-price-increase-may-2025\" target=\"_blank\" rel=\"noopener\">Switch 2 价格上涨</a> 做准备。</p>"
+    },
+    {
+      "id": "news-98b1f5152c55",
+      "date": "2026/09/05 09:15",
+      "title": "任天堂直面会",
+      "desc": "任天堂将举行两场直面会，包括塞尔达40周年纪念特别直播，备受期待",
+      "tags": [
+        "任天堂",
+        "直面会"
+      ],
+      "image": "https://image.gcores.com/ed0896a165a474d8505981b1d8b5d8ed-555-272.jpg?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
+      "game": "塞尔达传说",
+      "source": "机核",
+      "source_url": "https://www.gcores.com/articles/219256",
+      "likes": 0,
+      "content_html": "<p>任天堂于今日宣布，将于下周连续举行两场直面会。第一场为塞尔达传说40周年纪念特别直播，定于北京时间9月8日晚上10点播出，预计全程30分钟。第二场为常规直面会，将于9月9日同一时间举行，预计全程45分钟。</p>\n<img src=\"https://image.gcores.com/a276256e4098a2ca8e6fc76ac4e1d884-555-272.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>40 周年纪念直播预计聚焦《时之笛》重制版的正式发布信息，以及经典作品的重新上架计划。常规 Direct 则料将展示 Switch 2 平台 2027 年上半年的游戏阵容，包括《异度之刃 Genesis》与《宝可梦》新作的最新动态。</p>"
+    },
+    {
+      "id": "news-9ec01afef006",
+      "date": "2026/09/05 09:15",
+      "title": "地城拓荒发售",
+      "desc": "策略冒险游戏《地城拓荒》正式发售，国区售价68元，玩家期待体验",
+      "tags": [
+        "地城拓荒",
+        "发售"
+      ],
+      "image": "https://image.gcores.com/5adb1b2fc521dc8eb74ba67584c8e4c0-1268-727.jpg?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
+      "game": "地城拓荒",
+      "source": "机核",
+      "source_url": "https://www.gcores.com/articles/219228",
+      "likes": 0,
+      "content_html": "<p>由韩国独立游戏工作室Canopener开发的策略冒险游戏《地城拓荒》（Dungeon Settlers）9月4日正式登录Steam，开启抢先体验。国区售价68元人民币，首发享受15% off优惠，持续2周时间。</p>\n<img src=\"https://image.gcores.com/a5ffefbe0aba2100aa6c7d5ef1f0be38-1268-727.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>建设据点，探索地城</p>\n<p>据点建设与地城探险，这是《地城拓荒》的核心体验，两者在巧妙的有机结合下，为玩家提供绝佳的成长感。</p>\n<p>为了摧毁给世界带来灾难的地下城，玩家需要建立据点、招募队友，并带领队伍逐步深入地城，拓荒前进。</p>\n<p>据点可以为队伍提供生活所需，比如床铺、食物等，同时也承担装备打造、科技解锁和角色成长等功能。</p>\n<p>在地城中获取的资源则可以用来建设营地，解锁建筑。队伍实力提升后，又可以探索地城更深处，获得更多、更稀有的资源。</p>\n<p>游戏便在这种循环下，形成了一种独特的上瘾体验。</p>\n<img src=\"https://image.gcores.com/044169c5c7ab2baaabbae02154e40fdb-1266-715.jpeg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>从卧室、食堂，到种田和科研，玩家需要规划好自己的大本营</p>\n<img src=\"https://image.gcores.com/40ed32560b908bbf807a5a70c9263f52-1268-714.jpeg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>随着研究解锁，队伍将获得更强实力</p>\n<p>角色成长要素丰富</p>\n<p>游戏中，玩家可以带领最多4人的小队进入地城，探索随机生成的地图，搜集资源、击败敌人、发现事件，并挑战强力Boss。</p>\n<p>而每位角色都拥有独立的成长空间，包括种族、主特质、主技能、副技能、天赋、生活技能、个性和装备等，异常丰富。</p>\n<p>不同种族有什么优劣？主特质适不适合巨剑？主技能和副技能否配合？多种因素互相影响下，游戏为玩家提供了极大的角色培养空间。</p>\n<p>根据自己的想法和喜好培养队员，尝试不同的角色组合、技能搭配和装备配置，逐渐形成适合自己的远征方式。</p>\n<img src=\"https://image.gcores.com/55ec5fa919d396908727f27f80524ba1-1266-715.jpeg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>每个角色都拥有主技能和副技能，要考虑如何加点和搭配</p>\n<img src=\"https://image.gcores.com/cc020882f3ccc23448a4ed0a7fbf75ba-1266-715.jpeg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>没事就可以来招募处看看是否有心仪的角色</p>\n<p>一命制地城挑战</p>\n<p>游戏采用“一命制”，角色彻底死亡后将永久离开队伍，因此每次远征都需要认真准备，并根据实际情况作出选择。</p>\n<p>当然，招募队友时发现强力角色也是游戏的一大乐趣。</p>\n<p>战斗结果不仅取决于队伍的能力，补给、心情、睡眠和站位等因素也会影响战局。</p>\n<p>《地城拓荒》采用随机地图生成机制，每次进入地城都可能面对不同的环境、敌人和事件。</p>\n<p>随着探索深入，挑战也会逐渐增加。玩家需要在继续前进和安全返回之间作出判断，并根据每次远征的结果调整下一步的策略。</p>\n<img src=\"https://image.gcores.com/131a543a2c4b9792ed09830d4b77b162-1266-715.jpeg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<img src=\"https://image.gcores.com/f99a9bc125d0ee5a35430d43a42ff487-1266-715.jpeg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>越深入地城，就会获得越好的资源</p>\n<p>Steam地址：https://store.steampowered.com/app/2798330/_Dungeon_Settlers/</p>"
+    },
+    {
+      "id": "news-b61dd494c57c",
+      "date": "2026/09/05 09:15",
+      "title": "白金档案上线",
+      "desc": "音乐游戏《白金档案》正式上线，两款新DLC同步登场，玩家期待体验",
+      "tags": [
+        "白金档案",
+        "上线"
+      ],
+      "image": "https://image.gcores.com/50fcba67d160ff3dddc3651a8e10ec4f-920-430.jpg?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
+      "game": "白金档案",
+      "source": "机核",
+      "source_url": "https://www.gcores.com/articles/219237",
+      "likes": 0,
+      "content_html": "<p>近日，音乐游戏《白金档案》（PLATiNA :: LAB）的开发团队HIGH-END GAMES通过官方直播公开了1.0正式版本的前瞻信息。本作将于9月10日正式结束抢先体验、迎来1.0版本发售。</p>\n<p>v1.0版本中，官方宣布游戏将加入官方中文支持。此前因语言门槛而持观望态度的玩家们，届时将可以无障碍地体验剧情与角色互动内容了。</p>\n<p>与此同时，游戏本体价格也将迎来永久性大幅下调——伴随转正，游戏国区售价调整至60元，并在正式发售后将提供限时两周的85折优惠及BUNDLE组合包优惠。折算下来，仅需51元即可入手一款包含120余首可玩曲目、十余位Q萌角色相伴的音乐游戏，入手相当划算。</p>\n<p>数据世界，不止\"打谱\"</p>\n<p>《白金档案》是一款以经典下落式玩法为核心的节奏游戏，提供4轨、6轨与进阶PLUS谱面，无论是音游入门新手，还是追求高难度的硬核玩家，都能找到适合自己的节奏。</p>\n<img src=\"https://image.gcores.com/f9636adfb6023c963b060f0fcdf90caa-1143-637.gif\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>但《白金档案》远不止\"打歌\"这么简单 —— 十余位个性鲜明的DB萌娘会在你演奏时陪伴左右。达成连击时她们会为你喝彩，出现失误时她们会给你鼓励，打谱这件事，从此不再是孤独的指尖修行。</p>\n<p>作为音游的核心，游戏的曲库也是丰富多样，涵盖多种品类：从原创曲、Vocaloid、Anisong，到金属、爵士和经典游戏音乐，120余首曲目横跨十余种风格。无论大家是术力口老饕、J-POP爱好者，还是重型音乐狂热粉丝，都能在这里找到属于自己的那份节奏。</p>\n<img src=\"https://image.gcores.com/b83bdcab2b35c0cde4bd532383f755d2-1758-980.gif\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>每首曲目均配有专属背景动画（BGA），玩家甚至可以在\"观看背景动画\"模式下单独欣赏喜欢的BGA。可以说，《白金档案》是一场可以玩的Live盛典！</p>\n<p>1.0版本更新，全方位体验升级</p>\n<p>本次推出的1.0版本并非小修小补，而是在剧情、角色和游戏等多个维度进行的大规模更新。</p>\n<p>在剧情方面，游戏第一章将在v1.0中正式上线，玩家将扮演拥有特殊天赋的解码者（Decoder），与研究员艾琳、斑比和小蛋糕一同探索被加密的数据世界，与此同时，档案室还迎来了6位拥有独立个性和背景故事的全新DB角色。</p>\n<img src=\"https://image.gcores.com/23b7da931bf8e90185a57552c6e27527-1725-937.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<img src=\"https://image.gcores.com/95b605d982ffc965ff0394c108ebe73f-1267-687.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>游戏还会新增“我的数据”功能，登录次数、持有道具数量、成长趋势等数据都能够得到系统化的呈现。</p>\n<img src=\"https://image.gcores.com/c34d4dc0086890a04a997bdbecfd509c-1266-699.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>贴纸收集系统也将同步开启，完成游戏内重要目标即可获得Q萌贴纸，集齐后还可以补全收藏图鉴；全新实装的玩家排行榜，支持查看自己在指定谱面中的排名，并可浏览其他玩家的失误位置及判定详情。</p>\n<img src=\"https://image.gcores.com/342b9682686d4d6aaf37be7b6fac5d30-1267-712.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>而在自定义内容方面，游戏里新增了打击音效和称号两类选项，再加上原有的设备、音符、头像图标、个人资料背景等，玩家的个性化选择空间将得到进一步拓宽。</p>\n<img src=\"https://image.gcores.com/35254f2f48548ad50b68d240bb5e34f8-1267-668.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>1.0版本中还将新增两个对新玩家来说颇为友好的功能，一是在游戏开始前增加了完整的教程关卡，帮助新玩家快速上手；二是曲库中绝大部分原本需要通过“研究日志”模式解锁的曲目，现均已默认常驻，新玩家购入后即可直接体验，无需额外解锁。</p>\n<img src=\"https://image.gcores.com/f67efc6130a84660bce3022cc354a8d5-1268-885.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>此外，所有DB角色还会新增好感度10级解锁的“留言”奖励，绝大部分角色新增7级解锁的“贴纸”奖励，EA期间已达到对应好感度等级的玩家在更新后可立即领取。</p>\n<p>两款全新DLC曲包，随1.0同步登场</p>\n<p>除了本体内容更新以外，两款全新DLC曲包，在版本更新之际将同步上线——</p>\n<h3>DLC [SWEETIE;S]</h3>\n<p>迄今可玩曲目数量最多的DLC！收录24首全新原创歌曲。每首曲目均配有专属背景动画。更棒的是，DLC还将解锁DB角色小蛋糕（Cake）的全新皮肤，以及包含设备、音符等多种主题外观和头像装饰，在打谱的时候相伴在大家身旁。</p>\n<img src=\"https://image.gcores.com/892311fc0b2d0992a3ff8b2519cf5079-1001-563.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<h3>DLC [Flagship Collection]</h3>\n<p>这是为庆祝1.0正式发售推出的庆祝曲包，收录了来自韩国和海外风格各异的知名IP曲目，包括大热曲《恋爱循环》和《電波的妄想美少女Q》等等，其中部分曲目本体玩家还可免费游玩！两款付费原声带也同步推出，组合购买DLC或原声带可享受额外优惠。</p>\n<img src=\"https://image.gcores.com/fee16920d7976b9204769aaf2ebe872d-296-397.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<img src=\"https://image.gcores.com/96d4aad329277bea7527d58a9ae21306-299-400.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>所有在9月10日上午11:00（北京时间）永久降价前就已经购买并入库《白金档案》本体的玩家（包括通过Steam key激活的玩家，也需在此时间前完成激活入库），将在1.0发售时免费解锁以下专属回馈:</p>\n<p>免费解锁DLC“SWEETIE;S” ——老玩家可直接入库上述收录24首原创曲目、定价82元的大型DLC。</p>\n<p>3种限定纪念装饰道具！ 包括主题icon头像、动态纪念背景、EA玩家专属称号——这是专属于早期支持者的身份象征，永久纪念这份从EA阶段走到今天的旅程。</p>\n<p>此外，为答谢各位玩家一直以来的支持与信任，游戏将于今年9月为所有玩家推送一次免费更新，追加全新Vocaloid原创曲目——《Earth Sci》。该曲此前在2026年The VOCALOID Collection（ボカコレ）夏季赛中斩获Rookie榜第9名的优异成绩。</p>\n<img src=\"https://image.gcores.com/85fd7193e2bf16336717f3c9912e7a28-864-432.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>现有系统，全面\"翻新\"</p>\n<p>除了新内容的加入，游戏内已有的系统也迎来了新的优化：</p>\n<p>选曲界面迎来了直观的升级。新版界面在分类筛选中加入了“新曲”与“热门曲目”等版块，并新增了排序与收藏功能，每首歌曲的通关状态展示也变得更加清晰——对于有“清谱”习惯的玩家来说，这份一目了然的进度，更能够增加继续游戏的动力。</p>\n<img src=\"https://image.gcores.com/5add9955ad23cc372b28346c1c739968-1269-697.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>细节上，DB角色的语音互动场景进一步拓展，在保持连击、完成段落、判定失误等多种情况下均可触发角色语音，让演奏过程更有陪伴感。</p>\n<img src=\"https://image.gcores.com/9bc5129d0c46fbde46503789e5d3ce50-1267-705.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>《白金档案》1.0版本将在9月10日于Steam正式发售。对这款游戏感兴趣的玩家，欢迎前往商店页了解更多信息。</p>\n<img src=\"https://image.gcores.com/9ac35e1cad76e1eb23578322cbe54f67-799-446.gif\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">"
+    },
+    {
       "id": "news-676d4ccdf5d3",
       "date": "2026/09/04 09:15",
       "title": "Epic喜加一",
