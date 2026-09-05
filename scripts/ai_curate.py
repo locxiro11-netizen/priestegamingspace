@@ -55,6 +55,10 @@ PICK_MAX = int(os.environ.get("PICK_MAX", "15"))
 BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "8"))
 MAX_BATCHES = int(os.environ.get("MAX_BATCHES", "3"))
 
+# 每天至少要有几条独立游戏。模型偏好多给 3A，
+# 不给配额的话「独立游戏」子页签会一直是空的。
+INDIE_QUOTA = int(os.environ.get("INDIE_QUOTA", "2"))
+
 SELECT_SYSTEM = """你是资深游戏资讯主编，为一个中文游戏自媒体站点挑选每日要闻。
 
 判断标准只有一条：这条新闻会不会让玩家在群里讨论起来？
@@ -105,6 +109,8 @@ SELECT_USER = """下面是候选资讯（共 {n} 条），已经挑过的不在�
 - 中文源（游民星空 / 3DM / 机核 / indienova / GameLook / 游侠网）合计至少占一半，
   优先给国内玩家真正关心的话题让位
 - 独立游戏和玩家热议话题，只要真的火就值得选，不要因为「不是 3A」而漏掉
+- 本批里独立游戏至少 1 条、3A 至少 1 条：站点上这两个是分开的子页签，
+  全选一边会让另一边长期空着
 - 没有够分量的就少选，不要硬凑"""
 
 
@@ -350,6 +356,26 @@ def do_select():
                 continue
             used.add(key)
             curated.append(_entry_from(src, {}))
+
+    # 独立游戏配额兜底。模型天然偏爱 3A 大新闻，实测历史 50 条里一条独立游戏都没有，
+    # 「独立游戏」子页签会长期空着。这里硬性补够：从还没用过的候选里挑规则判定为
+    # indie 的条目（通常是 indienova 源，或标题带「独立游戏 / 一人开发 / 像素」这类）。
+    have_indie = sum(1 for c in curated if c.get("genre") == "indie")
+    if have_indie < INDIE_QUOTA:
+        for src in items:
+            if have_indie >= INDIE_QUOTA:
+                break
+            key = _key_of(src)
+            if key in used:
+                continue
+            entry = _entry_from(src, {})
+            if entry["genre"] != "indie":
+                continue
+            used.add(key)
+            curated.append(entry)
+            have_indie += 1
+        if have_indie:
+            print("  独立游戏补足到 %d 条" % have_indie)
 
     curated = dedupe_curated(curated)
 
