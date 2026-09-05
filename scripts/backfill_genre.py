@@ -10,9 +10,14 @@ backfill_genre.py — 给已发布的历史资讯补上分类（3A / 独立游�
 存量条目动辄上百条，规则足够，也不想为回填再烧一轮额度。
 
 用法:
-    python scripts/backfill_genre.py              # 回填并推送
-    python scripts/backfill_genre.py --dry-run    # 只看会改成什么，不推送
-    python scripts/backfill_genre.py --force      # 连已有合法分类的也重判一遍
+    python scripts/backfill_genre.py                # 回填并推送
+    python scripts/backfill_genre.py --dry-run      # 只看会改成什么，不推送
+    python scripts/backfill_genre.py --force        # 连已有合法分类的也重判一遍
+    python scripts/backfill_genre.py --recheck-indie  # 只复查被打成「独立游戏」的条目
+
+--recheck-indie 用于收紧口径后的纠偏：全量 --force 会用规则覆盖模型判断，
+而规则比模型粗糙，容易把判对的独立游戏误伤成综合。这里只在命中「其实不是
+独立游戏」的黑名单时才改判，其余一律保留原判断。
 
 Token 来源同 publish.py：环境变量 GITHUB_TOKEN 或仓库根目录 .gh_token
 """
@@ -33,6 +38,7 @@ CONFIG_PATH = os.path.join(ROOT, "scripts", "config.json")
 def main():
     dry_run = "--dry-run" in sys.argv[1:]
     force = "--force" in sys.argv[1:]
+    recheck = "--recheck-indie" in sys.argv[1:]
 
     with open(CONFIG_PATH, "r", encoding="utf-8") as f:
         cfg = json.load(f)
@@ -58,9 +64,14 @@ def main():
     changed, counts = [], {}
     for it in news:
         old = it.get("genre")
+        oldn = genre.normalize_genre(old)
         # --force 之外，已经是合法分类的就别动了，避免把模型判断过的又改回去
-        if not force and genre.normalize_genre(old) in genre.VALID_GENRES:
-            g = genre.normalize_genre(old)
+        if not force and oldn in genre.VALID_GENRES:
+            # 只在黑名单命中时才改判，其余保留模型判断
+            if recheck and oldn == "indie" and genre.not_indie_hit(it):
+                g = genre.infer_genre(it)
+            else:
+                g = oldn
         else:
             g = genre.infer_genre(it)
         counts[g] = counts.get(g, 0) + 1

@@ -15,6 +15,8 @@ genre.py — 资讯分类：3A 游戏 / 独立游戏 / 综合。
 都要用同一套判定，散在两处必然不一致。
 """
 
+import re
+
 # 3A / 大作信号：知名 IP、系列名，以及一眼就能认出的大厂大作
 AAA_KEYWORDS = [
     # Rockstar / Take-Two
@@ -72,6 +74,14 @@ INDIE_KEYWORDS = [
 # 这些来源本身就是独立游戏阵地
 INDIE_SOURCES = {"indienova"}
 
+# 反向排除：看着像独立、其实是有发行商的 AA 项目。
+# 大模型和规则都容易把它们划进独立游戏——体量小、画风文艺，
+# 但背后是万代 / Xbox 这类发行商，严格说不是独立游戏。
+# 命中这里的关键词一律不给 indie（再往下走 3A 关键词，都没有就归综合）。
+NOT_INDIE_KEYWORDS = [
+    "黎明行者之血", "Blood of the Dawnwalker", "奥日", "Ori",
+]
+
 GENRE_LABELS = {"3a": "3A游戏", "indie": "独立游戏", "other": "综合"}
 VALID_GENRES = ("3a", "indie", "other")
 
@@ -108,6 +118,24 @@ def normalize_genre(value):
     return mapping.get(v)
 
 
+def _contains(text, kw):
+    """关键词命中判断。
+
+    纯拉丁字母的关键词按「整词」匹配，避免 "Ori" 命中 "Origin"、
+    "F1" 命中 "SF12" 这类误伤；中文关键词直接子串匹配。
+    """
+    if re.fullmatch(r"[A-Za-z0-9 .'\-]+", kw):
+        return re.search(rf"(?<![A-Za-z0-9]){re.escape(kw)}(?![A-Za-z0-9])",
+                         text, re.IGNORECASE) is not None
+    return kw in text
+
+
+def not_indie_hit(item):
+    """返回命中的「其实不是独立游戏」关键词列表，没命中返回空列表。"""
+    text = _haystack(item)
+    return [kw for kw in NOT_INDIE_KEYWORDS if _contains(text, kw)]
+
+
 def infer_genre(item):
     """规则兜底推断分类。判不出来就归 'other'。
 
@@ -120,13 +148,17 @@ def infer_genre(item):
     # 顺序有讲究：关键词比来源可靠。
     # indienova 也会报道《GTA6》这种大作，若让来源说了算，
     # 3A 动态会被错划到独立游戏里——来源只作为「什么都没命中」时的弱信号。
-    for kw in INDIE_KEYWORDS:
-        if kw in text:
-            return "indie"
+    # 命中黑名单就彻底不给 indie：关键词和来源兜底两条路都堵上，
+    # 否则《奥日》发在 indienova 上又会被来源判回独立游戏。
+    blocked = not_indie_hit(item)
+    if not blocked:
+        for kw in INDIE_KEYWORDS:
+            if kw in text:
+                return "indie"
     for kw in AAA_KEYWORDS:
         if kw in text:
             return "3a"
-    if source in INDIE_SOURCES:
+    if source in INDIE_SOURCES and not blocked:
         return "indie"
     return "other"
 
@@ -148,6 +180,9 @@ if __name__ == "__main__":
         {"title": "《黑神话：悟空》新预告公布", "source": "3DM"},
         {"title": "本周 Steam 值得关注的游戏", "source": "indienova"},
         {"title": "索尼支付8000万美元和解金", "source": "IGN"},
+        {"title": "《黎明行者之血》Mod爆火", "source": "游民星空"},
+        {"title": "《奥日》工作室CEO对抗M站", "source": "3DM"},
+        {"title": "Ori and the Blind Forest 免费送", "source": "indienova"},
     ]
     for s in samples:
         print(f"{infer_genre(s):<6} [{s['source']}] {s['title']}")
