@@ -1,6 +1,234 @@
 {
   "news": [
     {
+      "id": "news-20be4f35fb87",
+      "date": "2026/09/11 09:34",
+      "title": "GTA6预告片引发热议",
+      "desc": "GTA6预告片引发玩家热议，Netflix订阅增长，玩家期待值高涨",
+      "tags": [
+        "3a",
+        "现象级话题"
+      ],
+      "image": "https://assets-prd.ignimgs.com/2026/09/03/gta6controllerad-1788443314402-1788461933302.png?width=1920&format=webp",
+      "game": "GTA6",
+      "genre": "3a",
+      "source": "IGN",
+      "source_url": "https://www.ign.com/articles/gta-6s-limited-edition-ps5-controller-pre-orders-overload-playstations-store-and-scalpers-are-already-reselling-them-on-ebay",
+      "likes": 0,
+      "image_w": 1920,
+      "image_h": 0,
+      "content_html": "<img src=\"https://assets-prd.ignimgs.com/2026/09/03/gta6controllerad-1788443314402-1788461933302.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>预购活动已正式开启，详情请访问<a href=\"https://www.ign.com/games/grand-theft-auto-vi\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>《侠盗猎车手6》的新PS5控制器今天早上公布，体验极为混乱。</p>\n<p>正如您可能预料的那样，对与GTA 6相关的任何东西都存在着巨大的需求。当索尼宣布它将 <a href=\"https://www.ign.com/articles/grand-theft-auto-6-is-getting-a-pair-of-limited-edition-ps5-controllers\" target=\"_blank\" rel=\"noopener\"></a> </p>\n<p>上周开启了限量版GTA 6主题PS5手柄的预购，可以肯定的是，会有黄牛、商店错误和其他各种干扰——这正是今天早上预购开启时发生的情况。</p>\n<p>我在预购开始前半小时就进入了PlayStation在线商店的排队，一旦大门打开，我就被踢到了队伍的后面，等待时间超过了一个小时。幸运的是，这段时间很快就缩短了一半，可能是由于不愿意等待那么久的人离开了队伍，但即便如此，我仍然遇到了问题。PlayStation的网站在尝试登录我的账户时不断出现错误，迫使我不得不在另一台设备上的新浏览器中打开商店。最终，我成功通过了，但这是我不希望遇到的摩擦。</p>\n<p>到目前为止，控制器在各种零售商那里似乎已经售罄，尽管在撰写本文时还有一些存货。GameStop和Best Buy的白色控制器已经售罄，而Target和Amazon似乎还有库存。与此同时，黑色控制器仅限PlayStation Direct独家销售，看起来仍然有货。</p>\n<p>PlayStation实施了一个系统，用户只能每个账号购买一个控制器，这可能会限制一些炒作，但不会根除问题。目前，这些控制器在eBay上的转售价格几乎是原价的两倍，但还不清楚人们是否会真的购买它们。不清楚这些控制器会保持库存多久，以及如果售罄后是否会补货。</p>\n<p>随着控制器预购的发布，我们离《侠盗猎车手6》的发售已经不到两个月了。现在营销活动正在全力进行，不过接下来会发生什么还不清楚。在<a href=\"https://www.ign.com/articles/grand-theft-auto-6-everything-revealed-on-netflix-ign-and-more\" target=\"_blank\" rel=\"noopener\"></a>之后，游戏还会不会有新的预告片呢？</p>\n<p>关于这款游戏广泛的、深入的玩法揭秘？Rockstar会在发布前<a href=\"https://www.ign.com/articles/gta-6-is-a-single-player-experience-rockstar-confirms-what-now-for-gta-online\" target=\"_blank\" rel=\"noopener\">讨论GTA Online吗</a>？还有很多疑问，但至少我们已经到了最后阶段。</p>\n<p>《侠盗猎车手6》将于11月19日发布，支持PS5和Xbox Series X|S平台。</p>"
+    },
+    {
+      "id": "news-e8370c867616",
+      "date": "2026/09/11 09:34",
+      "title": "GTA6预告片带动Netflix增长",
+      "desc": "GTA6预告片带动Netflix订阅增长，分析称一天内新增10万订阅",
+      "tags": [
+        "3a",
+        "现象级话题"
+      ],
+      "image": "https://www.gamespot.com/wp-content/uploads/2026/09/Screenshot-2026-09-10-at-11.16.01-AM.png?w=1600",
+      "game": "GTA6",
+      "genre": "3a",
+      "source": "GameSpot",
+      "source_url": "https://www.gamespot.com/articles/gta-6-trailer-drove-100000-netflix-sign-ups-in-the-us-alone-in-one-day-analyst-claims/",
+      "likes": 0,
+      "image_w": 1600,
+      "image_h": 0
+    },
+    {
+      "id": "news-3882682c8add",
+      "date": "2026/09/11 09:34",
+      "title": "RDR2演员真实录音",
+      "desc": "RDR2演员透露角色咳嗽录音为真实录音，增加游戏真实感",
+      "tags": [
+        "3a",
+        "现象级话题"
+      ],
+      "image": "https://assets-prd.ignimgs.com/2026/09/10/rdr2-1789077021807.jpg?width=1920&format=webp",
+      "game": "RDR2",
+      "genre": "3a",
+      "source": "IGN",
+      "source_url": "https://www.ign.com/articles/arthur-morgans-coughing-fits-in-red-dead-redemption-2-sound-so-real-because-actor-roger-clark-was-actually-sick",
+      "likes": 0,
+      "image_w": 1920,
+      "image_h": 0,
+      "content_html": "<img src=\"https://assets-prd.ignimgs.com/2026/09/10/rdr2-1789077021807.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>本文包含《荒野大镖客2》的剧透。</p>\n<p>《荒野大镖客2》演员罗杰·克拉克透露，亚瑟·摩根那令人不安的咳嗽发作实际上是在他现实生活中生病时录制的。</p>\n<p>我最近<a href=\"https://youtu.be/WJKvK1A7Mow?si=0KVx142A4LxDBnqX\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>采访了罗杰·克拉克，为YouTube视频讲述了《荒野大镖客救赎》中的亚瑟·摩根是如何塑造的。在我们的漫长对话中，我有机会问他我一直想知道的问题：扮演亚瑟那样剧烈咳嗽有多累？据克拉克说，实际上并没有那么糟糕——在某些情况下，他甚至没有在假装。</p>\n<p>\"这并没有你想象的那么糟糕，因为我有五年的时间来分散它，\"克拉克说。\"如果真的有一个很糟糕的咳嗽场景，我们总是把它留到一天结束时。所以，并没有你想象的那么糟糕。我有五年的时间来分散它。在五年里，有很多感冒。我们得到了很多相当真实的数据。[...] 我会像这样‘嘿，我感冒了，让我进去。’然后他们会说，‘好的。’[...] 很好的痰液。”</p>\n<p>实际上，没有比在现实生活中体验场景更好的表演方式了。亚瑟·摩根几乎部分地被他的咳嗽所定义；这个角色在故事一开始，为了钱打死一个人后，就患上了肺结核。这几乎是亚瑟所过生活的残酷的因果报应，而且根据玩家的选择，他们可以尝试通过帮助他人来救赎这个牛仔。</p>\n<p>随着游戏的进行，亚瑟的咳嗽越来越严重。玩家最初并不清楚亚瑟为什么这么病，直到他开始咳出肺里的东西，晕倒并被拖去医生那里接受诊断。这是对游戏进行独特处理的方向之一，也是《荒野大镖客救赎2》的故事之所以令人难忘的部分。</p>"
+    },
+    {
+      "id": "news-aeed0e443859",
+      "date": "2026/09/11 09:34",
+      "title": "Dave the Diver销量突破千万",
+      "desc": "Dave the Diver销量突破千万，开发商公布未来计划",
+      "tags": [
+        "indie",
+        "现象级话题"
+      ],
+      "image": "https://cdn.mos.cms.futurecdn.net/NirYTGgk2dAjzh2caAMRYf-1920-90.jpg",
+      "game": "Dave the Diver",
+      "genre": "indie",
+      "source": "PC Gamer",
+      "source_url": "https://www.pcgamer.com/games/life-sim/dave-the-diver-has-now-sold-more-than-10-million-copies-mintrocket-cant-wait-to-share-our-future-plans/",
+      "likes": 0,
+      "image_w": 1920,
+      "image_h": 0,
+      "content_html": "<p>深海探险与餐厅管理游戏 <a href=\"https://www.pcgamer.com/dave-the-diver\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>Dave the Diver 仍在深海探险：开发者 Mintrocket 表示，该游戏现在已在所有平台上售出超过 1000 万份，而 6 月发布的《在丛林中》扩展包也已售出超过 100 万份。</p>\n<p>Dave the Diver 是一款 \"<a href=\"https://www.pcgamer.com/dave-the-diver-this-years-out-of-nowhere-breakout-hit-has-already-sold-a-million-copies-in-10-days/\" target=\"_blank\" rel=\"noopener\"></a>\"</p>\n<p>2023年突然爆红的游戏，在PC Gamer上获得了惊人的<a href=\"https://www.pcgamer.com/dave-the-diver-review/\" target=\"_blank\" rel=\"noopener\">91%的评分</a>——这个网站并不轻易给出90分以上的评价——并且在短短10天内卖出了超过一百万份。在2023年游戏大奖最佳独立游戏类别的提名引发了一场<a href=\"https://www.pcgamer.com/indie-game-debate-dave-the-diver/\" target=\"_blank\" rel=\"noopener\">小小的争议</a>：Mintrocket是Nexon的子公司，所以它根本不是一个独立工作室。</p>\n<p>然而，整体影响似乎并不大，部分原因是因为Dave the Diver没有获奖，而且游戏导演Jaeho Hwang也相当明确地表示<a href=\"https://www.pcgamer.com/games/adventure/its-not-like-we-applied-for-the-award-ourselves-dave-the-diver-director-reminds-people-that-theres-nothing-indie-about-his-game-and-the-controversial-indie-nomination-was-out-of-his-control/\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>也不认为它是一款独立游戏。</p>\n<p>Dave the Diver 是一款真正优秀的游戏，通过发布后更新和有意义的跨界合作不断改进，这也可能在这方面有所帮助。今年早些时候发布的《丛林》DLC 本身就是一个亮点：PC Gamer 的 Chris Livingston 给它评了 90%，并宣称它“与基础游戏一样迷人且令人惊喜。”</p>\n<p>\"Mintrocket 的每个人都对 Dave the Diver 在发布多年后仍然吸引着热情和爱感到震惊，\" Hwang 在谈到这个重大的销售里程碑时说。\"我们期待在未来扩展 Dave the Diver 系列，包括即将推出的烹饪模拟和冒险衍生作品 Bancho The Chef。我们想感谢所有对我们表示信任的人，我们迫不及待地想要分享我们的未来计划。\"</p>\n<p><a href=\"https://cdn.mos.cms.futurecdn.net/ySfxasiE5zyqSm6vzT4z7X.png\" target=\"_blank\" rel=\"noopener\"></a>(图片来自 Mintrocket)</p>\n<img src=\"https://cdn.mos.cms.futurecdn.net/ySfxasiE5zyqSm6vzT4z7X.png\" alt=\"Dave the Diver surpasses 10 million copies sold\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>Bancho the Chef 是 Dave the Diver 的前传，是一款烹饪模拟冒险游戏，跟随 Bancho，Dave 餐厅的厨师，在他年轻的时候，当他\"在成为寿司大师的道路上\"。</p>\n<p>尚未设定发布日期，但现在可以在 <a href=\"https://store.steampowered.com/app/3596430/Bancho_the_Chef/\" target=\"_blank\" rel=\"noopener\"></a> 预购。</p>\n<img src=\"https://cdn.mos.cms.futurecdn.net/6offQUY4CXebir2TC27dMd.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">"
+    },
+    {
+      "id": "news-99d6e152fa74",
+      "date": "2026/09/11 09:34",
+      "title": "游戏王重制版支持中文",
+      "desc": "游戏王TAG FORCE GX确认支持中文，吸引中国玩家关注",
+      "tags": [
+        "3a",
+        "现象级话题"
+      ],
+      "image": "https://image.gcores.com/1bbf90205db0a3d8031f534d4763ec31-770-433.webp",
+      "game": "游戏王TAG FORCE GX",
+      "genre": "3a",
+      "source": "机核",
+      "source_url": "https://www.gcores.com/articles/219519",
+      "likes": 0,
+      "image_w": 770,
+      "image_h": 433,
+      "content_html": "<p>科乐美今日正式公布《游戏王 TAG FORCE GX》的消息。本作为广受玩家喜爱的 RPG卡牌游戏《游戏王 !GX TAG FORCE 3》重制作品，采用现代化视觉表现、强化决斗系统，并收录来自《游戏王GX》动画时代令人怀念的经典卡片，更首度对应繁体中文与简体中文，《游戏王 TAG FORCE GX》将于2027年2月16日推出，各平台提供专属预购特典，现已于Steam、Nintendo Switch 2、Nintendo Switch开放预购。</p>\n<img src=\"https://image.gcores.com/999eee36992349bb40ea3a90171d1d97-1408-792.jpeg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>承袭《游戏王GX TAG FORCE 3》的经典魅力，《游戏王 TAG FORCE GX》导入众多符合现代需求的全新功能，让决斗者重返决斗学院的最后学年学习搭档决斗（Tag Duel）的精髓，并从超过100位全面画面升级的角色中选择自己的搭档，双人携手迎战强敌。</p>\n<img src=\"https://image.gcores.com/579b65a473d124489fa47f9815b6d977-1920-1080.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>释放你内心的英雄！经典决斗体验全面回归，含原本《Yu-Gi-Oh! GX TAG FORCE 3》时期尚未登场、深受玩家喜爱的卡牌在内，共收录超过3,800张卡牌，可用来组成专属牌组与独特战术，迈向胜利！</p>\n<p>决斗学院开学了:体验决斗学院的学生生活，自由探索校园、调查各种事件，透过全新与重制的小游戏丰富你的课外活动。</p>\n<p>与全世界决斗: 参与线上多人模式休闲决斗（Casual Duel）或对战房间（Room Match），享受搭档决斗和单人决斗！</p>\n<p>Gallery Mode: 重温《Yu-Gi-Oh! GX TAG FORCE》与《Yu-Gi-Oh! GX TAG FORCE 2》的精彩剧情场景。</p>\n<img src=\"https://image.gcores.com/03803b8b48449d0fb9fc923d5ab85d3d-1920-1080.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>购买Steam 版《Yu-Gi-Oh! TAG FORCE GX》的玩家将获得可进一步沉浸于《Yu-Gi-Oh! TAG FORCE GX》的世界之中的数位电子书。而预购Nintendo Switch 2或Nintendo Switch™实体版的决斗者，可获得三张《游戏王公式卡片游戏 决斗怪兽》的特典卡片，其中两张更是自《游戏王GX》动画首次登场以来，睽违20年的实体卡版本。</p>\n<img src=\"https://image.gcores.com/de0bc45a8673236cc9e11b99b70cdbd4-1920-1080.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>尤贝尔（镜碎稀有/Prismatic Secret Rare）- 强大的「尤贝尔」再度降临，以全新异图版本改写历史。</p>\n<p>邪心教典（金闪稀有/Ultra Rare）- 毁灭对手倒数计时开始的全新卡牌「邪心教典」登场。</p>\n<p>向未来的希望－永望荣合（金闪稀有/Ultra Rare）- 全新卡牌「向未来的希望－永望荣合」呼唤「元素－英雄 新宇侠」的力量。</p>\n<img src=\"https://image.gcores.com/5c07a9a3c09c63da9d6991214be5e7a4-579-269.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>在 2027年2月16日 正式发售之前，决斗者们将可于 9月17日（星期四）至9月21日（星期一）举行的东京电玩展 抢先亲身体验《游戏王 TAG FORCE GX》，并深入感受「搭档决斗（Tag Duel）」的真正魅力。</p>"
+    },
+    {
+      "id": "news-4cfb56468d8c",
+      "date": "2026/09/11 09:34",
+      "title": "核爆模拟器全球爆火",
+      "desc": "核爆模拟器小游戏全球爆火，伊朗玩家最多",
+      "tags": [
+        "indie",
+        "现象级话题"
+      ],
+      "image": "http://img.gamelook.com.cn/2026/09/hbwzmnq0.jpg",
+      "game": "核爆模拟器",
+      "genre": "indie",
+      "source": "GameLook",
+      "source_url": "http://www.gamelook.com.cn/2026/09/601803/",
+      "likes": 0,
+      "content_html": "<img src=\"http://img.gamelook.com.cn/2026/09/hbwzmnq0.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>GameLook报道/作为游戏媒体，GameLook其实已经颇为习惯，每隔一段时间就会突然由某一个不知名的小项目、网站等爆火。</p>\n<p>而在最近，类似的情况就发生在了一个与当前国际政治格局颇为应景的模拟网站上。</p>\n<p>这是一个名为NukeSimulation.com的核爆模拟网站，它由Twitter用户max（@MaxGaniyev）打造，主打的是将真实地图与核爆可视化结合。其使用了谷歌地图API，直接调用了谷歌3D地图，网友可以精准定位，不仅通过网页浏览器实现了蘑菇云的3D效果，还实现了城市破坏效果。<br></p>\n<img src=\"http://img.gamelook.com.cn/2026/09/hbwzmnq2.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>根据开发者自述，其使用了github上的一个3D效果库，城市破坏效果则采用了从谷歌获取图块并在 Three.js 场景中渲染，然后可以对生成的网格应用自定义顶点操作。</p>\n<p>https://github.com/takram-design-engineering/three-geospatial<br></p>\n<img src=\"http://img.gamelook.com.cn/2026/09/hbwzmnq4.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>截至GameLook撰稿时，官网累计记录547621次模拟，伊朗、美国、韩国、日本分别以102283次、87807次和72655次、31974次，成为了被全球网友核爆次数最多的四个国家。</p>\n<p>网站的交互并不复杂：用户可以搜索城市或选择预设地点，选取“小男孩”“胖子”“沙皇炸弹”等历史型号，或者自定义核弹的当量，切换爆炸类型，观察火球、蘑菇云及冲击波效果。</p>\n<p>模拟结束后，页面还会展示爆炸影响范围、热辐射范围以及估算伤亡。相较于只在地图上画出同心圆的表现形式，三维场景把抽象的当量与具体城市放到一起，让破坏规模变得更容易理解。<br></p>\n<img src=\"http://img.gamelook.com.cn/2026/09/hdybwz1.gif\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>在当前人口最大的城市群东京引爆核弹「胖子」将在4.7km内造成大规模伤害，超过30万人瞬间死伤，近90万人瞬间受到影响</p>\n<p>当然这种直观也有边界。网站采用WorldPop 2020人口数据估算伤亡，没有计入通勤、疏散与避难等因素；爆炸效果同样简化了地形、天气和建筑遮蔽的影响。</p>\n<p>因此，画面再逼真，也不能将显示的数字视为现实灾害预测。目前新增的放射性沉降展示，也只是建立在简化风场之上的示意模型。</p>\n<p>由于最近几天网游大量访问还带来了十分现实的成本。max在9月4日表示，网站不断触及调用配额，谷歌账单也在累积，因此将写实模式转为Pro专属。</p>\n<p>免费版仍保留三维地球和基础模拟，付费版则提供谷歌地图的写实城市建筑，以及自定义爆炸高度、扩大自定义当量范围等功能。目前三个付费档位为5、10、20美元，分别对应约7天、30天和90天使用期。<br></p>\n<img src=\"http://img.gamelook.com.cn/2026/09/hbwzmnq5.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>但比运营账单更微妙的，是开发初衷与传播方式之间的距离。</p>\n<p>max强调，网站是关于核爆对真实地理环境影响的教育模型，保留历史当量，是因为单凭数字很难理解那些事件的规模。他明确表示：“它不是一个游戏，不是瞄准工具，也不是对任何人历史的评论。”</p>\n<p>当然到了网友手里，科普工具却难免被当成解压玩具。</p>\n<p>就有韩媒报道，网站在韩国传播后，有用户出于好奇，在自己居住或工作的区域进行模拟，社区中也出现了拿公司、学校开玩笑的自嘲。这类尝试或许可能是韩国排名靠前的原因之一。<br></p>\n<img src=\"http://img.gamelook.com.cn/2026/09/hbwzmnq6.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>然而，当真实国名、预估伤亡数字与排行榜同时出现，话题也很容易从技术展示滑向政治情绪的宣泄。网站甚至区分累计与当日排名，使一场场虚拟灾难拥有了可以比较的热度。</p>\n<p>而之所以该网站能够在上线后爆火，除了各种娱乐化的原因，在GameLook看来，或许也因为当下核威胁并没有停留在虚构世界。</p>\n<p>今年2月，美俄《新削减战略武器条约》到期时，联合国秘书长古特雷斯警告，核武器被使用的风险已处于数十年来的高位，并敦促双方重返谈判桌。</p>\n<p>对生活在冲突阴影下的人而言，屏幕里的假设，可能对应着每天都无法回避的恐惧。网页里的城市可以重置，现实中的生命没有重来一次的机会。模拟越逼真，越应该让人理解和平的珍贵，而不是习惯毁灭的画面。</p>"
+    },
+    {
+      "id": "news-4fc0ee68b767",
+      "date": "2026/09/11 09:34",
+      "title": "《战锤40K》新战报发布",
+      "desc": "《战锤40K：战争黎明4》发布三份全新战报，展示多人模式深度和战略，引发玩家讨论。",
+      "tags": [
+        "3a",
+        "战报",
+        "多人模式"
+      ],
+      "image": "https://image.gcores.com/71f1a8b27a7485096a06c631e0f3b129-1920-1080.jpg",
+      "game": "《战锤40K：战争黎明4》",
+      "genre": "3a",
+      "source": "机核",
+      "source_url": "https://www.gcores.com/articles/219555",
+      "likes": 0,
+      "image_w": 1920,
+      "image_h": 1080,
+      "content_html": "<p>《战锤40K：战争黎明4》开发商KING Art Games通过三份全新的战报，引领玩家深度探索游戏中的多人模式。今日首发之战，便是一场欧克蛮人与太空死灵之间的高阶1v1歼灭对决。</p>\n<p>全新的战报在现已展示过的多人对战内容基础上，呈现更深邃的战略谋划、更丰富的兵种单位以及白热化的后期鏖战。战局将拓宽至2v2多人模式，并首次揭开2v2团队小规模冲突的神秘面纱。</p>\n<p>战报#3 - 欧克蛮人对阵太空死灵：1v1歼灭战</p>\n<p>在本期战报中，创意总监Jan Theysen将与QA主管Orvie Thumel展开一场1v1歼灭战对决。后者不仅是KING Art内部《战争黎明4》实力最强的玩家，更曾是《战争黎明2》的知名解说与顶尖高手。</p>\n<p>Orvie坐镇指挥太空死灵，展现该阵营更为庞大的单位阵容及此前未曾公开的后期作战能力，而Jan则统帅欧克蛮人，悍然奔赴沙场。</p>\n<img src=\"https://image.gcores.com/1f3c22a4d8be7b92853efa3869f7e1c4-1920-1080.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>这份战报也向玩家展示了可自由配置的对战设置，以及为提升战场信息可读性正在推进的部分开发工作，其中便包括基于社区反馈对太空死灵“力量矩阵”所作出的针对性调整。</p>\n<p>克洛诺斯战火延续</p>\n<p>本月晚些时候将接踵发布另外两份战报：</p>\n<p>9月16日，战火将蔓延至2v2多人模式，四大阵营齐聚全新游戏模式，在团队占领对局中争夺最高控制权。</p>\n<p>随后于9月23日，Jan与Elliott将结为同盟，首次演示2v2团队小规模冲突。他们将对抗高难度电脑，此战将是对二人团队协作、指挥官调遣及临场应变能力的终极考验。</p>\n<p>请于9月16日与23日准时锁定《战锤40K：战争黎明4》B站官号，观看后续两场战报。</p>"
+    },
+    {
+      "id": "news-3d2d2af9ec0d",
+      "date": "2026/09/11 09:34",
+      "title": "Switch 2 更新注入新活力",
+      "desc": "Nintendo Switch 2 推出最新更新，增加个性和怀旧元素，玩家讨论更新内容。",
+      "tags": [
+        "3a",
+        "更新",
+        "Switch 2"
+      ],
+      "image": "https://www.gamespot.com/wp-content/uploads/2026/09/20260910-01M26J492AFRC6ZHJ4RSWY9MTM-12D75A81-95AA-4B1A-A9D1-89FFB8792B35.jpeg?w=1600",
+      "game": "Nintendo Switch 2",
+      "genre": "3a",
+      "source": "GameSpot",
+      "source_url": "https://www.gamespot.com/articles/nintendo-finally-adds-some-life-to-the-switch-2/",
+      "likes": 0,
+      "image_w": 1600,
+      "image_h": 0
+    },
+    {
+      "id": "news-7825af0347e2",
+      "date": "2026/09/11 09:34",
+      "title": "《Fairgames》回归测试",
+      "desc": "PlayStation 的在线游戏《Fairgames》似乎以新代号回归，并开始测试，引发玩家关注。",
+      "tags": [
+        "3a",
+        "回归",
+        "测试"
+      ],
+      "image": "https://assets-prd.ignimgs.com/2026/09/10/fairgames-1789067945402.jpg?width=1920&format=webp",
+      "game": "《Fairgames》",
+      "genre": "3a",
+      "source": "IGN",
+      "source_url": "https://www.ign.com/articles/playstations-fairgames-seemingly-remerges-with-first-gameplay-new-codename-and-private-playtest",
+      "likes": 0,
+      "image_w": 1920,
+      "image_h": 0,
+      "content_html": "<img src=\"https://assets-prd.ignimgs.com/2026/09/10/fairgames-1789067945402.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>PlayStation的在线抢劫游戏《Fairgames》似乎以一个代号重新出现，并发布了首部游戏玩法演示和测试邀请。</p>\n<p>三年前，PlayStation宣布了一款名为《Fairgames》的新在线射击游戏。这是一款竞技抢劫游戏，在纸面上是一个相当独特的设计，但据报道，它遇到了各种开发难题，包括<a href=\"https://www.ign.com/articles/sony-live-service-woes-continue-as-playstation-executive-jade-raymond-exits-fairgames-developer-after-external-test-sparked-concern\" target=\"_blank\" rel=\"noopener\"></a>，</p>\n<p>工作室创始人Jade Raymond的离职以及<a href=\"https://www.ign.com/articles/sonys-live-service-ambitions-take-another-blow-as-fairgames-creative-director-leaves-haven-studios-mid-development\" target=\"_blank\" rel=\"noopener\">游戏创意总监Daniel Drapeau的离开</a>。他们的离职是在工作室内部人员开始对游戏表示担忧之后，因为内部测试结果不佳。自宣布以来，PlayStation对这款游戏几乎没有给予任何关注，但开发工作仍在继续。</p>\n<p>现在，这款游戏似乎在代号Project Espresso下悄然复出。该游戏被添加到了<a href=\"https://player.gg/explore/games/project-espresso?utm_medium=email&amp;utm_source=player-gg&amp;utm_content=Project+Espresso%2C+Slots+%26+Slaughter%2C+new+curators+%26+more%21\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>Player.gg，一个允许开发者与玩家连接进行游戏测试的网站。尽管游戏处于代号阶段，开发者身份保密，但列表中包含了一段相当大的游戏预告片，看起来与Fairgames非常相似。它具有相似的艺术风格和概念，并有一则声明称游戏正在为PS5和PC开发。</p>\n<p>看起来这是FAIRGAME$（即Break In）的首次官方游戏画面亮相。<a href=\"https://t.co/kuphMNor1Y\" target=\"_blank\" rel=\"noopener\">https://t.co/kuphMNor1Y</a> <a href=\"https://t.co/W5KE8nEO9b\" target=\"_blank\" rel=\"noopener\">pic.twitter.com/W5KE8nEO9b</a>— Radec (@realradec) <a href=\"https://x.com/realradec/status/2098114200685916293?ref_src=twsrc%5Etfw\" target=\"_blank\" rel=\"noopener\">2026年9月10日</a></p>\n<p>此外，该游戏需要有一个PlayStation账号才能玩，这在第三方游戏中通常不会发生。这有点奇怪，但很难想象会有其他情况。如果你有兴趣亲自体验，你可以在Player.gg上注册进行试玩。</p>\n<p>今年早些时候，PlayStation 还 <a href=\"https://www.ign.com/articles/sony-files-trademark-for-new-game-called-break-in\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>提交了一项关于一款名为《Break In》的新游戏的商标申请，有些人怀疑这可能就是Fairgames的新标题。IGN已经联系PlayStation就此事发表评论，如果得到任何消息，我们将更新故事。</p>\n<p>尽管Fairgames在很大程度上被保密，但这并没有阻止玩家对其产生怀疑。PlayStation的另一款大型在线服务游戏Concord是一个灾难性的失败。此外，Marathon未能给人留下深刻印象，《最后生还者》在线版已被取消，Destiny 2不再受到支持，最近人们对在线服务游戏普遍感到厌恶。在PlayStation的第一方产品之外，Highguard原本是另一款大型在线服务游戏，但两个月后就失败了。</p>\n<p>Fairgames（或者它最终的名字是什么）能否打破趋势，引起人们的兴趣还有待观察。对于索尼来说，这是一个充满混乱的有趣时期；昨晚，确认了<a href=\"https://www.ign.com/articles/hideo-kojimas-metal-gear-solid-spiritual-successor-physint-will-now-be-published-by-xbox-instead-of-sony\" target=\"_blank\" rel=\"noopener\"></a>。</p>\n<p>小岛秀夫在与PlayStation分手，因为该平台计划取消小岛秀夫雄心勃勃的下一代游戏Physint。Xbox介入并提出了拯救它的提议，加强了公司与这位作家的关系。小岛秀夫还在Xbox开发了一款名为OD的新恐怖游戏。</p>\n<p>PlayStation在做出决定后也陷入了玩家的愤怒，这些决定包括<a href=\"https://www.ign.com/articles/sony-just-killed-discs-physical-disc-production-to-end-january-2028-for-new-games-releasing-on-playstation-consoles\" target=\"_blank\" rel=\"noopener\"></a>。</p>\n<p>在2028年停止对实体媒体的支持，<a href=\"https://www.ign.com/articles/playstation-shuts-down-demons-souls-shadow-of-the-colossus-remake-studio-bluepoint-games\" target=\"_blank\" rel=\"noopener\">在收购它几年后关闭了Bluepoint工作室</a>，以及<a href=\"https://www.ign.com/articles/playstation-reportedly-pulled-out-of-pc-ports-due-to-inconsistent-releases-and-lack-of-revenue\" target=\"_blank\" rel=\"noopener\">结束了对PC单机游戏的支援</a>。如果再有一个直播服务项目失败，现在对PlayStation的公关来说将是一个重大打击，所以希望这些测试能够将其塑造成一个能够吸引广泛受众的产品。</p>"
+    },
+    {
+      "id": "news-80568fcdbddc",
+      "date": "2026/09/11 09:34",
+      "title": "《Wardogs》销量突破百万",
+      "desc": "FPS 游戏《Wardogs》首日销量突破百万份，成为 Steam 热门游戏。",
+      "tags": [
+        "indie",
+        "销量",
+        "Wardogs"
+      ],
+      "image": "https://assets-prd.ignimgs.com/2026/08/10/wardogs-1786382120921.jpg?width=1920&format=webp",
+      "game": "《Wardogs》",
+      "genre": "indie",
+      "source": "IGN",
+      "source_url": "https://www.ign.com/articles/wardogs-surpasses-1-million-copies-sold-on-day-one-blows-past-300k-peak-concurrent-players-on-steam",
+      "likes": 0,
+      "image_w": 1920,
+      "image_h": 0,
+      "content_html": "<img src=\"https://assets-prd.ignimgs.com/2026/08/10/wardogs-1786382120921.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>《Wardogs》已售出超过一百万份，并在Steam的在线玩家排行榜上大放异彩。</p>\n<p>今天早些时候，开发商Bulkhead推出了其全新的全面战争FPS游戏《Wardogs》。这款游戏是今年最受期待的射击游戏之一，玩家们纷纷加入其中。根据开发商的说法，游戏已售出超过一百万份，SteamDB显示游戏同时在线玩家超过30万。因此，许多玩家被放入服务器队列中，无法直接进入游戏。</p>\n<p>“在我们进入早期访问阶段时，销量突破一百万份真是太令人难以置信了，”Bulkhead的CEO Joe Brammer说。“我们过去几个月一直在向人们展示《Wardogs》是什么，不是什么，甚至在某个时刻，我们实际上给出了十个不购买它的理由。我们不想让人们盲目跟风。所以看到超过一百万的人选择在早期访问阶段加入游戏，对我们所有人来说意义重大。但这是早期访问。我们还有事情要修复，有事情想要改进，还有很多事情想要构建。现在玩家能做的最好的事情就是继续玩，继续告诉我们他们的想法，继续给我们带来那些荒谬的《Wardogs》时刻。”</p>\n<p>《Wardogs》目前仅在PC上可用，这使得其首销成绩更加令人印象深刻，但它<em></em></p>\n<p>即将登陆主机。Bulkhead确认了<a href=\"https://www.ign.com/articles/wardogs-is-coming-to-xbox-and-ps5-but-it-will-be-a-while\" target=\"_blank\" rel=\"noopener\">《Wardogs》计划于2028年在PS5和Xbox上发售</a>，但并未提供具体的发售日期。开发商还表示，他们预计炒作最终会平息，因为他们计划在发布新内容时慢慢来，因此玩家数量可能会有所下降。</p>\n<p>然而，这是一款新多人射击游戏的一次强劲首秀。这款游戏能否在添加新内容时保持玩家的兴趣，还需要观察，但很高兴有其他游戏如《使命召唤》和《战地》之外的游戏产生影响。《Wardogs》试图在像《Arma》这样的军事模拟游戏和像《战地》这样的休闲游戏之间找到独特的平衡，从而产生紧张、真实但规模庞大的体验，充满了意外时刻。到目前为止，<a href=\"https://www.ign.com/articles/wardogs-hits-different-and-could-be-the-next-big-fps-those-who-managed-to-get-into-the-recent-private-playtest-say\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>玩家们似乎非常喜欢，随着口碑的传播，其受众群体很可能会继续增长。</p>"
+    },
+    {
+      "id": "news-654ee5112f21",
+      "date": "2026/09/11 09:34",
+      "title": "《GTA6》全球发售时间公布",
+      "desc": "《GTA6》全球发售时间公布，引发玩家对发售日期和内容的讨论。",
+      "tags": [
+        "3a",
+        "发售",
+        "GTA6"
+      ],
+      "image": "https://www.gamespot.com/wp-content/uploads/2026/09/Jason_and_Lucia_10_65a6a5.jpg?w=1600",
+      "game": "《GTA6》",
+      "genre": "3a",
+      "source": "GameSpot",
+      "source_url": "https://www.gamespot.com/articles/unofficial-gta-6-worldwide-release-times-revealed-and-the-us-gets-it-almost-last/",
+      "likes": 0,
+      "image_w": 1600,
+      "image_h": 0
+    },
+    {
+      "id": "news-14f9e0051eb2",
+      "date": "2026/09/11 09:34",
+      "title": "《塞尔达传说：时之笛》重制版发布",
+      "desc": "《塞尔达传说：时之笛》重制版实机公布，玩家对画面和玩法展开讨论。",
+      "tags": [
+        "3a",
+        "重制",
+        "塞尔达传说：时之笛"
+      ],
+      "image": "http://img.gamelook.com.cn/2026/09/10001-8.jpg",
+      "game": "《塞尔达传说：时之笛》",
+      "genre": "3a",
+      "source": "GameLook",
+      "source_url": "http://www.gamelook.com.cn/2026/09/601821/",
+      "likes": 0,
+      "content_html": "<p>GameLook报道/作为电子游戏史上里程碑式的作品，《塞尔达传说：时之笛》宣布重置后的每一次动向都牵动着全球玩家的心。</p>\n<img src=\"http://img.gamelook.com.cn/2026/09/10001-8.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>在任天堂最新的直面会上，官方终于正式公开了《塞尔达传说：时之笛》重制版的实机演示，并宣布游戏将于2026年11月5日发售。</p>\n<div class=\"news-video\"><iframe src=\"https://v.qq.com/txp/iframe/player.html?vid=v3298ptfgvw\" frameborder=\"0\" allow=\"autoplay; encrypted-media; picture-in-picture\" allowfullscreen loading=\"lazy\"></iframe></div>\n<p>本次重制版不仅在画面上大幅跃升，视觉风格相比N64原版更趋于写实，还在玩法与交互上作出了诸多现代化改良，包括加入主动跳跃、冲刺与加速游泳、按键快速切换装备、第三人称视角呈现部分城镇区域，甚至支持通过新主机硬件设施直接哼唱曲目来演奏时之笛。</p>\n<img src=\"http://img.gamelook.com.cn/2026/09/10007-7.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>然而，伴随着实机画面的全面曝光，海外玩家社区与社交平台上也迅速掀起了关于本作美术风格与重制方式的激烈讨论。</p>\n<p>在论坛及各类游戏社区中，玩家对于官方选用的全新美术风格呈现出了相当两极分化的看法。一部分网友对重制的整体表现感到非常满意，认为游戏不仅保留了原汁原味的架构，还在视觉呈现、交响乐重编、全语音过场动画以及丰富的新玩法要素上做足了功课，非常期待看到经典场景与BOSS在全新技术下的蜕变。</p>\n<img src=\"http://img.gamelook.com.cn/2026/09/10002-7.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>但另一部分网友则对人物建模与视觉质感表达了不解与担忧，网友直言吐槽：“这种风格让我想起了那些用虚幻引擎重制的经典游戏，比如《超级马里奥64》，你经常能看到有人这么做。”</p>\n<img src=\"http://img.gamelook.com.cn/2026/09/10003-8.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>也有不少玩家对人物建模与细节表达了不解与担忧，有人表示“角色的设计真的让我感觉很不舒服”，其眼睛和鼻子的设计显得尤为违和，国内则是有网友晒出林克历代造型对比图并打趣评论“男大十八变”。</p>\n<img src=\"http://img.gamelook.com.cn/2026/09/10004-8.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>不过，也有网友表达了明确的喜爱，有玩家反驳质疑道：“我知道很多人会这么说，但我真心不同意。尽管画面风格更加写实，但素材、环境等等仍然很有风格。在我看来，它真的很美。我觉得它的风格更像是皮克斯电影，而不是超写实的3A游戏。”</p>\n<img src=\"http://img.gamelook.com.cn/2026/09/10008-6.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>除了视觉风貌上的分歧，重制版在游戏机制与保留元素上的处理也引发了关于“忠实原版”与“现代化体验”的探讨。针对本次重制保留了区域切换时的加载画面，系列制作人青沼英二曾解释这是为了刻意维持原版游戏的独特节奏与体验。</p>\n<img src=\"http://img.gamelook.com.cn/2026/09/10005-7.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>对这种设计，有网友认为官方过度死板地固守传统，表示：“大家都在讨论画面，但我最惊讶的是，它在关卡设计、敌人移动、道具等方面都完全照搬了原作。我原本期待的是像《最终幻想7》/《生化危机》那样的‘重新构想’的重制版，而不是这种更像是高清重制版的作品……这让我之前对它的期待值大大降低了。”</p>\n<p>也有网友补充分析称，其实最接近理想中“重制版”概念的反而是《黄昏公主》，两者在很多游戏机制和场景上都非常接近。而在机制保留方面，针对本次重制保留了区域切换时的加载画面，青沼英二曾解释这是为了刻意维持原版游戏的独特节奏与体验。</p>\n<img src=\"http://img.gamelook.com.cn/2026/09/10009-3.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>与此同时，诸如加入方便玩家了解剧情与任务进度的“时间线”功能、动态时间系统以及全新的交互方式等微创新，也让不少玩家感到十分欣慰。</p>\n<img src=\"http://img.gamelook.com.cn/2026/09/10006-8.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p><br> 作为一款承载了无数玩家青春回忆与业内最高赞誉的经典之作，《塞尔达传说：时之笛》重制版注定要面对来自新老玩家极其苛刻的审视。</p>\n<p>无论是在美术风格上的大胆尝试，还是在经典体验与现代操控之间的权衡折中，都表明了任天堂试图在传承遗产与拓展受众之间寻找平衡。随着发售日期的临近，这款重制大作究竟能否用实际品质征服所有挑剔的眼光，仍需等待市场与玩家最终的检验。</p>",
+      "video": "https://v.qq.com/txp/iframe/player.html?vid=v3298ptfgvw"
+    },
+    {
       "id": "news-d4a56d2b0cea",
       "date": "2026/09/10 09:39",
       "title": "NS运动度假胜地发售",
