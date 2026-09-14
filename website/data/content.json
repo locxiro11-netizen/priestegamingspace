@@ -1,6 +1,251 @@
 {
   "news": [
     {
+      "id": "news-a00665ae6873",
+      "date": "2026/09/14 09:22",
+      "title": "索尼小岛秀夫分手",
+      "desc": "索尼退出与小岛工作室合作，因预算和盈利能力顾虑，小岛作品未达预期，Physint项目面临预算超支风险。",
+      "tags": [
+        "3a",
+        "行业动态"
+      ],
+      "image": "https://image.gcores.com/c61ac7576d1acd1299d69efafd9feadc-661-345.webp",
+      "game": "PHYSINT",
+      "genre": "3a",
+      "source": "机核",
+      "source_url": "https://www.gcores.com/articles/219665",
+      "likes": 0,
+      "image_w": 661,
+      "image_h": 345,
+      "content_html": "<p>近日，彭博社透露了索尼不再与小岛工作室合作打造IP谍报动作游戏《PHYSINT》的幕后原因。据悉，索尼决定退出主要是出于对预算、潜在盈利能力以及平台独占性的顾虑。消息人士表示，小岛秀夫此前制作的《死亡搁浅》及其续作商业表现未达到 PlayStation 的收益预期。</p>\n<img src=\"https://image.gcores.com/10039e6d4d512a5afce279aacfb17725-661-345.webp\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>此外，索尼认为《Physint》已多次错过开发节点，在距离发售还有数年时就面临严重的预算超支风险。结合目前的大环境，公司也不愿向一款无法永久独占的项目投入数亿美元资金。《死亡搁浅》系列均为PlayStation 限时独占作品，小岛工作室保留了IP所有权。</p>\n<img src=\"https://image.gcores.com/c113a9cda07e18bb3e72dea869a5a001-770-433.webp\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>另有传言表示，小岛工作室已彻底失去索尼的技术支持。由于小岛工作室大概率无法继续使用 Decima 引擎，可能严重影响《Physint》的开发进程。此前两部《死亡搁浅》均基于该引擎打造，《Physint》的动作捕捉工作也使用了该技术。Decima 引擎最初由游骑兵工作室打造，随后两家工作室基于同一代码库共同开发技术。</p>"
+    },
+    {
+      "id": "news-939a0f9d3352",
+      "date": "2026/09/14 09:22",
+      "title": "《寻星者：余晖‌》试玩开启",
+      "desc": "团队制RPG《寻星者：余晖‌》开启试玩，愿望单突破十万，玩家可体验错综复杂的叙事和战术丰富的战斗。",
+      "tags": [
+        "indie",
+        "独立游戏"
+      ],
+      "image": "https://image.gcores.com/ef47fe29cd5d4d0bd5f79bbca2872649-920-430.jpg",
+      "game": "寻星者：余晖‌",
+      "genre": "indie",
+      "source": "机核",
+      "source_url": "https://www.gcores.com/articles/219671",
+      "likes": 0,
+      "image_w": 920,
+      "image_h": 430,
+      "content_html": "<p>由 Epictellers 打造的团队制RPG 《寻星者：余晖‌》现已开启试玩 Demo 。据悉，本作的愿望单已突破十万，开发者也感谢玩家的支持。在本作中，玩家可扮演士兵、使节、特工、秘术师、恒星武士和织维巫师，投身回合制策略战斗之中。利用Paizo备受好评的三行动系统，将无穷无尽的丰富战术化为可能。提升等级，收集异星装备，与各种各样的敌人战斗——从地狱骑士到数字幽灵。</p>\n<img src=\"https://image.gcores.com/ace77aedcb635ae14f53fa506378b88f-1920-1080.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<img src=\"https://image.gcores.com/63294757281a957aa2e648e930cb295f-1920-1080.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<img src=\"https://image.gcores.com/747c0797a1f1937e51ef3c60de378b27-1920-1075.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<img src=\"https://image.gcores.com/e4bde7c7f590f9d0fe5d61020355dea3-1920-1080.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>开发者表示，玩家可在游戏中体验错综复杂的叙事；你的选择在其中举足轻重。万事皆无禁忌，万事皆有后果。伸出援手或是牟取私利，仁慈宽恕或是无情复仇。派系会记得你的选择，队友会衡量你的真心，而你的传奇尽由你一人书写。</p>\n<img src=\"https://image.gcores.com/346aee27e8e15140e7aef1fd142c6dbc-1828-1080.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<img src=\"https://image.gcores.com/3ebf4edf410d8196c8e603220431de86-1920-1075.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>从 Absalom 空间站到 Eox 的不死帝国，从数字神明到宇宙巨龙。在40到60小时的冒险中，探索魔法与技术交相辉映的契约诸界。在这个宇宙中，一切事物皆有可能，而且一切事物都有可能想要杀死你。</p>"
+    },
+    {
+      "id": "news-601ede98689b",
+      "date": "2026/09/14 09:22",
+      "title": "《暗黑破坏神5》全产制作",
+      "desc": "《暗黑破坏神5》已全面进入制作阶段，预计2029年推出，将增加更多职业和进程化世界。",
+      "tags": [
+        "3a",
+        "行业动态"
+      ],
+      "image": "https://assets-prd.ignimgs.com/2026/09/13/d5-1789336016630.png?width=1920&format=webp",
+      "game": "暗黑破坏神5",
+      "genre": "3a",
+      "source": "IGN",
+      "source_url": "https://www.ign.com/articles/diablo-5-director-confirms-game-is-already-in-full-production",
+      "likes": 0,
+      "image_w": 1920,
+      "image_h": 0,
+      "content_html": "<img src=\"https://assets-prd.ignimgs.com/2026/09/13/d5-1789336016630.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>虽然《暗黑破坏神》即将迎来众多新更新，包括一个<a href=\"https://www.ign.com/articles/animated-diablo-show-in-the-works-at-netflix\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>新Netflix系列，《暗黑破坏神4》第15季，一个<a href=\"https://www.ign.com/articles/hdiablo-netflix-series-blizzcon-news-interview\" target=\"_blank\" rel=\"noopener\">Switch 2移植版</a>，以及更多内容，在BlizzCon 2026上，该系列最大的揭露是<a href=\"https://www.ign.com/articles/diablo-5-announced-release-date-2029\" target=\"_blank\" rel=\"noopener\">宣布《暗黑破坏神V》</a>，将于2029年推出。</p>\n<p>IGN独家采访了即将推出游戏背后的团队，包括游戏总监Joe Shely，叙事总监Jennifer Helper和生产总监Tiffany Wat，他们为我们提供了大量关于《暗黑破坏神5》的新细节，包括它已经过了早期开发阶段。</p>\n<p>IGN：我知道可能没有人会错过《暗黑破坏神5》的宣布，但你们能否给大家提供一个关于这款游戏的整体概述？</p>\n<p>乔·谢利：这是这样一个世界，圣所已经陷落，迪亚布洛已经获胜。这意味着世界正处于末日。玩家们在其他《暗黑破坏神》游戏中努力阻止多年的命运已经发生。其他英雄崛起，试图阻止迪亚布洛，但失败了。迪亚布洛坐在韦斯特玛奇的宝座上，征服了整个西大陆。</p>\n<p>《暗黑破坏神5》为何设定在《暗黑破坏神4》100年后的原因</p>\n<p>IGN：目前《暗黑破坏神4》还有一些生命力。在《暗黑破坏神5》中，你们计划实现什么，而你们认为在《暗黑破坏神4》整体上是不可能实现的？</p>\n<p>Shely：暗黑破坏神4得到了充分的支持。整个团队都在全力支持它。我们今天早些时候刚刚宣布，亚马逊、地狱遗产季将加入暗黑破坏神4，并且暗黑破坏神4将继续获得持续的支持。玩家有很多理由继续玩游戏。当然，我们已经在暗黑破坏神5的开发上投入了一段时间。我们现在正在全面生产，能够与玩家分享这个消息对我们来说是非常激动人心的。</p>\n<p>Jennifer Helper：我们将把暗黑破坏神带回玩家面前，暗黑破坏神永远不会是暗黑破坏神游戏中的“又一件事情”。我们需要一个完整的战役和围绕暗黑破坏神的全故事。[在暗黑破坏神5中]，我们向前推进了一百年来讲述这个故事，这样暗黑破坏神4就有很多空间继续他们的故事和开发，同时我们进行暗黑破坏神5的开发。<a href=\"https://assets-prd.ignimgs.com/2026/09/13/diablo-v-logo-jpg-1789334797048.jpg\" target=\"_blank\" rel=\"noopener\"></a></p>\n<img src=\"https://assets-prd.ignimgs.com/2026/09/13/diablo-v-logo-jpg-1789334797048.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>暗黑破坏神5将拥有“比你们见过的更多职业”</p>\n<p>Tiffany Wat：[暗黑破坏神5]是我们真正深入一些令人难以置信的创新的机会，不仅在技术上，也在游戏玩法和系统方面。我们将带来比暗黑破坏神游戏中的任何职业都多的职业。我们谈论过恢复程序世界，这是之前暗黑破坏神游戏中非常受欢迎的，我们在暗黑破坏神4中通过我们的地下城系统深入地做到了这一点。在暗黑破坏神5中，我们真的觉得这是玩暗黑破坏神的一种非常有趣和核心的方式，我们希望将其带回世界和地下城系统。</p>\n<p>Joe经常和他的团队讨论持续探索和不知道下一步会发生什么的重要性。这给圣所的世界增添了危险元素，这与Jennifer和她团队试图讲述的故事非常契合。能够将所有这些结合起来，真正追求Joe和他的团队的游戏玩法雄心，对我们来说开始一个续集是非常有意义的，我们已经这样做了一段时间。</p>\n<p>暗黑破坏神5将不会那么开放世界，因为暗黑破坏神已经摧毁了一切</p>\n<p>IGN：看起来你们正在追求更多传统的世界，人们可以前往不同的空间。所以我们将不会有暗黑破坏神4那样的开放世界氛围。</p>\n<p>Wat：再也没有城镇了，因为迪亚布洛和他的恐惧指挥官已经完全摧毁了圣所。因此，你正在聚集的这些成员，你遇到的这些圣所幸存者，他们与你同行，试图仅仅生存下去，弄清楚迪亚布洛发生了什么，你从一个地区移动到另一个地区，这给了我们机会真正展示圣所在恐怖之主统治下的样子，看到恐惧指挥官扭曲世界的方式。我和Joe在暗黑破坏神上共同工作了十多年的怪物，伙计，怪物团队正在大显身手。所以能够看到在不同的世界中加载时在不同时间出现的扭曲、令人作呕、恐怖的恶魔，真的是非常、非常酷。</p>\n<p>IGN：当《暗黑破坏神5》发布时，支持似乎会继续延续到《暗黑破坏神4》和其他游戏。你预见在基本有五款《暗黑破坏神》游戏轮换供玩家在赛季结束后回归时，会有哪些挑战，不仅仅是玩家留存，还有整体内容创作方面的挑战吗？</p>\n<p>Wat：我们为每款游戏都设有专门的团队，因为这些游戏对我们来说很重要，对社区来说也非常重要。我认为这给了我们一个非常好的机会，能够相互协作，相互交流。尽管我们可能是不同的团队，但我们仍然非常紧密地合作，因为我们最终是为《暗黑破坏神》社区制作游戏。我认为现在是成为《暗黑破坏神》粉丝的最好时机。</p>\n<p>《暗黑破坏神2》如何启发了《暗黑破坏神5》</p>\n<p>IGN：动作角色扮演游戏市场正在扩大。当目标受众分散在多个游戏之间时，如何让《暗黑破坏神》在这样的市场中进化？你会观察这些游戏，看看它们在制作新内容时有哪些新想法可以注入到你的游戏中吗？</p>\n<p>Shely：当然。动作角色扮演游戏本质上是一种系统游戏。我们玩与《暗黑破坏神》相关的所有游戏，或者能给我们提供玩家喜欢的内容灵感的游戏。但我们特别关注的是《暗黑破坏神》的核心，以及《暗黑破坏神》真正擅长的事情。比如，进化我们的战斗模式，制作一个易于接近且拥有令人难以置信的战役的游戏。我们希望这是我们最好的战役。</p>\n<p>《暗黑破坏神2》中的一些紧凑感，真正吸引了众多核心动作角色扮演游戏玩家，启发了《暗黑破坏神5》中的事物，比如物品上回归的属性要求，物品等级，这很大程度上受到了《暗黑破坏神2》的启发，甚至还有像回归腰带槽或背包中的多槽物品这样的东西。</p>\n<p>腰带槽的回归</p>\n<p>IGN：你能稍微谈谈腰带槽的回归，以及《暗黑破坏神5》中的物品化与《暗黑破坏神4》相比的情况，以及你们如何计划处理这个问题吗？</p>\n<p>Shely：简单来说，腰带槽通常比裤子槽更有趣。腰带槽只是我们看待玩家可以装备的物品套件的反映。我们总是想要平衡这一点，让你在武器和盔甲之间追求正确的装备件数。从视觉风格进化的角度来看，腰带槽让我们能够制作出胸甲和裤子之间更加统一的装备套装。</p>\n<p>回到韦斯特玛奇</p>\n<p>IGN：我们看到《暗黑破坏神》现在正在回归《暗黑破坏神4》，从第15赛季开始。从现在到《暗黑破坏神5》发布之间还有多少个赛季。你对《暗黑破坏神》在《暗黑破坏神4》中的实施与在《暗黑破坏神5》中的呈现有什么担忧吗？</p>\n<p>Helper：我们不仅领先了一百年，我们还回到了西方大陆。所以《暗黑破坏神4》的内容都在东方，而我们回到了大家熟悉的韦斯特玛奇，这是从前三个游戏中来的。韦斯特玛奇已经扩展到了整个西方大陆。所以我们有很多关于西方大陆的未来历史，我们已经很久没有看到了，我们将能够涵盖这些内容，这是一个完全开放的空间。</p>\n<p>IGN：最后一个问题。我们何时能了解更多关于《暗黑破坏神5》的信息？</p>\n<p>Shely：当我们决定宣布我们一直在开发《暗黑破坏神V》时，我们想要确保分享一些有意义的更新，谈论职业，谈论猎魔人、僧侣的回归，<a href=\"https://www.ign.com/articles/diablo-5-forging-the-next-era-panel-everything-announced\" target=\"_blank\" rel=\"noopener\">新职业如瘟疫骑士</a>，我们之前谈论过的物品化等问题。我们希望继续这个对话。特别是，现在谈论游戏并继续这个对话到2027年，届时我们将分享更多关于它的信息，是为了能够与玩家交谈，与所有热爱《暗黑破坏神》的人交谈，与他们一起构建游戏，并通过倾听他们的想法来实现。</p>"
+    },
+    {
+      "id": "news-b5d62e58e1a4",
+      "date": "2026/09/14 09:22",
+      "title": "AL夺《英雄联盟》冠军",
+      "desc": "AL战队在《英雄联盟》LPL 2026年总决赛中夺冠，捧起队史首座银龙杯，将代表LPL出征全球总决赛。",
+      "tags": [
+        "other",
+        "玩家热议"
+      ],
+      "image": "https://image.gcores.com/d521d404c7dcfcc1a9e4fb52571771e5-690-388.jpg",
+      "game": "英雄联盟",
+      "genre": "other",
+      "source": "机核",
+      "source_url": "https://www.gcores.com/articles/219662",
+      "likes": 0,
+      "image_w": 690,
+      "image_h": 388,
+      "content_html": "<p>在《英雄联盟》LPL 2026年总决赛现场，AL 以3比1 击败了 BLG 战队。AL 战队不仅捧起队史首座银龙杯，更将作为LPL赛区一号种子出征2026全球总决赛。同时，Tarzan 获得2026 LPL 总决赛 FMVP 。</p>\n<img src=\"https://image.gcores.com/443614de76b3a76909be8232d35a8e4b-690-388.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<img src=\"https://image.gcores.com/b4688504a97ee619d601468e2b634490-690-920.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">"
+    },
+    {
+      "id": "news-d4ff979fa0a0",
+      "date": "2026/09/14 09:22",
+      "title": "《魔兽争霸3》新资料片",
+      "desc": "《魔兽争霸3》重制版全新资料片“被遗忘的王国”公布，新增英雄和画质模式。",
+      "tags": [
+        "3a",
+        "行业动态"
+      ],
+      "image": "https://image.gcores.com/730479b8e564f03e8c560dd997da0e2b-1280-720.jpg",
+      "game": "魔兽争霸3",
+      "genre": "3a",
+      "source": "机核",
+      "source_url": "https://www.gcores.com/articles/219636",
+      "likes": 0,
+      "image_w": 1280,
+      "image_h": 720,
+      "content_html": "<p>《魔兽争霸3》重制版全新资料片“被遗忘的王国”公布。据悉，序章将衔接原作阿尔萨斯弑父之后的剧情空档，而主线战役讲述的是洛丹伦沦陷后，希尔瓦娜斯·风行者建立被遗忘者势力、创立幽暗城的过程。</p>\n<p>与此同时，玩家首次能在经典版、终极版以及重制版的多人游戏中游玩全新英雄“被遗忘者圣骑士”，所有购买游戏的玩家均可体验。玩家还可体验新画质模式，使用全新的动画编辑器、照明编辑器，还有经过改良的物件管理，让玩家扩展自己的故事。</p>"
+    },
+    {
+      "id": "news-8a8002f77987",
+      "date": "2026/09/14 09:22",
+      "title": "《Fairgame$》疑似复活",
+      "desc": "索尼PlayStation旗下Haven Studios开发的多人射击新作《Fairgame$》疑似复活，预计登陆PC和PS5平台。",
+      "tags": [
+        "3a",
+        "行业动态"
+      ],
+      "image": "https://img1.gamersky.com/upimg/pic/2026/09/11/small_202609111138132128.png",
+      "game": "Fairgame$",
+      "genre": "3a",
+      "source": "游民星空",
+      "source_url": "https://www.gamersky.com/news/202609/2207619.shtml",
+      "likes": 0,
+      "content_html": "<p>《Fairgame$》是一款由索尼PlayStation旗下Haven Studios开发的多人射击新作，预计登陆PC和PS5平台，发售时间未知。游戏在<a href=\"https://www.gamersky.com/news/202305/1600503.shtml\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>2023年首曝时，主角阵容中包含黑人，根据Insider Gaming获取的内部资料，这款游戏<a href=\"https://www.gamersky.com/news/202604/2125930.shtml\" target=\"_blank\" rel=\"noopener\">主打“搜打撤”</a>玩法。</p>\n<img src=\"https://img1.gamersky.com/upimg/pic/2026/09/11/small_202609111138132128.png\" alt=\"游民星空\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>据Polygon报道，近日，游戏测试发布网站Player.gg上出现了一项全新试玩测试信息，据介绍，该网站将举办一款“尚未公布的竞技动作射击游戏”试玩活动，登陆PlayStation 5和Windows PC，代号为Project Espresso，而它与《Fairgame$》存在诸多惊人的相似之处。</p>\n<img src=\"https://img1.gamersky.com/upimg/pic/2026/09/11/small_202609111138178980.png\" alt=\"游民星空\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>试玩测试介绍写道：“Project Espresso是一款第三人称PvPvE竞技动作游戏，参赛队伍将竞相潜入高度戒备的地点，窃取贵重货物，并在竞争对手之前成功撤离。”</p>\n<p>Polygon指出，这听起来与《Fairgame$》非常相似，并且他们获取到的资料显示，这款游戏的设计风格也和《Fairgame$》有诸多相似之处。PlayStation在2023年的一篇官方博客文章中曾将《Fairgame$》描述为“一款令人兴奋的竞技劫案游戏，你将加入一场地下运动，抢劫超级富豪，并重新平衡这个世界的财富天平”。</p>"
+    },
+    {
+      "id": "news-b01297b3318a",
+      "date": "2026/09/14 09:22",
+      "title": "《古神：风里希》与索尼合作",
+      "desc": "国产单机ARPG《古神：风里希》与索尼PS合作，定位中式创世神话史诗，计划2028年发售。",
+      "tags": [
+        "indie",
+        "独立游戏"
+      ],
+      "image": "https://img.3dmgame.com/uploads/images/news/20260914/1789339981_370768_jpg_r.jpg",
+      "game": "古神：风里希",
+      "genre": "indie",
+      "source": "3DM",
+      "source_url": "https://www.3dmgame.com/news/202609/3953152.html",
+      "likes": 0,
+      "content_html": "<p>近日虚幻5国产单机ARPG《古神：风里希》公开大量情报。本作定位中式创世神话史诗，是三部曲系列的第一部，计划于2028年发售，登陆PS5、XSX|S和PC(Steam/Epic)平台。</p>\n<img src=\"https://img.3dmgame.com/uploads/images/news/20260914/1789339981_370768_jpg_r.jpg\" alt=\"《古神：风里希》深受战神启发 与索尼PS合作\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>《古神：风里希》故事跳出大众熟知的哪吒闹海<a href=\"https://www.3dmgame.com/tag/juqing_1/\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>剧情，回溯洪荒创世时代。玩家扮演女娲以土、水、火所创造的本源生命“灵珠”，从懵懂本源一步步成长，最终化身为哪吒。剧情背景设定在盘古沉眠之后，十日焚天、天柱崩塌的乱世；主角肩负补天、探寻自身起源、封印时空裂隙的使命。主线流程约25小时，内置多重结局。游戏会还原夸父逐日、后羿射日等上古神话名场面，玩家甚至可以攀爬巨神夸父的躯体进行BOSS战，登上扶桑神树完成射日剧情。</p>\n<p>战斗系统融合多重经典作品的设计灵感，参考《龙珠》高速突进、《战神3》史诗BOSS战、《街头霸王6》格斗逻辑，实现地面空中无缝衔接的一体化战斗，可以瞬间拉近身位，把敌人击飞后接续空中连段，战斗节奏爽快。</p>\n<img src=\"https://img.3dmgame.com/uploads/images/news/20260914/1789339981_870149.jpg\" alt=\"《古神：风里希》深受战神启发 与索尼PS合作\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>核心设计理念取自李小龙“Be Water（上善若水）”，也就是水之哲学，将截拳道攻防、弹反反击融入战斗；主角可以凝聚水力释放破甲、范围招式。独有法宝融合系统，能够把后羿神弓、芭蕉扇等上古神器进行组合，生成全新神通。</p>\n<p>开发组兼顾硬核与新手体验，支持玩家提前自定义预设连招链，类似街霸现代操作模式，即便是新手也可以打出华丽连段，不会强制要求玩家熟记复杂指令。游戏不追求魂系那种步步谨慎的高压体验，更侧重主动进攻的爽快感，同时保留操作博弈门槛。</p>\n<img src=\"https://img.3dmgame.com/uploads/images/news/20260914/1789339981_115199.jpg\" alt=\"《古神：风里希》深受战神启发 与索尼PS合作\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>技术层面深度定制虚幻5引擎，实现实时流体水特效、动态昼夜与雷雨冰雹等天气系统、大范围场景破坏。使用MetaHuman高保真面部捕捉。美术参考敦煌石窟雕刻、传统瓷器曲线，打造东方洪荒美学。</p>\n<p>制作人Young Lau在采访坦言，《黑神话：悟空》的成功极大提振团队信心，证明中式神话题材可以走向全球。本作规划完整创世神话三部曲，本作仅仅是开篇。团队目前已和PlayStation展开合作，但暂未官宣日语本地化，日本市场是重点目标，希望借游戏实现跨文化玩家交流。</p>"
+    },
+    {
+      "id": "news-a76191160e14",
+      "date": "2026/09/14 09:22",
+      "title": "《塞尔达传说：时之笛》重制版",
+      "desc": "《塞尔达传说：时之笛》重制版放出实机画面，官宣2026年11月5日发售，引发热议。",
+      "tags": [
+        "3a",
+        "行业动态"
+      ],
+      "image": "https://img.3dmgame.com/uploads/images/news/20260914/1789339853_885265_jpg_r.jpg",
+      "game": "塞尔达传说：时之笛",
+      "genre": "3a",
+      "source": "3DM",
+      "source_url": "https://www.3dmgame.com/news/202609/3953151.html",
+      "likes": 0,
+      "content_html": "<p>近日在塞尔达40周年特别直面会上，Switch2独占《塞尔达传说：时之笛 重制版》放出大量实机画面，官宣2026年11月5日发售，游戏完整的美术、玩法改动迅速在海内外游戏社区掀起热烈讨论。</p>\n<img src=\"https://img.3dmgame.com/uploads/images/news/20260914/1789339853_885265_jpg_r.jpg\" alt=\"《塞尔达传说：时之笛》三版本林克塞尔达形象对比\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>本作定位为完全重制，并非简单高清移植，画面整体采用怀旧写实奇幻美术风格，抛弃《王国之泪》的卡通渲染。不少玩家将N64原版、3DS重制版、Switch2新版三代角色进行横向对比。一起来看看差别！</p>\n<img src=\"https://img.3dmgame.com/uploads/images/news/20260914/1789339853_571394_jpg_r.jpg\" alt=\"《塞尔达传说：时之笛》三版本林克塞尔达形象对比\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<img src=\"https://img.3dmgame.com/uploads/images/news/20260914/1789339853_455123.jpg\" alt=\"《塞尔达传说：时之笛》三版本林克塞尔达形象对比\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<img src=\"https://img.3dmgame.com/uploads/images/news/20260914/1789339854_650673_jpg_r.jpg\" alt=\"《塞尔达传说：时之笛》三版本林克塞尔达形象对比\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>N64原版受到当年硬件性能限制，角色建模和材质相对简单。中间3DS版本则对模型、贴图和光影进行了强化，在保持原有造型基础上进行了现代化处理。而Switch2重制版则进一步重新设计角色细节，林克、塞尔达公主等全部重新建模，发丝布料皮肤材质细节大幅提升。有一些老玩家对新造型表示遗憾，但也有玩家认为新版风格更契合重制版整体氛围。</p>"
+    },
+    {
+      "id": "news-329972871897",
+      "date": "2026/09/14 09:22",
+      "title": "巫师3皮肤联动",
+      "desc": "《巫师3》与《暗黑破坏神4》联动，玩家需预购《巫师3》扩展包才能获得主题皮肤，引发玩家讨论是否值得预购扩展包以获取皮肤。",
+      "tags": [
+        "联动",
+        "皮肤",
+        "巫师3"
+      ],
+      "image": "https://assets-prd.ignimgs.com/2026/09/13/geralt-1789330423902.png?width=1920&format=webp",
+      "game": "巫师3",
+      "genre": "3a",
+      "source": "IGN",
+      "source_url": "https://www.ign.com/articles/the-witcher-3-geralt-skin-for-diablo-4-barbarians-revealed-but-theres-a-catch",
+      "likes": 0,
+      "image_w": 1920,
+      "image_h": 0,
+      "content_html": "<img src=\"https://assets-prd.ignimgs.com/2026/09/13/geralt-1789330423902.png\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>CD Projekt和Blizzard发布了《Diablo 4》中Geralt主题野蛮人皮肤的首次亮相，但您需要预购《巫师3：狂猎》扩展包《往日之歌》在Battle.net上才能获得它。</p>\n<p>Diablo 4，但您需要在Battle.net上预购《巫师3：狂猎》扩展包《往日之歌》才能获得这款皮肤。</p>\n<p>在2026年的BlizzCon上，CD Projekt的专家社区和社交媒体经理Amelia Korzycka以及关卡设计主管Miles Tost作为嘉宾出现在了《Battle.net 30周年》的讨论小组上，揭露了这款皮肤，它将提供给在Battle.net上预购《过去之歌》（目前仅限加入愿望单）或在其发布时购买扩展包的玩家。这意味着Geralt的皮肤被锁在了Battle.net之后，这也意味着例如Steam玩家将错过这款皮肤。</p>\n<p>正如你可以想象的那样，这对已经拥有《巫师3》且在非Battle.net平台上玩游戏的《暗黑破坏神4》玩家来说并不好。重制版将在2026年9月29日作为免费升级出现在Steam上，供已经拥有基础游戏的玩家使用。因此，那些已经在Steam上拥有《巫师3》（在这个时候，谁没有呢？）并且对《过去之歌》感兴趣的玩家可能会在Valve的平台上购买，并且很可能会<em></em></p>\n<p>不想在Battle.net上重新购买《巫师3》只是为了得到《暗黑破坏神4》的杰洛特皮肤。</p>\n<p>“不打算为这款已经15年的游戏再付一次钱，因为可能玩它的大部分人可能已经拥有了，”一位网友在社交媒体上说道。“不过还是要感谢暴雪。”</p>\n<p>“他看起来太糟糕了，”另一位网友回应了在展示环节中展示的杰洛特的面部图像。“不过我很高兴，因为我根本不想在史上最糟糕的启动器上预购一款游戏只是为了得到这个。我真的希望他们将来会单独出售。”</p>\n<p>杰洛特皮肤也遭到了一些《暗黑破坏神4》粉丝的抨击，他们因暴雪昨天确认游戏不会获得任何进一步扩展而感到愤怒。游戏导演布伦特·吉布森告诉<a href=\"https://www.pcgamer.com/games/rpg/no-more-diablo-4-expansions-are-planned-but-theres-a-lot-of-room-for-more-storytelling-in-the-leadup-to-diablo-5/\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>PC Gamer: \"我们都在关注[暗黑破坏神4]的赛季和迈向暗黑破坏神5。我们感觉我们已经讲述了仇恨的故事。我们与梅菲斯托一起，在《仇恨之主》中有一个很好的结局，我们现在正朝着讲述恐怖的故事迈进。”暗黑破坏神4于2023年6月发布。暗黑破坏神5预计将在2029年的某个时候推出。</p>\n<p>\"对于我们来说，这类事情非常有趣，因为它让我们这些创作者处于一个必须思考的位置，那就是我们如何让这些世界以尊重和尊重的方式碰撞在一起，在这个背景下是暗黑破坏神和巫师。”Tost在BlizzCon的Battle.net讨论会上谈到Geralt皮肤时说。</p>\n<p>\"所以当我们看到这类事情时，我们首先尝试找到重叠的部分。什么是有意义的？当然，谈到职业，查看名单，我们相对很快地就确定了野蛮人是我们可以想象添加Geralt灵感内容的地方。他们都是身体力量的大师。他们一生都在训练，成为超级强大和强大的近战战士。野蛮人能够同时挥舞多件武器。Geralt不是同时挥舞它们，但他确实使用了双剑：象征人类的标志性钢铁剑和象征怪物的银剑。</p>\n<p>\"而且你可以看到这里——对于那些了解内情的人来说——这套盔甲深受Geralt标志性的Kaer Morhen盔甲的启发。上面撒了一些野蛮人的元素……你看到了所有的毛皮。我认为你可以看到我们如何尝试以对两队和世界以及粉丝都有意义的方式创造这样的合作。我希望你能看到我们创造了一些感觉在圣所中很自在的东西。”</p>\n<p>CD Projekt表示，明年将有更多巫师主题的内容加入暗黑破坏神4，更多细节将在稍后公布。“这个皮肤，将Geralt的风格带入圣所的地狱景象，是第一个即将加入暗黑破坏神4的巫师灵感内容，还有更多正在制作中，将于2027年加入Blizzard的动作RPG，”CD Projekt补充道。</p>\n<p>与此同时，CD Projekt宣布<a href=\"https://www.ign.com/games/cyberpunk-2077\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>《赛博朋克2077》，其扩展包《幻痛自由》和终极版将于今年晚些时候加入Battle.net，随着与Blizzard合作的扩大。与此同时，Blizzard的《守望先锋》将在2027年获得《赛博朋克：边缘行者》和《边缘行者2》主题内容。续集动画系列《赛博朋克：边缘行者2》将于10月20日在Netflix首播。</p>\n<p>如果你需要回顾，这里有一个<a href=\"https://www.ign.com/articles/blizzcon-2026-opening-ceremony-live-blog-the-future-of-warcraft-and-diablo-set-to-be-revealed-amid-starcraft-announcement-rumors\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>BlizzCon 2026 开幕式上宣布的所有内容。</p>"
+    },
+    {
+      "id": "news-1f92a109024f",
+      "date": "2026/09/14 09:22",
+      "title": "魔兽3重制版强制在线",
+      "desc": "《魔兽争霸3：重制版》新增强制在线要求，移除局域网模式，引起玩家对游戏体验和自由性的讨论。",
+      "tags": [
+        "魔兽争霸3",
+        "在线要求",
+        "局域网"
+      ],
+      "image": "https://cdn.mos.cms.futurecdn.net/hAjhaVyvYreqznkVJHK5YA-1920-90.jpg",
+      "game": "魔兽争霸3",
+      "genre": "3a",
+      "source": "PC Gamer",
+      "source_url": "https://www.pcgamer.com/games/rts/warcraft-3-reforged-adds-always-online-requirement-removes-lan-mode/",
+      "likes": 0,
+      "image_w": 1920,
+      "image_h": 0,
+      "content_html": "<p>魔兽争霸3：重铸获得了<a href=\"https://us.forums.blizzard.com/en/warcraft3/t/warcraft-iii-reforged-forsaken-kingdom-patch-notes/38400\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>hefty 3.0补丁与其新的<a href=\"https://www.pcgamer.com/games/rts/blizzard-just-dropped-a-new-warcraft-3-campaign-the-first-in-23-years/\" target=\"_blank\" rel=\"noopener\">《被遗忘的王国》扩展包</a>一同发布，但并非所有更改都是向好的方向。在修复bug和新增功能的同时，Reforged现在要求玩家在游戏中连接互联网，即使在单机模式下，它还移除了游戏的本地区域网络（LAN）功能。暴雪在补丁说明中没有提供这些更改的原因。</p>\n<p>暴雪确实提到，通过购买《重铸》附带的旧版《魔兽争霸3》客户端，仍然可以提供局域网支持和离线游戏。公司有一个<a href=\"https://us.support.blizzard.com/en/help/article/256212\" target=\"_blank\" rel=\"noopener\"></a>，</p>\n<p>Battle.net支持页面，其中包含了如何安装此旧版客户端的说明。</p>\n<p>但这个改变仍然令人沮丧、令人困惑：重铸是一个饱受争议的重制版，它不得不从粉丝群体中争取支持。遗忘王国扩展包和3.0补丁是完成救赎弧并确立重铸为2002年RTS的最终版本的最佳机会。尽管事物已经有所改善，但在胜利的最后一圈中它还是绊了一跤。</p>\n<p>自从2010年代初期在线要求首次出现以来，在线要求一直是游戏中的一个痛点，而且根据你所在的地方，可靠的宽带互联网并不总是有保证。即使在大城市，停电也不是闻所未闻，单机游戏需要始终在线的要求对玩家来说仍然是一种令人厌恶的强制措施。</p>\n<p>The LAN removal makes even less sense to me: LAN party and tournament play have always struck me as an essential part of Warcraft 3's legacy. Why concede this ground to the original game when the remaster's reputation has been so contested since its release? You can check out the <a href=\"https://us.forums.blizzard.com/en/warcraft3/t/warcraft-iii-reforged-forsaken-kingdom-patch-notes/38400\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>full Warcraft 3: Reforged patch notes over on the Blizzard forums. More positive changes include a new graphics mode and a doubling of the unit selection cap from 12 to 24.</p>\n<img src=\"https://cdn.mos.cms.futurecdn.net/6offQUY4CXebir2TC27dMd.jpg\" alt=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer\">"
+    },
+    {
+      "id": "news-c707dab816ee",
+      "date": "2026/09/14 09:22",
+      "title": "星际争霸射击游戏",
+      "desc": "《星际争霸》新射击游戏为第三人称游戏，强调玩家感受“强大”，引发玩家对游戏类型和体验的讨论。",
+      "tags": [
+        "星际争霸",
+        "射击游戏",
+        "第三人称"
+      ],
+      "image": "https://www.gamespot.com/wp-content/uploads/2026/09/blizzcon_6c87dc.jpg?w=1600",
+      "game": "星际争霸",
+      "genre": "3a",
+      "source": "GameSpot",
+      "source_url": "https://www.gamespot.com/articles/the-starcraft-shooter-is-a-third-person-game-and-blizzard-insists-that-you-have-to-feel-powerful/",
+      "likes": 0,
+      "image_w": 1600,
+      "image_h": 0
+    },
+    {
+      "id": "news-d8e3f0b31bc7",
+      "date": "2026/09/14 09:22",
+      "title": "星际争霸单人游戏",
+      "desc": "《星际争霸》新射击游戏将专注于单人游戏，不支持创建角色，引发玩家对游戏模式和创新性的讨论。",
+      "tags": [
+        "星际争霸",
+        "单人游戏",
+        "角色"
+      ],
+      "image": "https://www.gamespot.com/wp-content/uploads/2026/09/StarCraftsingleplayer.jpg?w=1600",
+      "game": "星际争霸",
+      "genre": "3a",
+      "source": "GameSpot",
+      "source_url": "https://www.gamespot.com/articles/starcraft-reboot-is-focusing-on-single-player-creative-director-says/",
+      "likes": 0,
+      "image_w": 1600,
+      "image_h": 0
+    },
+    {
+      "id": "news-32f804556e22",
+      "date": "2026/09/14 09:22",
+      "title": "魔兽世界经典版确认",
+      "desc": "《魔兽世界：经典版》正式确认，玩家对“经典+”体验的讨论引发对游戏历史的回顾和期待。",
+      "tags": [
+        "魔兽世界",
+        "经典版",
+        "确认"
+      ],
+      "image": "https://assetsio.gnwcdn.com/Screenshot-2026-09-13-at-13.59.19.png?width=1600&quality=90&format=jpg&auto=webp",
+      "game": "魔兽世界",
+      "genre": "3a",
+      "source": "Eurogamer",
+      "source_url": "https://www.eurogamer.net/world-of-warcraft-forever-announced-blizzcon-2026-classic-plus",
+      "likes": 0,
+      "image_w": 1600,
+      "image_h": 0,
+      "content_html": "<p>暴雪官方确认了《魔兽世界：永恒》，这个长期传闻的“经典+”体验。</p>\n<p>上周，<a href=\"https://www.eurogamer.net/world-of-warcraft-classic-plus-wow-2-colours-website-css-datamine\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>《魔兽世界》的粉丝们在数据挖掘者从暴雪网站上拉取被标记为“wow 2”标签的色彩时，对颜色如痴如醉，这导致许多人猜测这指的是传闻中的《魔兽世界： Camelot》，或者更广为人知的“经典+”版本，就像<a href=\"https://www.eurogamer.net/blizzard-may-expand-diablo-2-more-if-warlock-class-goes-well\" target=\"_blank\" rel=\"noopener\">暴雪现在如何扩展《暗黑破坏神2》</a>一样。</p>\n<p>现在，随着BlizzCon开幕式，事实证明这些传闻几乎完全准确，并且《魔兽世界：永恒》将于11月4日全球上线。</p>\n<img src=\"https://i.ytimg.com/vi/uQuKE0KDgiM/hqdefault.jpg\" alt=\"Cover image for YouTube video\" loading=\"lazy\" referrerpolicy=\"no-referrer\">\n<p>《魔兽世界：永恒》| 游戏预告片</p>\n<div class=\"news-video\"><iframe src=\"https://www.youtube.com/embed/uQuKE0KDgiM?autoplay=1\" frameborder=\"0\" allow=\"autoplay; encrypted-media; picture-in-picture\" allowfullscreen loading=\"lazy\"></iframe></div>\n<p>《魔兽世界：永恒》的揭晓预告片。<a href=\"https://www.youtube.com/watch?v=uQuKE0KDgiM\" target=\"_blank\" rel=\"noopener\">在YouTube上观看</a></p>\n<p>如果十一月听起来很遥远，不用担心；任何预购了游戏升级包的人都可以从本周四，即9月17日开始获得测试访问权限。</p>\n<p>一个专门的讨论小组，包括高级游戏总监Ion Hazzikostas、首席经典设计师Tim Jones、首席软件工程师Nora Mills和副制作总监Clay Stone，深入讨论了新区域、系统和项目背后的设计理念。</p>\n<p>暴雪将《永恒》描述为《魔兽世界》在现代和经典版本之外的另一个永久家园，而不是取代它们。它发生在《魔兽世界》剧情中的两个固定时间点之间——在新亡灵王国战役之后，但在原始熔火之心副本之前。玩家将回到原始大陆，等级上限为60级。</p>\n<p>《魔兽世界：永生》将从发布起拥有三个新区域，以及超过1000个新任务，九个新地下城，两个支持10人和20人团队的全新副本，新的种族和职业，以及一个全新的可玩种族——天翔者。</p>\n<p>最好的是，无需额外购买，因为访问权限包含在现有的《魔兽世界》订阅中。不过，可以选择性地购买升级包，例如天翔者英雄包，它解锁了天翔者种族和起始区域。更昂贵的天翔者史诗包提供测试版访问权限、一个月的游戏时间以及额外的外观物品。</p>\n<p>它是BlizzCon 2026开幕式上几个重大揭晓之一，同时<a href=\"https://www.eurogamer.net/diablo-5-announced-blizzcon-2026-spring-2029\" target=\"_blank\" rel=\"noopener\"></a></p>\n<p>包括《暗黑破坏神5》和<a href=\"https://www.eurogamer.net/starcraft-open-world-shooter-announced-blizzcon-2026\" target=\"_blank\" rel=\"noopener\">一款新的开放世界《星际争霸》射击游戏</a>。更多详情，请查看<a href=\"https://www.eurogamer.net/blizzcon-2026-announcements-live-report-starcraft-diablo-overwatch-wow\" target=\"_blank\" rel=\"noopener\">BlizzCon 2026 开幕式上宣布的所有内容</a>。</p>",
+      "video": "https://www.youtube.com/embed/uQuKE0KDgiM?autoplay=1"
+    },
+    {
       "id": "news-ac4283ace0aa",
       "date": "2026/09/13 09:27",
       "title": "《暗黑破坏神5》正式公布",
