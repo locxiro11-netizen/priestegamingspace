@@ -431,6 +431,8 @@ const App = (() => {
     document.querySelector('#detail-modal').addEventListener('click', (e) => {
       if (e.target.id === 'detail-modal') closeModal();
     });
+    // 正文在按月分片里，弹窗骨架先渲染，正文异步填进来
+    Components.loadNewsBody();
   }
 
   function closeModal(modalId) {
