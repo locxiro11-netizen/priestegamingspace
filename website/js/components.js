@@ -463,6 +463,43 @@ const Components = (() => {
     return html.replace(/(<iframe[^>]*src="[^"]*?)autoplay=1&?/g, '$1');
   }
 
+  // ---- 正文分片 ----
+  // content.json 只留元数据（体积曾撑破 1MB 导致 CI 断更 26 天），
+  // 正文按月份单独放 data/news/YYYY-MM.json，详情页按需拉取。
+  const _bodyCache = Object.create(null);
+
+  /** '2026/10/16 23:42' -> '2026-10' */
+  function newsBodyMonth(item) {
+    return ((item && item.date) || '').slice(0, 7).replace('/', '-');
+  }
+
+  /** renderDetail 里若留了 #detail-body-slot，就在弹窗打开后把正文填进去。 */
+  async function loadNewsBody() {
+    const slot = document.getElementById('detail-body-slot');
+    if (!slot) return;
+    const id = slot.dataset.newsId;
+    const month = slot.dataset.newsMonth;
+    if (!id || !month) {
+      slot.innerHTML = '';
+      return;
+    }
+    try {
+      let map = _bodyCache[month];
+      if (!map) {
+        const res = await fetch(`data/news/${month}.json?_=` + Date.now());
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        map = await res.json();
+        _bodyCache[month] = map;
+      }
+      const entry = map && map[id];
+      slot.innerHTML = (entry && entry.content_html)
+        ? sanitizeContentHtml(entry.content_html)
+        : '<p style="color:var(--text-muted)">正文暂不可用，可点击「阅读原文」查看。</p>';
+    } catch (e) {
+      slot.innerHTML = '<p style="color:var(--text-muted)">正文加载失败，可点击「阅读原文」查看。</p>';
+    }
+  }
+
   function renderDetail(item) {
     const meta = CAT_META[item.category] || {};
     const tagHtml = item.tags?.map(t => `<span class="card-tag">${escapeHtml(t)}</span>`).join('') || '';
@@ -505,9 +542,19 @@ const Components = (() => {
                     onload="Components.fitCover(this)" onerror="Components.coverFailed(this)">
                 </div>` : ''}
               <div class="detail-content article-body">${sanitizeContentHtml(item.content_html)}</div>
+            ` : (item.body ? `
+              ${item.video && item.image ? `
+                <div class="${coverBox(item, 'detail-image').cls}"${coverBox(item, 'detail-image').style}>
+                  <img src="${item.image}" alt=""${coverAttrs(item)}
+                    onload="Components.fitCover(this)" onerror="Components.coverFailed(this)">
+                </div>` : ''}
+              <div class="detail-content article-body" id="detail-body-slot"
+                   data-news-id="${escapeHtml(item.id)}" data-news-month="${escapeHtml(newsBodyMonth(item))}">
+                <span class="body-loading">正文加载中…</span>
+              </div>
             ` : `
               <div class="detail-content">${(item.content || item.desc || '').replace(/\n/g, '<br>')}</div>
-            `}
+            `)}
             ${item.source_url ? `
               <a class="detail-origin" href="${escapeHtml(item.source_url)}"
                  target="_blank" rel="noopener">
@@ -717,6 +764,7 @@ const Components = (() => {
     renderStatsBar, renderNavTabs, renderSubBar, renderDayTitle,
     renderSectionHeader, renderCard, renderContentByDate, renderAllContent,
     renderCalendar, renderBookmarksPanel, renderDetail, renderCreateModal,
+    newsBodyMonth, loadNewsBody,
     renderSearchBar, renderSourceTabs, renderGenreTabs, renderArchive, renderHomeHero, renderEmpty,
     renderPasswordGate, showToast, showConfirm, escapeHtml, truncate, formatDateDisplay,
     fitCover, coverFailed
