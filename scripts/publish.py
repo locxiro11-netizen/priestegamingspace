@@ -38,9 +38,6 @@ import urllib.error
 from datetime import datetime, timezone, timedelta
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(ROOT, "scripts"))
-import cover
-import genre
 CONFIG_PATH = os.path.join(ROOT, "scripts", "config.json")
 DEFAULT_INPUT = os.path.join(ROOT, "scripts", "out", "curated.json")
 TOKEN_FILE = os.path.join(ROOT, ".gh_token")
@@ -79,6 +76,24 @@ def http_json(url, method="GET", token=None, payload=None):
     return {"__error__": last_err}
 
 
+def http_text(url):
+    """取纯文本（用于绕开 contents API 的 1MB 限制）。"""
+    headers = {
+        "User-Agent": "PriesteGamingSpace-NewsBot",
+        "Accept": "text/plain, */*",
+    }
+    last_err = None
+    for ctx in (_SSL_OK, _SSL_LOOSE):
+        try:
+            req = urllib.request.Request(url, headers=headers, method="GET")
+            with urllib.request.urlopen(req, timeout=60, context=ctx) as resp:
+                return resp.read().decode("utf-8")
+        except Exception as e:
+            last_err = f"{type(e).__name__}: {e}"
+            continue
+    raise RuntimeError(last_err or "未知错误")
+
+
 def load_token():
     tok = os.environ.get("GITHUB_TOKEN", "").strip()
     if tok:
@@ -92,11 +107,6 @@ def load_token():
 def now_str():
     # 统一用北京时间打戳（本地跑和 GitHub Actions UTC 跑都一致）
     return datetime.now(timezone(timedelta(hours=8))).strftime("%Y/%m/%d %H:%M")
-
-
-def _with_size(url):
-    """把封面图 URL 升到最高清版本（缩略图参数换成大图档位）。"""
-    return cover.cover_fields((url or "").strip())[0]
 
 
 def push_content(api, token, sha, content, message, branch, dry_run):
@@ -195,8 +205,19 @@ def main():
         return 1
 
     sha = remote.get("sha")
+    raw = (remote.get("content") or "").strip()
+    if raw:
+        raw = base64.b64decode(raw).decode("utf-8")
+    else:
+        # 文件超过 1MB 后，GitHub contents API 不再返回 content，
+        # 改用 raw 地址取原文（sha 仍从 contents API 拿，推送用得上）。
+        raw_url = (cfg.get("live_content_url")
+                   or f"https://raw.githubusercontent.com/{repo['owner']}/{repo['name']}"
+                      f"/{repo['branch']}/{repo['content_path']}")
+        print(f"  ! contents API 未返回正文（文件 {(remote.get('size') or 0)/1048576:.2f}MB），改用 raw 地址读取")
+        raw = http_text(raw_url)
     try:
-        content = json.loads(base64.b64decode(remote["content"]).decode("utf-8"))
+        content = json.loads(raw)
     except Exception as e:
         print(f"线上 content.json 解析失败: {e}", file=sys.stderr)
         return 1
@@ -222,10 +243,10 @@ def main():
         filled = 0
         for it in targets:
             try:
-                blocks, page_cover = enrich.blocks_for(it)
+                blocks, cover = enrich.blocks_for(it)
             except Exception as e:
                 print(f"  ! {(it.get('title') or '')[:30]} 提取异常: {e}", file=sys.stderr)
-                blocks, page_cover = [], ""
+                blocks, cover = [], ""
             if not blocks:
                 print(f"  ✗ {(it.get('title') or '')[:30]} 未取到正文")
                 continue
@@ -233,13 +254,8 @@ def main():
             v = enrich.first_video(blocks)
             if v:
                 it["video"] = v
-            cur_img = (it.get("image") or "").strip()
-            # 没有封面、是广告图、或是列表页小缩略图，都要换掉
-            if not cur_img or enrich._AD_IMAGE.search(cur_img):
-                it["image"] = _with_size(enrich.first_image(blocks) or page_cover)
-            else:
-                it["image"], _ = cover.pick_bigger(
-                    cur_img, [enrich.first_image(blocks), page_cover])
+            if not (it.get("image") or "").strip():
+                it["image"] = enrich.first_image(blocks) or cover
             print(f"  ✓ {(it.get('title') or '')[:30]} "
                   f"{len(it['content_html'])}字{' 含视频' if v else ''}")
             filled += 1
@@ -277,7 +293,7 @@ def main():
         fixed = 0
         for it in targets:
             try:
-                blocks, page_cover = enrich.blocks_for(it)
+                blocks, cover = enrich.blocks_for(it)
             except Exception as e:
                 print(f"  ! {(it.get('title') or '')[:30]} 提取异常: {e}",
                       file=sys.stderr)
@@ -289,13 +305,10 @@ def main():
             v = enrich.first_video(blocks)
             if v:
                 it["video"] = v
-            # 封面若是广告图或小缩略图，换成正文首图或页头 meta 封面
+            # 封面若是广告图，换成正文首图或页头 meta 封面
             cur_img = (it.get("image") or "").strip()
             if not cur_img or enrich._AD_IMAGE.search(cur_img):
-                it["image"] = _with_size(enrich.first_image(blocks) or page_cover)
-            else:
-                it["image"], _ = cover.pick_bigger(
-                    cur_img, [enrich.first_image(blocks), page_cover])
+                it["image"] = enrich.first_image(blocks) or cover
             print(f"  ✓ {(it.get('title') or '')[:30]} "
                   f"{len(it['content_html'])}字 图：{(it.get('image') or '无')[:52]}")
             fixed += 1
@@ -330,39 +343,18 @@ def main():
             skipped.append(f"{title}（ID 重复）")
             continue
 
-        # 最后一道闸：正文和摘要都没有的条目就是个空壳（典型的如游民星空
-        # 跳往社区活动页的 redirect 页，正文全靠 JS 跳转），发出去只会是
-        # 一张标题 + 一张图，点进去啥也没有。直接丢掉。
-        body = (item.get("content_html") or "").strip()
-        if not body and not (item.get("desc") or "").strip() \
-                and not (item.get("raw_desc") or "").strip():
-            skipped.append(f"{title}（正文与摘要均为空，已剔除）")
-            continue
-
-        desc = (item.get("desc") or "").strip()
-        # 封面图统一在这里升到最高清版本：URL 里能推断出原图尺寸的一并记录，
-        # 前端拿它提前占位，避免图片加载完把文字顶下去
-        img_url, img_w, img_h = cover.cover_fields((item.get("image") or "").strip())
         entry = {
             "id": new_id,
             "date": now_str(),
             "title": title,
-            "desc": desc,
+            "desc": (item.get("desc") or "").strip(),
             "tags": item.get("tags") or [],
-            "image": img_url,
+            "image": (item.get("image") or "").strip(),
             "game": (item.get("game") or "").strip(),
-            # 3A / 独立 / 综合：模型已经打好标，没打就用规则兜底，
-            # 前端的子页签靠这个字段过滤
-            "genre": genre.resolve_genre(
-                {"title": title, "desc": desc, "tags": item.get("tags") or [],
-                 "game": item.get("game") or "", "source": item.get("source") or ""},
-                item.get("genre")),
             "source": (item.get("source") or "").strip(),
             "source_url": url,
             "likes": 0,
         }
-        if img_w:
-            entry["image_w"], entry["image_h"] = img_w, img_h
         # 正文全文与视频由 enrich.py 补齐，供详情页展示
         if item.get("content_html"):
             entry["content_html"] = item["content_html"]
