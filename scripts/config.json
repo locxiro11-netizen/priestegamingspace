@@ -18,7 +18,7 @@
   "max_per_source": 18,
 
   "_max_keep": "content.json 的 news 数组最多保留多少条，超出丢弃最旧的",
-  "max_keep": 300,
+  "max_keep": 150,
 
   "_sources_note": "list = 抓列表页（国内站点 RSS 多已关闭）；rss = 标准 feed；steam = 官方 API",
   "sources": {
